@@ -43,35 +43,22 @@ Alineado directamente con el equipo de **Back-End** para los endpoints expuestos
   }
   ```
 
-### 2. Análisis Financiero (Entrada Individual)
+### 2. Clasificación de Gasto Individual
 
-- **Endpoint:** `POST /analisis-financiero`
+- **Endpoint:** `POST /clasificar-transaccion`
 - **Petición (Request):**
   ```json
   {
-    "ingreso_mensual": 3500,
-    "nivel_endeudamiento": 15,
-    "frecuencia_ahorro": "Baja",
-    "transacciones": [
-      {
-        "descripcion": "Uber",
-        "valor": 45.0
-      }
-    ]
+    "descripcion": "Uber",
+    "valor": 45.00
   }
   ```
 - **Respuesta (Response):**
   ```json
   {
-    "perfil_financiero": "Saludable",
-    "probabilidad": 0.89,
-    "resumen_gastos": {
-      "transporte": 45.0
-    },
-    "recomendaciones": [
-      "Considerar alternativas de transporte más económico.",
-      "Establecer un presupuesto mensual de transporte."
-    ]
+    "descripcion": "Uber",
+    "valor": 45.00,
+    "categoria_gasto": "Transporte"
   }
   ```
 
@@ -89,7 +76,8 @@ Para cumplir con la arquitectura en la nube de la solución:
 
 Antes de escribir código en Python, definiremos la matriz de consistencia:
 
-- **Categorías de Gasto Obligatorias**: Alimentación, Transporte, Salud, Vivienda, Educación, Ocio y Servicios. - **Diccionario de Conceptos**: Una lista de mínimo 20 comercios/textos reales de México (O más lugares) por categoría (ej. Transporte → Uber, DiDi, gasolinera, Metrobus, caseta).
+- **Categorías de Gasto Obligatorias**: Alimentación, Transporte, Salud, Vivienda, Educación, Ocio y Servicios.
+- **Diccionario de Conceptos**: Una lista de mínimo 20 comercios/textos reales de México (O más lugares) por categoría (ej. Transporte → Uber, DiDi, gasolinera, Metrobus, caseta).
 - **Variables Macro del Perfil**: `ingreso_mensual `(numérico), `frecuencia_ahorro `(categórico: Baja/Media/Alta) y `nivel_endeudamiento `(numérico: % de 0 a 100).
 - **Reglas de Perfil**: Definir la lógica exacta de negocio para etiquetar las clases oficiales: Saludable, En observación y En riesgo.
 
