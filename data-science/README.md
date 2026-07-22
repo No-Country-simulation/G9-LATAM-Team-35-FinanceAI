@@ -198,7 +198,7 @@ data-science/
 2. **Instalar dependencias requeridas:**
 
    ```bash
-   pip install -r requirements.txt
+   cd .\data-science\ pip install -r requirements.txt
    ```
 
 3. **Ejecución:**
