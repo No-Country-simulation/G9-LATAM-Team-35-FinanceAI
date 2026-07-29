@@ -2,6 +2,7 @@ package com.team35.backend.repository;
 
 import com.team35.backend.entity.Transaccion;
 import com.team35.backend.enums.TipoTransaccion;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -37,6 +38,8 @@ public interface TransaccionRepository extends JpaRepository<Transaccion, Long> 
             LocalDate fechaInicio,
             LocalDate fechaFin
     );
+
+    Optional<Transaccion> findByIdAndUsuarioId(Long id, Long usuarioId);
 
     // Calcula la suma de los ingresos de un usuario dentro de un período determinado.
     @Query("""

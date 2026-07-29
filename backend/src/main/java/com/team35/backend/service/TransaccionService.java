@@ -39,7 +39,6 @@ public class TransaccionService {
         /* La categoría puede quedar NULL inicialmente
           Posteriormente se asignara cuando la transacción sea clasificada por Data.
          */
-
         Transaccion transaccionGuardada =
                 transaccionRepository.save(transaccion);
 
@@ -117,6 +116,41 @@ public class TransaccionService {
                         fechaInicio,
                         fechaFin
                 );
+    }
+
+    @Transactional
+    public void eliminarTransaccion(Long transaccionId, Long usuarioId) {
+        Transaccion transaccion = transaccionRepository.findById(transaccionId)
+                .orElseThrow(() -> new RuntimeException("Transacción no encontrada"));
+        if (!transaccion.getUsuario().getId().equals(usuarioId)) {
+            throw new RuntimeException("No tienes permiso para eliminar esta transacción");
+        }
+        transaccionRepository.delete(transaccion);
+    }
+
+    @Transactional
+    public TransaccionDetails editarTransaccion(
+            Long transaccionId,
+            Long usuarioId,
+            TransaccionRegister request
+    ) {
+
+        Transaccion transaccion = transaccionRepository.findById(transaccionId)
+                .orElseThrow(() -> new RuntimeException("Transacción no encontrada"));
+
+        if (!transaccion.getUsuario().getId().equals(usuarioId)) {
+            throw new RuntimeException("No tienes permiso para editar esta transacción");
+        }
+
+        // 3. Actualizar los campos
+        transaccion.setDescripcion(request.getDescripcion());
+        transaccion.setValor(request.getValor());
+        transaccion.setTipo(request.getTipo());
+        transaccion.setFecha(request.getFecha());
+
+        Transaccion transaccionActualizada = transaccionRepository.save(transaccion);
+
+        return new TransaccionDetails(transaccionActualizada);
     }
 
     //Metodo privado para convertir una entidad Transaccion a un DTO TransaccionDetails que sera la respuesta al frontend.

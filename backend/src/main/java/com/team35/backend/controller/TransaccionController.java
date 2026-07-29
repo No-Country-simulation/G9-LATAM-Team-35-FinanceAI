@@ -5,6 +5,7 @@ import com.team35.backend.dto.TransaccionRegister;
 import com.team35.backend.enums.TipoTransaccion;
 import com.team35.backend.entity.Usuario;
 import com.team35.backend.repository.UsuarioRepository;
+import com.team35.backend.service.AuthService;
 import com.team35.backend.service.TransaccionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/transacciones")
@@ -22,36 +25,18 @@ import java.util.List;
 public class TransaccionController {
 
     private final TransaccionService transaccionService;
+    private final AuthService authService;
 
-    //Este Repository se utiliza temporalmente para buscar al usuario mediante su ID
-    private final UsuarioRepository usuarioRepository;
-
-    //Regisrar una nueva transacción, por ahora: El usuarioId viene en la URL.
     @Operation(summary = "Registra una nueva transacción para un usuario específico")
-    @PostMapping("/usuario/{usuarioId}")
+    @PostMapping
     public ResponseEntity<TransaccionDetails> registrar(
-            @PathVariable Long usuarioId,
-
             @Valid
             @RequestBody
             TransaccionRegister datos
     ) {
-        //TEMPORAL PARA LAS PRUEBAS
-        Usuario usuario =
-                usuarioRepository
-                        .findById(usuarioId)
-                        .orElseThrow(
-                                () -> new RuntimeException(
-                                        "Usuario no encontrado"
-                                )
-                        );
+        Usuario usuario = authService.getUsuarioAutenticado();
+        TransaccionDetails respuesta = transaccionService.registrarTransaccion(datos, usuario);
 
-        TransaccionDetails respuesta =
-                transaccionService
-                        .registrarTransaccion(
-                                datos,
-                                usuario
-                        );
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -59,11 +44,10 @@ public class TransaccionController {
     }
 
     @Operation(summary = "Obtiene todas las transacciones de un usuario específico")
-    @GetMapping("/usuario/{usuarioId}")
+    @GetMapping
     public ResponseEntity<List<TransaccionDetails>>
-    obtenerTransacciones(
-            @PathVariable Long usuarioId
-    ) {
+    obtenerTransacciones() {
+        Long usuarioId = authService.getUsuarioIdAutenticado();
         List<TransaccionDetails> transacciones =
                 transaccionService
                         .obtenerTransacciones(
@@ -76,14 +60,13 @@ public class TransaccionController {
     }
 
     @Operation(summary = "Obtiene todas las transacciones de un usuario específico filtradas por tipo")
-    @GetMapping("/usuario/{usuarioId}/tipo")
+    @GetMapping("/tipo")
     public ResponseEntity<List<TransaccionDetails>>
     obtenerPorTipo(
-            @PathVariable Long usuarioId,
             @RequestParam
             TipoTransaccion tipo
     ) {
-
+        Long usuarioId = authService.getUsuarioIdAutenticado();
         List<TransaccionDetails> transacciones =
                 transaccionService
                         .obtenerTransaccionesPorTipo(
@@ -99,11 +82,10 @@ public class TransaccionController {
 
     //OBTENER TRANSACCIONES SIN CLASIFICAR
     @Operation(summary = "Obtiene todas las transacciones de un usuario específico que aún no han sido clasificadas")
-    @GetMapping("/usuario/{usuarioId}/sin-clasificar")
+    @GetMapping("/sin-clasificar")
     public ResponseEntity<List<TransaccionDetails>>
-    obtenerSinClasificar(
-            @PathVariable Long usuarioId
-    ) {
+    obtenerSinClasificar() {
+        Long usuarioId = authService.getUsuarioIdAutenticado();
         List<TransaccionDetails> transacciones =
                 transaccionService
                         .obtenerTransaccionesSinClasificar(
@@ -112,5 +94,29 @@ public class TransaccionController {
         return ResponseEntity.ok(
                 transacciones
         );
+    }
+
+    @Operation(summary="Elimina una transacción específica de un usuario")
+    @DeleteMapping("/{transaccionId}")
+    public ResponseEntity<Map<String, String>> eliminarTransaccion(
+            @PathVariable Long transaccionId
+    ) {
+        Long usuarioId = authService.getUsuarioIdAutenticado();
+        transaccionService.eliminarTransaccion(transaccionId, usuarioId);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Transacción eliminada correctamente");
+        return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "Edita una transacción específica de un usuario")
+    @PutMapping("/{transaccionId}")
+    public ResponseEntity<TransaccionDetails> editarTransaccion(
+            @PathVariable Long transaccionId,
+            @Valid @RequestBody TransaccionRegister datos
+    ) {
+        Long usuarioId = authService.getUsuarioIdAutenticado();
+        TransaccionDetails transaccionEditada = transaccionService.editarTransaccion(transaccionId, usuarioId, datos);
+        return ResponseEntity.ok(transaccionEditada);
     }
 }

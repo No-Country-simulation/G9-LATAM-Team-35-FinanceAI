@@ -1,6 +1,8 @@
 package com.team35.backend.controller;
 
+import com.team35.backend.dto.LoginDetails;
 import com.team35.backend.dto.UsuarioDetails;
+import com.team35.backend.dto.UsuarioLogin;
 import com.team35.backend.dto.UsuarioRegister;
 import com.team35.backend.service.AuthService;
 import jakarta.validation.Valid;
@@ -35,4 +37,15 @@ public class AuthController {
                 .status(HttpStatus.CREATED)
                 .body(usuario);
     }
+
+    //inicia sesión
+    @PostMapping("/login")
+    public ResponseEntity<LoginDetails> login(
+            @Valid @RequestBody UsuarioLogin datos
+    ) {
+        LoginDetails respuesta =
+                authService.login(datos);
+        return ResponseEntity.ok(respuesta);
+    }
+
 }

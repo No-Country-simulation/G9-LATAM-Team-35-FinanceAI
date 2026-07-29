@@ -12,7 +12,7 @@ import java.util.Date;
 
 //service encargado de generar y validar tokens JWT.
 @Service
-public class JtwService {
+public class JwtService {
 
     //clave secreta utilizada para firmar y verificar los tokens JWT.
    @Value("${jwt.secret}")
@@ -31,7 +31,6 @@ public class JtwService {
         Date fechaActual = new Date();
         Date fechaExpiracion = new Date(fechaActual.getTime() + expiration);
 
-        //No obsoleto, ya no se utiliza el SignatureAlgorithm.HS256, en su lugar se utiliza el método signWith(SecretKey) que es más seguro y flexible.
         return Jwts.builder()
                 .subject(email)
                 .issuedAt(fechaActual)

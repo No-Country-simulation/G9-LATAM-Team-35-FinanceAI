@@ -1,5 +1,6 @@
 package com.team35.backend.dto;
 
+import com.team35.backend.entity.Transaccion;
 import com.team35.backend.enums.TipoTransaccion;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -37,6 +38,18 @@ public class TransaccionDetails {
         this.categoria = categoria;
         this.fecha = fecha;
         this.creadoEn = creadoEn;
+    }
+
+    public TransaccionDetails(Transaccion transaccionActualizada) {
+        this.id = transaccionActualizada.getId();
+        this.descripcion = transaccionActualizada.getDescripcion();
+        this.valor = transaccionActualizada.getValor();
+        this.tipo = transaccionActualizada.getTipo();
+        this.categoria = transaccionActualizada.getCategoria() != null
+                ? transaccionActualizada.getCategoria().getNombre()
+                : null;
+        this.fecha = transaccionActualizada.getFecha();
+        this.creadoEn = transaccionActualizada.getCreadoEn();
     }
 
     public Long getId() {
