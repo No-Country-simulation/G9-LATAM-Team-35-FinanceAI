@@ -50,14 +50,14 @@ Alineado directamente con el equipo de **Back-End** para los endpoints expuestos
   ```json
   {
     "descripcion": "Uber",
-    "valor": 45.00
+    "valor": 45.0
   }
   ```
 - **Respuesta (Response):**
   ```json
   {
     "descripcion": "Uber",
-    "valor": 45.00,
+    "valor": 45.0,
     "categoria_gasto": "Transporte"
   }
   ```
@@ -187,19 +187,52 @@ data-science/
 
 1. **Crear y activar entorno virtual:**
 
-   ```bash
-   python -m venv venv
-   # En Windows:
-   .\venv\Scripts\activate
-   # En Linux/Mac:
-   source venv/bin/activate
-   ```
+```bash
+  python -m venv venv
+  # En Windows:
+  .\venv\Scripts\activate
+  # En Linux/Mac:
+  source venv/bin/activate
+```
 
 2. **Instalar dependencias requeridas:**
 
-   ```bash
-   cd .\data-science\ pip install -r requirements.txt
-   ```
+```bash
+ cd .\data-science\ pip install -r requirements.txt
+```
 
 3. **Ejecución:**
    Abrir los notebooks en orden numérico (`01`, `02`, `03`) o simplemente usar el completo (`00`) dentro de Jupyter / VS Code para reproducir el entrenamiento y evaluación de los modelos.
+
+## Uso de prueba de `prediction_wrapper.py`
+
+1. **Activar el entorno virtual y entrar a la carpeta del wrapper:**
+
+```bash
+  # Desde la raíz del repo
+  .\venv\Scripts\activate
+  cd data-science\src
+```
+
+2. **Levantar el servidor:**
+
+```bash
+  uvicorn prediction_wrapper:app --reload
+```
+
+3. Ir al link que provee la consola (`http://127.0.0.1:8000/docs`), esto genera una página con Swagger UI donde se pueden probar los JSON de ejemplo mencionados al [Inicio](#contrato-de-datos-api-contracts).
+
+En el endpoint de Clasificación de Gastos se pueden mandar múltiples transacciones en un solo arreglo:
+
+```json
+[
+  {
+    "descripcion": "Uber",
+    "valor": 45.0
+  },
+  {
+    "descripcion": "Supermercado",
+    "valor": 40.0
+  }
+]
+```
