@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@theme {
+  --color-fintech-dark: #0f4c54;
+  --color-fintech-primary: #19d282;
+  --color-fintech-primary-hover: #15b771;
+  --color-fintech-surface: #f1f3f5;
+  --color-fintech-text: #2c3e50;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
