@@ -1,15 +1,32 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
+from fastapi import FastAPI, Request, Body
+from fastapi.responses import JSONResponse
+from pydantic import BaseModel, Field
 from pathlib import Path
 import joblib, re, unicodedata
 import pandas as pd
 
 app = FastAPI(title="FinanceAI - Microservicio de clasificación y perfil financiero")
 
+
+@app.exception_handler(Exception)
+async def manejador_global(request: Request, exc: Exception):
+    """Red de seguridad para errores no anticipados (no reemplaza la validación de Pydantic, que ya rechaza inputs invalidos antes de llegar aqui)"""
+    return JSONResponse(
+        status_code=500,
+        content={"detail": "Ocurrió un error inesperado procesando la solicitud."},
+    )
+
+
+@app.post("/probar-error")
+def probar_error():
+    raise ValueError("Esto es una prueba")
+
+
 modelo_perfil_financiero = joblib.load(
     Path("../models/modelo_perfil_financiero.joblib")
 )
 modelo_clasificador_gastos = joblib.load(Path("../models/clasificador_gastos.joblib"))
+
 
 def limpiar_texto(texto):
     if not texto:
@@ -21,12 +38,13 @@ def limpiar_texto(texto):
     texto = re.sub(r"[^a-z0-9\s]", " ", texto)
     return re.sub(r"\s+", " ", texto).strip()
 
+
 # Clasificación de gastos
 
 
 class Transaccion(BaseModel):
-    descripcion: str
-    valor: float
+    descripcion: str = Field(..., min_length=1)
+    valor: float = Field(..., gt=0)
 
 
 class ClasificacionResponse(BaseModel):
@@ -36,7 +54,7 @@ class ClasificacionResponse(BaseModel):
 
 
 @app.post("/clasificar-transaccion", response_model=list[ClasificacionResponse])
-def clasificar_transaccion(transacciones: list[Transaccion]):
+def clasificar_transaccion(transacciones: list[Transaccion] = Body(..., min_length=1)):
     textos_limpios = [limpiar_texto(t.descripcion) for t in transacciones]
     categorias = modelo_clasificador_gastos.predict(textos_limpios)
 
@@ -52,6 +70,7 @@ def clasificar_transaccion(transacciones: list[Transaccion]):
 
 # Perfil financiero
 
+
 def generar_recomendaciones(
     perfil: str, resumen: dict, ingreso_mensual: float
 ) -> list[str]:
@@ -65,10 +84,10 @@ def generar_recomendaciones(
         pct_ingreso = (monto_top / ingreso_mensual) * 100 if ingreso_mensual > 0 else 0
 
         # Alerta dinámica basada en la categoría predominante
-        if pct_top >= 30:
+        if pct_top >= 30:  # Si representa el 30% o más de sus gastos totales
             recomendaciones.append(
-                f"Alerta: Tu mayor rubro de gasto es '{categoria_top}' con ${monto_top:,.2f}, "
-                f"equivalente al {pct_top:.1f}% de las transacciones que registraste en este análisis."
+                f"Alerta: Tu mayor rubro de gasto es '{categoria_top}' con ${monto_top:,.2f} "
+                f"({pct_top:.1f}% de tus gastos totales)."
             )
 
             # Reglas específicas
@@ -93,9 +112,8 @@ def generar_recomendaciones(
         # Alerta basada en el ingreso mensual: una sola categoría absorbiendo demasiado
         if pct_ingreso >= 15:
             recomendaciones.append(
-                f"Atención: '{categoria_top}' por sí solo absorbe el {pct_ingreso:.1f}% de tu ingreso "
-                f"mensual completo (${ingreso_mensual:,.2f}), más allá de lo reportado aquí, "
-                f"vale la pena vigilar ese porcentaje."
+                f"Atención: '{categoria_top}' representa el {pct_ingreso:.1f}% de tu ingreso mensual "
+                f"por sí solo — considera si ese porcentaje es sostenible."
             )
 
     # Recomendaciones generales basadas en el perfil de riesgo
@@ -122,10 +140,10 @@ def generar_recomendaciones(
 
 
 class PerfilRequest(BaseModel):
-    ingreso_mensual: float
-    nivel_endeudamiento: float
+    ingreso_mensual: float = Field(..., ge=9582, le=120000)
+    nivel_endeudamiento: float = Field(..., ge=0, le=100)
     frecuencia_ahorro: str
-    transacciones: list[Transaccion]
+    transacciones: list[Transaccion] = Field(..., min_length=1)
 
 
 class PerfilResponse(BaseModel):
@@ -137,20 +155,25 @@ class PerfilResponse(BaseModel):
 
 @app.post("/analisis-financiero", response_model=PerfilResponse)
 def analisis_financiero(request: PerfilRequest):
+    # Clasificar todas las transacciones
     textos_limpios = [limpiar_texto(t.descripcion) for t in request.transacciones]
     categorias = modelo_clasificador_gastos.predict(textos_limpios)
 
+    # Acumular gasto por categoría
     resumen_gastos: dict[str, float] = {}
     for transaccion, categoria in zip(request.transacciones, categorias):
         resumen_gastos[categoria] = resumen_gastos.get(categoria, 0) + transaccion.valor
 
+    # Ordenar de mayor a menor gasto
     resumen_gastos = dict(
         sorted(resumen_gastos.items(), key=lambda item: item[1], reverse=True)
     )
 
+    # Ratio gasto/ingreso
     gasto_total = sum(resumen_gastos.values())
     ratio_gasto_ingreso = gasto_total / request.ingreso_mensual
 
+    # Armar fila para el modelo de perfil
     fila_usuario = pd.DataFrame(
         [
             {

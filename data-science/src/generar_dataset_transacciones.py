@@ -324,19 +324,16 @@ DICCIONARIO_CONCEPTOS = {
 
 
 #  GENERACIÓN DE DATASETS SIMULADOS
-def generar_dataset_gastos(n_filas=700):
+def generar_dataset_gastos(min_por_concepto=5, filas_extra=200):
     """Genera Dataset A - Clasificación de Gastos con descripciones textuales"""
     np.random.seed(42)
 
     categorias = list(DICCIONARIO_CONCEPTOS.keys())
     registros = []
 
-    for _ in range(n_filas):
-        categoria = np.random.choice(categorias)
-        concepto = np.random.choice(DICCIONARIO_CONCEPTOS[categoria])
-
-        # Generar variaciones textuales
-        variaciones = [
+    # Generar variaciones textuales
+    def variaciones_de(concepto):
+        return [
             f"compra {concepto}",
             f"pago {concepto}",
             concepto.upper(),
@@ -347,51 +344,57 @@ def generar_dataset_gastos(n_filas=700):
             f"COMPRA EN {concepto.upper()}",
             f"pago con tarjeta en {concepto}",
         ]
-        descripcion = np.random.choice(variaciones)
 
-        # Generar montos realistas
-        if categoria == "Alimentación":
-            monto = np.random.uniform(50, 800)
-        elif categoria == "Transporte":
-            monto = np.random.uniform(20, 500)
-        elif categoria == "Salud":
-            monto = np.random.uniform(100, 1500)
-        elif categoria == "Vivienda":
-            monto = np.random.uniform(500, 5000)
-        elif categoria == "Educación":
-            monto = np.random.uniform(100, 2000)
-        else:  # Ocio y Servicios
-            monto = np.random.uniform(50, 1000)
+    # Generar montos realistas
+    def monto_para(categoria):
+        rangos = {
+            "Alimentación": (50, 800),
+            "Transporte": (20, 500),
+            "Salud": (100, 1500),
+            "Vivienda": (500, 5000),
+            "Educación": (100, 2000),
+            "Ocio y Servicios": (50, 1000),
+        }
+        return round(np.random.uniform(*rangos[categoria]), 2)
 
+    for categoria in categorias:
+        for concepto in DICCIONARIO_CONCEPTOS[categoria]:
+            variantes = variaciones_de(concepto)
+            for _ in range(min_por_concepto):
+                descripcion = np.random.choice(variantes)
+                registros.append(
+                    {
+                        "descripcion": descripcion,
+                        "categoria": categoria,
+                        "monto": monto_para(categoria),
+                    }
+                )
+
+    # Filas extra al azar para volumen/variedad natural
+    for _ in range(filas_extra):
+        categoria = np.random.choice(categorias)
+        concepto = np.random.choice(DICCIONARIO_CONCEPTOS[categoria])
+        descripcion = np.random.choice(variaciones_de(concepto))
         registros.append(
             {
                 "descripcion": descripcion,
                 "categoria": categoria,
-                "monto": round(monto, 2),
+                "monto": monto_para(categoria),
             }
         )
 
-    df = pd.DataFrame(registros)
-
-    # Asegurar balance
-    for cat in categorias:
-        if len(df[df["categoria"] == cat]) < 30:
-            adicionales = 30 - len(df[df["categoria"] == cat])
-            for _ in range(adicionales):
-                concepto = np.random.choice(DICCIONARIO_CONCEPTOS[cat])
-                df.loc[len(df)] = [
-                    f"compra {concepto}",
-                    cat,
-                    round(np.random.uniform(50, 1000), 2),
-                ]
-
     # Guardar los resultados en csv
+    df = pd.DataFrame(registros)
     output_dir = Path("data-science/data/raw")
     output_dir.mkdir(parents=True, exist_ok=True)
-    output_path = output_dir / "transacciones_simuladas.csv"
+    df.to_csv(
+        output_dir / "transacciones_simuladas.csv",
+        sep=",",
+        encoding="utf-8",
+        index=False,
+    )
 
-    df.to_csv(output_path, sep=",", encoding="utf-8", index=False)
-    
     return df
+
 
 generar_dataset_gastos()

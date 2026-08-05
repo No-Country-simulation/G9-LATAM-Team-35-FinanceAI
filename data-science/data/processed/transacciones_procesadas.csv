@@ -1,701 +1,1711 @@
 descripcion,categoria,monto,descripcion_limpia
-COMPRA EN GAS LP,Vivienda,3193.96,compra en gas lp
-*camion*,Transporte,47.88,camion
-COMPRA EN OFFICEMAX,Educación,1445.34,compra en officemax
-COMPRA EN TEATRO,Ocio y Servicios,840.82,compra en teatro
-Teatro,Ocio y Servicios,636.61,teatro
-pago con tarjeta en mototaxi,Transporte,159.79,pago con tarjeta en mototaxi
-DEVLYN,Salud,635.45,devlyn
-Agua,Vivienda,3233.95,agua
-*tablet*,Educación,125.2,tablet
-pago tacos,Alimentación,339.06,pago tacos
-pago Volaris,Transporte,348.43,pago volaris
-COMPRA EN INTERNET,Vivienda,654.75,compra en internet
-belleza,Ocio y Servicios,223.12,belleza
-$hipoteca,Vivienda,1435.74,hipoteca
-pago gas lp,Vivienda,3988.1,pago gas lp
-taxi,Transporte,306.99,taxi
-pago con tarjeta en Ticketmaster,Ocio y Servicios,963.11,pago con tarjeta en ticketmaster
-pago deporte,Educación,1125.42,pago deporte
-pago con tarjeta en Pemex,Transporte,162.21,pago con tarjeta en pemex
-pago con tarjeta en colegio,Educación,1975.09,pago con tarjeta en colegio
-COMPRA EN NUTRISA,Alimentación,54.14,compra en nutrisa
-COMPRA EN CARDIOLOGIA,Salud,1120.61,compra en cardiologia
-*Bodega Aurrera*,Alimentación,538.31,bodega aurrera
-pago con tarjeta en internet,Vivienda,3304.84,pago con tarjeta en internet
-*Mexibus*,Transporte,169.27,mexibus
-COMPRA EN OFFICE DEPOT,Educación,621.97,compra en office depot
-FARMACIA,Salud,267.43,farmacia
-compra concierto,Ocio y Servicios,735.64,compra concierto
-pago con tarjeta en antro,Ocio y Servicios,725.13,pago con tarjeta en antro
-LLANTERIA,Transporte,35.09,llanteria
-buffet,Alimentación,730.67,buffet
-musica,Educación,1891.42,musica
-pago Farmacias Similares,Salud,974.1,pago farmacias similares
-suscripcion,Ocio y Servicios,897.93,suscripcion
-pago con tarjeta en Laboratorios del Chopo,Salud,545.2,pago con tarjeta en laboratorios del chopo
-pago con tarjeta en supermercado,Alimentación,535.77,pago con tarjeta en supermercado
-pago con tarjeta en buffet,Alimentación,278.59,pago con tarjeta en buffet
-pago con tarjeta en Disney+,Ocio y Servicios,510.59,pago con tarjeta en disney
-COMPRA EN SUSHI,Alimentación,757.18,compra en sushi
-COMPRA EN SMART FIT,Ocio y Servicios,717.87,compra en smart fit
-pasticceria,Alimentación,235.16,pasticceria
-compra gasolina,Transporte,91.08,compra gasolina
-pago pasticceria,Alimentación,427.01,pago pasticceria
-Ticketmaster,Ocio y Servicios,377.82,ticketmaster
-pago mercado,Alimentación,448.2,pago mercado
-$Urbano,Transporte,136.19,urbano
-COMPRA EN PLOMERIA,Vivienda,1569.37,compra en plomeria
-Superboletos,Ocio y Servicios,650.69,superboletos
-compra Cinemex,Ocio y Servicios,193.18,compra cinemex
-SEGURO,Salud,927.25,seguro
-CURACION,Salud,1095.61,curacion
-*traumatologo*,Salud,344.11,traumatologo
-*taqueria*,Alimentación,752.55,taqueria
-pago con tarjeta en carniceria,Alimentación,135.11,pago con tarjeta en carniceria
-CERVECERIA,Ocio y Servicios,267.12,cerveceria
-pago con tarjeta en ADO,Transporte,267.99,pago con tarjeta en ado
-compra Walmart,Alimentación,119.83,compra walmart
-Cfe,Vivienda,4471.86,cfe
-PASTELERIA,Alimentación,575.27,pasteleria
-COMPRA EN TRAUMATOLOGO,Salud,666.31,compra en traumatologo
-jugueria,Alimentación,113.1,jugueria
-COMPRA EN VIGILANCIA,Vivienda,3228.93,compra en vigilancia
-pago con tarjeta en Monterrey,Salud,1028.9,pago con tarjeta en monterrey
-pago excursiones,Educación,1022.67,pago excursiones
-pago con tarjeta en audiologia,Salud,346.3,pago con tarjeta en audiologia
-Elektra,Vivienda,1304.7,elektra
-compra cardiologia,Salud,859.56,compra cardiologia
-*Farmacias Similares*,Salud,450.65,farmacias similares
-$masaje,Ocio y Servicios,423.44,masaje
-pago Disney+,Ocio y Servicios,382.57,pago disney
-compra Fresko,Alimentación,196.43,compra fresko
-material,Educación,146.2,material
-7-Eleven,Alimentación,712.62,7 eleven
-Cuota De Mantenimiento,Vivienda,4677.43,cuota de mantenimiento
-Krispy Kreme,Alimentación,479.22,krispy kreme
-elektra,Vivienda,1825.02,elektra
-*Libreria Gandhi*,Educación,610.1,libreria gandhi
-pago con tarjeta en pediatra,Salud,652.57,pago con tarjeta en pediatra
-COMPRA EN CONCIERTO,Ocio y Servicios,116.9,compra en concierto
-$Urbano,Transporte,192.15,urbano
-pago Devlyn,Salud,551.57,pago devlyn
-$panaderia,Alimentación,319.62,panaderia
-*ChatGPT*,Educación,897.58,chatgpt
-COMPRA EN PEMEX,Transporte,458.36,compra en pemex
-pago con tarjeta en Metrobus,Transporte,321.39,pago con tarjeta en metrobus
-COMPRA EN RENTA,Vivienda,3658.85,compra en renta
-PLAYSTATION,Ocio y Servicios,371.1,playstation
-pago Coppel,Vivienda,2473.13,pago coppel
-pago con tarjeta en Discord,Ocio y Servicios,197.29,pago con tarjeta en discord
-$Cinemex,Ocio y Servicios,287.74,cinemex
-$Diesel,Transporte,277.8,diesel
-COMPRA EN EL SOTANO,Educación,1562.99,compra en el sotano
-Articulo De Limpieza,Vivienda,2557.69,articulo de limpieza
-boliche,Ocio y Servicios,440.79,boliche
-aparato ortopedico,Salud,285.84,aparato ortopedico
-LLANTERIA,Transporte,401.69,llanteria
-*Laboratorios del Chopo*,Salud,451.2,laboratorios del chopo
-*Volaris*,Transporte,225.59,volaris
-compra renta,Vivienda,2490.59,compra renta
-pago con tarjeta en zoologico,Ocio y Servicios,677.19,pago con tarjeta en zoologico
-*colegio*,Educación,1348.51,colegio
-*inscripcion*,Educación,190.66,inscripcion
-AUTOPISTA,Transporte,383.77,autopista
-Starbucks,Alimentación,120.62,starbucks
-parque de diversiones,Ocio y Servicios,216.56,parque de diversiones
-Bp,Transporte,247.27,bp
-Mcdonalds,Alimentación,348.88,mcdonalds
-Vivaaerobus,Transporte,445.61,vivaaerobus
-SODIMAC,Vivienda,2764.11,sodimac
-bodega aurrera,Alimentación,511.89,bodega aurrera
-etn,Transporte,296.23,etn
-compra Tren Ligero,Transporte,239.96,compra tren ligero
-Mas Vision,Salud,976.32,mas vision
-COMPRA EN DOMINO'S,Alimentación,729.01,compra en domino s
-pago gas lp,Vivienda,675.33,pago gas lp
-*Tren Ligero*,Transporte,54.17,tren ligero
-pago maestria,Educación,595.32,pago maestria
-COMPRA EN DETERGENTE,Vivienda,3807.82,compra en detergente
-Officemax,Educación,1526.17,officemax
-resonancia,Salud,620.83,resonancia
-Smart Fit,Ocio y Servicios,276.67,smart fit
-pago con tarjeta en reinscripcion,Educación,552.65,pago con tarjeta en reinscripcion
-compra belleza,Ocio y Servicios,529.99,compra belleza
-LONCHERIA,Alimentación,341.9,loncheria
-CUOTA DE MANTENIMIENTO,Vivienda,910.79,cuota de mantenimiento
-muebles,Vivienda,3080.47,muebles
-CUADERNOS,Educación,1244.64,cuadernos
-jardineria,Vivienda,4757.88,jardineria
-Cafeteria,Alimentación,420.82,cafeteria
-Epic Games,Ocio y Servicios,750.18,epic games
-pago Plagium,Educación,1940.44,pago plagium
-compra fruteria,Alimentación,125.84,compra fruteria
-COMPRA EN XBOX,Ocio y Servicios,119.12,compra en xbox
-pago Shell,Transporte,59.05,pago shell
-FOTOCOPIAS,Educación,1204.48,fotocopias
-$colegio,Educación,1644.32,colegio
-cinnabon,Alimentación,312.66,cinnabon
-SODIMAC,Vivienda,3997.16,sodimac
-ANTRO,Ocio y Servicios,155.64,antro
-pago AXA,Salud,756.12,pago axa
-COMPRA EN COMBI,Transporte,76.41,compra en combi
-compra cafeteria,Alimentación,560.78,compra cafeteria
-COMPRA EN MEGACABLE,Vivienda,2877.67,compra en megacable
-Lapiceros,Educación,182.46,lapiceros
-Tutorias,Educación,580.68,tutorias
-pago con tarjeta en traumatologo,Salud,832.34,pago con tarjeta en traumatologo
-compra pasticceria,Alimentación,520.67,compra pasticceria
-*concierto*,Ocio y Servicios,93.17,concierto
-COMPRA EN REPARACION,Vivienda,2275.35,compra en reparacion
-telefono,Vivienda,2586.64,telefono
-Primera Plus,Transporte,487.71,primera plus
-pago con tarjeta en cardiologia,Salud,533.34,pago con tarjeta en cardiologia
-PINTURA,Vivienda,4201.42,pintura
-Vuelo,Transporte,314.44,vuelo
-COMPRA EN TAXI,Transporte,440.8,compra en taxi
-Axa,Salud,136.91,axa
-compra deposito,Alimentación,410.28,compra deposito
-Carniceria,Alimentación,612.18,carniceria
-compra loncheria,Alimentación,678.75,compra loncheria
-AUTOZONE,Transporte,84.25,autozone
-compra lapiceros,Educación,1115.26,compra lapiceros
-FOTOCOPIAS,Educación,1155.32,fotocopias
-PAPELERIA,Educación,569.96,papeleria
-compra HBO,Ocio y Servicios,956.35,compra hbo
-compra libros,Educación,1376.23,compra libros
-COMPRA EN MOBIL,Transporte,30.65,compra en mobil
-$Cablebus,Transporte,390.71,cablebus
-compra psicologo,Salud,872.67,compra psicologo
-pago con tarjeta en Platzi,Educación,1220.92,pago con tarjeta en platzi
-pago colegiatura,Educación,1629.58,pago colegiatura
-$Planet Fitness,Ocio y Servicios,627.68,planet fitness
-TOTALENERGIES,Transporte,454.0,totalenergies
-compra vigilancia,Vivienda,4026.44,compra vigilancia
-*Home Depot*,Vivienda,2856.21,home depot
-bodega aurrera,Alimentación,394.51,bodega aurrera
-compra fruteria,Alimentación,243.68,compra fruteria
-$Porrua,Educación,1035.97,porrua
-PLAGIUM,Educación,1120.8,plagium
-COMPRA EN AUDIOLOGIA,Salud,352.09,compra en audiologia
-MEGACABLE,Vivienda,4434.43,megacable
-pago consulta medica,Salud,942.71,pago consulta medica
-Ginecologo,Salud,336.51,ginecologo
-$Infanavit,Vivienda,899.16,infanavit
-pago con tarjeta en Bodega Aurrera,Alimentación,316.99,pago con tarjeta en bodega aurrera
-compra Planet Fitness,Ocio y Servicios,528.25,compra planet fitness
-pago con tarjeta en certificacion,Educación,275.35,pago con tarjeta en certificacion
-COMPRA EN LONCHERIA,Alimentación,705.18,compra en loncheria
-actividades,Educación,1631.78,actividades
-uber eats,Alimentación,207.01,uber eats
-*gimnasio*,Ocio y Servicios,554.7,gimnasio
-COMPRA EN AUTOLAVADO,Transporte,83.9,compra en autolavado
-*MetLife*,Salud,816.35,metlife
-pago detergente,Vivienda,2513.36,pago detergente
-pago con tarjeta en optometria,Salud,1132.37,pago con tarjeta en optometria
-*reparacion*,Vivienda,1949.36,reparacion
-pago con tarjeta en Apple Music,Ocio y Servicios,896.0,pago con tarjeta en apple music
-megacable,Vivienda,2097.97,megacable
-pago Cinnabon,Alimentación,115.19,pago cinnabon
-COMPRA EN PLANET FITNESS,Ocio y Servicios,607.21,compra en planet fitness
-pago con tarjeta en predial,Vivienda,2018.51,pago con tarjeta en predial
-pago Naturgy,Vivienda,1599.59,pago naturgy
-$AXA,Salud,948.08,axa
-$miscelanea,Alimentación,219.0,miscelanea
-zoologico,Ocio y Servicios,858.28,zoologico
-COMPRA EN STEAM,Ocio y Servicios,901.93,compra en steam
-COMPRA EN DERMATOLOGO,Salud,1075.75,compra en dermatologo
-teatro,Ocio y Servicios,971.0,teatro
-$electrodomesticos,Vivienda,4887.8,electrodomesticos
-MASAJE,Ocio y Servicios,829.82,masaje
-COMPRA EN VALET PARKING,Transporte,248.78,compra en valet parking
-Duolingo,Educación,455.38,duolingo
-EVENTO,Ocio y Servicios,239.53,evento
-compra electricidad,Vivienda,3247.79,compra electricidad
-unas,Ocio y Servicios,354.61,unas
-$estudios medicos,Salud,571.25,estudios medicos
-*Premium*,Transporte,283.48,premium
-COMPRA EN COMBUSTIBLE,Transporte,408.74,compra en combustible
-pago con tarjeta en Didi Food,Alimentación,620.17,pago con tarjeta en didi food
-COMPRA EN OPTOMETRIA,Salud,948.54,compra en optometria
-compra oftalmologo,Salud,1291.02,compra oftalmologo
-pago articulo de limpieza,Vivienda,1059.34,pago articulo de limpieza
-pago análisis,Salud,353.73,pago analisis
-COMPRA EN FARMACIA,Salud,1110.24,compra en farmacia
-COMPRA EN GAS LP,Vivienda,4225.73,compra en gas lp
-ARTE,Educación,412.11,arte
-material,Educación,700.77,material
-pago Pemex,Transporte,411.97,pago pemex
-SMART FIT,Ocio y Servicios,642.9,smart fit
-compra neveria,Alimentación,224.16,compra neveria
-*tamales*,Alimentación,448.89,tamales
-COMPRA EN ESCANEO,Educación,1286.05,compra en escaneo
-$seguro,Salud,565.94,seguro
-receta,Salud,1211.64,receta
-el sotano,Educación,1508.78,el sotano
-$curacion,Salud,1153.36,curacion
-*papeleria*,Educación,371.94,papeleria
-pago Izzi,Vivienda,3931.06,pago izzi
-compra rayos x,Salud,244.08,compra rayos x
-domestika,Educación,968.3,domestika
-COMPRA EN ELECTRODOMESTICOS,Vivienda,1174.63,compra en electrodomesticos
-pago electricidad,Vivienda,554.91,pago electricidad
-curacion,Salud,1102.65,curacion
-clinica,Salud,354.24,clinica
-$refaccionaria,Transporte,129.13,refaccionaria
-COMPRA EN CAR WASH,Transporte,262.83,compra en car wash
-COMPRA EN DOMINO'S,Alimentación,704.09,compra en domino s
-articulo de limpieza,Vivienda,4634.38,articulo de limpieza
-COMPRA EN PAPELERIA,Educación,1337.6,compra en papeleria
-pago con tarjeta en Fresko,Alimentación,368.1,pago con tarjeta en fresko
-COMPRA EN ARTE,Educación,1696.84,compra en arte
-compra Farmacias San Pablo,Salud,258.53,compra farmacias san pablo
-maestria,Educación,336.86,maestria
-$supermercado,Alimentación,439.13,supermercado
-Tablet,Educación,736.87,tablet
-pago con tarjeta en Naturgy,Vivienda,1014.2,pago con tarjeta en naturgy
-$Megacable,Vivienda,2058.56,megacable
-pago Shell,Transporte,460.86,pago shell
-SEGURO DE GASTOS MEDICOS,Salud,447.52,seguro de gastos medicos
-restaurante,Alimentación,364.19,restaurante
-$pasticceria,Alimentación,215.07,pasticceria
-compra pesero,Transporte,105.46,compra pesero
-compra cuota de mantenimiento,Vivienda,3007.87,compra cuota de mantenimiento
-COMPRA EN CRUNCHYROLL,Ocio y Servicios,527.09,compra en crunchyroll
-*KFC*,Alimentación,370.09,kfc
-compra analisis clinicos,Salud,151.17,compra analisis clinicos
-COMPRA EN SALON,Ocio y Servicios,608.08,compra en salon
-TACOS,Alimentación,389.97,tacos
-compra VivaAerobus,Transporte,212.37,compra vivaaerobus
-discord,Ocio y Servicios,222.83,discord
-IMPRESIONES,Educación,809.29,impresiones
-pago camion,Transporte,216.19,pago camion
-pago IKEA,Vivienda,4401.47,pago ikea
-TIENDA DE CONVENIENCIA,Alimentación,223.31,tienda de conveniencia
-$receta,Salud,574.98,receta
-CURSOS,Educación,1340.22,cursos
-COMPRA EN TREN LIGERO,Transporte,366.69,compra en tren ligero
-pool,Ocio y Servicios,947.19,pool
-*Cinepolis*,Ocio y Servicios,901.52,cinepolis
-compra Metrobus,Transporte,119.79,compra metrobus
-MONTERREY,Salud,916.26,monterrey
-pago seguro hogar,Vivienda,4597.81,pago seguro hogar
-pago uniforme,Educación,789.81,pago uniforme
-Basura,Vivienda,2053.36,basura
-pago HBO,Ocio y Servicios,868.01,pago hbo
-COMPRA EN FARMACIAS SIMILARES,Salud,259.93,compra en farmacias similares
-*parque de diversiones*,Ocio y Servicios,809.86,parque de diversiones
-ALITAS,Alimentación,434.34,alitas
-pago taqueria,Alimentación,525.11,pago taqueria
-$deposito,Alimentación,676.2,deposito
-pago Naturgy,Vivienda,1725.38,pago naturgy
-pago seguro,Salud,841.53,pago seguro
-pago con tarjeta en verificacion,Transporte,151.55,pago con tarjeta en verificacion
-pago con tarjeta en Didi Food,Alimentación,423.1,pago con tarjeta en didi food
-Totalplay,Vivienda,549.48,totalplay
-pago con tarjeta en certificacion,Educación,606.35,pago con tarjeta en certificacion
-pago aparato ortopedico,Salud,940.72,pago aparato ortopedico
-*miscelanea*,Alimentación,479.97,miscelanea
-Sams Club,Alimentación,337.35,sams club
-pago car wash,Transporte,99.82,pago car wash
-FARMACIA,Salud,226.47,farmacia
-Laboratorios Chopo,Salud,1271.91,laboratorios chopo
-compra curacion,Salud,1110.15,compra curacion
-*ultrasonido*,Salud,1029.14,ultrasonido
-Cinemex,Ocio y Servicios,509.57,cinemex
-verificacion,Transporte,97.77,verificacion
-compra Fovissste,Vivienda,2733.65,compra fovissste
-pago Plagium,Educación,1284.33,pago plagium
-pago con tarjeta en Volaris,Transporte,56.07,pago con tarjeta en volaris
-pago con tarjeta en supermercado,Alimentación,578.69,pago con tarjeta en supermercado
-*Pemex*,Transporte,56.45,pemex
-TENENCIA,Transporte,150.63,tenencia
-PEAJE,Transporte,171.01,peaje
-pago con tarjeta en cardiologia,Salud,724.41,pago con tarjeta en cardiologia
-COMPRA EN COLCHON,Vivienda,3912.77,compra en colchon
-*actividades*,Educación,1475.8,actividades
-pago con tarjeta en Disney+,Ocio y Servicios,908.2,pago con tarjeta en disney
-pago con tarjeta en electrodomesticos,Vivienda,4748.27,pago con tarjeta en electrodomesticos
-*autopista*,Transporte,499.69,autopista
-$pesero,Transporte,459.43,pesero
-Spa,Ocio y Servicios,744.47,spa
-COMPRA EN MONTERREY,Salud,1459.48,compra en monterrey
-excursiones,Educación,1704.64,excursiones
-*llanteria*,Transporte,37.76,llanteria
-pago seguro de gastos medicos,Salud,1339.0,pago seguro de gastos medicos
-*aparato ortopedico*,Salud,666.28,aparato ortopedico
-$Chedraui,Alimentación,289.06,chedraui
-pago Mexibus,Transporte,31.71,pago mexibus
-*Cablebus*,Transporte,109.03,cablebus
-URBANO,Transporte,53.61,urbano
-compra Nintendo Switch,Ocio y Servicios,431.83,compra nintendo switch
-pago con tarjeta en Duolingo,Educación,1203.44,pago con tarjeta en duolingo
-pago con tarjeta en refrigerador,Vivienda,3957.23,pago con tarjeta en refrigerador
-cafeteria,Alimentación,603.19,cafeteria
-MUSEO,Ocio y Servicios,493.95,museo
-streaming,Ocio y Servicios,729.78,streaming
-compra diplomado,Educación,1829.64,compra diplomado
-compra mariscos,Alimentación,343.72,compra mariscos
-Electricidad,Vivienda,4038.55,electricidad
-*seguro*,Salud,1330.77,seguro
-pago Superboletos,Ocio y Servicios,208.68,pago superboletos
-COMPRA EN LUZ,Vivienda,4742.29,compra en luz
-pago Discord,Ocio y Servicios,414.89,pago discord
-PASTICCERIA,Alimentación,669.65,pasticceria
-$cuadernos,Educación,1941.29,cuadernos
-PANADERIA,Alimentación,497.96,panaderia
-POLLO FELIZ,Alimentación,618.68,pollo feliz
-COMPRA EN BELLEZA,Ocio y Servicios,902.56,compra en belleza
-COMPRA EN JERINGAS,Salud,1147.02,compra en jeringas
-panaderia,Alimentación,485.06,panaderia
-pago con tarjeta en caseta,Transporte,207.76,pago con tarjeta en caseta
-pago con tarjeta en Laboratorios del Chopo,Salud,162.13,pago con tarjeta en laboratorios del chopo
-pago con tarjeta en peaje,Transporte,177.94,pago con tarjeta en peaje
-pago Bodega Aurrera,Alimentación,356.34,pago bodega aurrera
-Disney+,Ocio y Servicios,96.34,disney
-Diesel,Transporte,125.69,diesel
-Udemy,Educación,1983.8,udemy
-REFACCIONARIA,Transporte,415.85,refaccionaria
-compra refaccionaria,Transporte,441.74,compra refaccionaria
-COMPRA EN AUDIOLOGIA,Salud,443.4,compra en audiologia
-pago con tarjeta en Monterrey,Salud,567.61,pago con tarjeta en monterrey
-Diplomado,Educación,1392.27,diplomado
-*jeringas*,Salud,1334.29,jeringas
-*Domestika*,Educación,109.78,domestika
-*oftalmologo*,Salud,325.06,oftalmologo
-*hipoteca*,Vivienda,1369.1,hipoteca
-compra regularizacion,Educación,1163.7,compra regularizacion
-INDRIVE,Transporte,81.66,indrive
-*oftalmologo*,Salud,857.77,oftalmologo
-Mobil,Transporte,69.2,mobil
-basura,Vivienda,805.27,basura
-$cardiologia,Salud,1092.0,cardiologia
-$cine,Ocio y Servicios,639.87,cine
-pago pediatra,Salud,1486.21,pago pediatra
-ingles,Educación,1330.39,ingles
-*electricidad*,Vivienda,795.32,electricidad
-COMER,Alimentación,239.38,comer
-pago Cablebus,Transporte,498.62,pago cablebus
-pago con tarjeta en Uber Eats,Alimentación,172.72,pago con tarjeta en uber eats
-coursera,Educación,1695.9,coursera
-$plaza,Ocio y Servicios,174.77,plaza
-COMPRA EN CARDIOLOGIA,Salud,705.27,compra en cardiologia
-Deporte,Educación,1313.2,deporte
-pago con tarjeta en lavanderia,Ocio y Servicios,470.18,pago con tarjeta en lavanderia
-$farmacia,Salud,421.94,farmacia
-compra Office Depot,Educación,1338.17,compra office depot
-COMPRA EN SEGURO HOGAR,Vivienda,1216.61,compra en seguro hogar
-7-Eleven,Alimentación,165.24,7 eleven
-pago GNP,Salud,1165.43,pago gnp
-Consulta Medica,Salud,1376.57,consulta medica
-gasolina,Transporte,402.34,gasolina
-*McDonalds*,Alimentación,143.89,mcdonalds
-basura,Vivienda,3012.86,basura
-$loncheria,Alimentación,294.44,loncheria
-COMPRA EN INDRIVE,Transporte,168.97,compra en indrive
-COMPRA EN ACTIVIDADES,Educación,982.74,compra en actividades
-$barberia,Ocio y Servicios,327.08,barberia
-compra diplomado,Educación,1910.03,compra diplomado
-$tortilleria,Alimentación,611.87,tortilleria
-pago con tarjeta en 7-Eleven,Alimentación,478.18,pago con tarjeta en 7 eleven
-cinemex,Ocio y Servicios,378.72,cinemex
-pago Mexibus,Transporte,276.44,pago mexibus
-compra quesadilla,Alimentación,668.39,compra quesadilla
-*mototaxi*,Transporte,83.7,mototaxi
-pago car wash,Transporte,414.29,pago car wash
-compra alineacion y balanceo,Transporte,476.74,compra alineacion y balanceo
-$cursos,Educación,1230.08,cursos
-pago con tarjeta en cafeteria,Alimentación,581.8,pago con tarjeta en cafeteria
-mobil,Transporte,182.94,mobil
-medicamento,Salud,874.2,medicamento
-CINEMEX,Ocio y Servicios,88.72,cinemex
-pago Infanavit,Vivienda,771.58,pago infanavit
-pago con tarjeta en pintura,Vivienda,4423.03,pago con tarjeta en pintura
-*camion*,Transporte,245.69,camion
-*computadora*,Educación,923.95,computadora
-pago seguro de gastos medicos,Salud,129.21,pago seguro de gastos medicos
-Farmacias Similares,Salud,1494.87,farmacias similares
-SORIANA,Alimentación,560.17,soriana
-compra musica,Educación,1696.86,compra musica
-Mcdonalds,Alimentación,595.38,mcdonalds
-tramite escolar,Educación,1294.65,tramite escolar
-articulo de limpieza,Vivienda,2771.8,articulo de limpieza
-ETN,Transporte,297.76,etn
-coppel,Vivienda,4430.4,coppel
-$verificacion,Transporte,334.4,verificacion
-PSICOLOGO,Salud,972.15,psicologo
-compra musica,Educación,349.98,compra musica
-*microondas*,Vivienda,3346.43,microondas
-pago gimnasio,Ocio y Servicios,221.93,pago gimnasio
-pago con tarjeta en fotocopias,Educación,569.74,pago con tarjeta en fotocopias
-COMPRA EN REFRIGERADOR,Vivienda,3107.37,compra en refrigerador
-*hipoteca*,Vivienda,1235.86,hipoteca
-pago con tarjeta en Farmacias Benavides,Salud,658.66,pago con tarjeta en farmacias benavides
-Gasa,Salud,555.27,gasa
-*cerrajero*,Vivienda,2542.05,cerrajero
-RAYOS X,Salud,718.83,rayos x
-pago con tarjeta en G500,Transporte,226.83,pago con tarjeta en g500
-compra telefono,Vivienda,1636.38,compra telefono
-pago con tarjeta en plaza,Ocio y Servicios,625.26,pago con tarjeta en plaza
-Ingles,Educación,1585.4,ingles
-$cilindro de gas,Vivienda,1426.29,cilindro de gas
-pago uniforme,Educación,1974.72,pago uniforme
-didi food,Alimentación,88.77,didi food
-TIENDA DE CONVENIENCIA,Alimentación,389.15,tienda de conveniencia
-compra cuadernos,Educación,1063.75,compra cuadernos
-playstation,Ocio y Servicios,987.3,playstation
-pago Mas Vision,Salud,552.38,pago mas vision
-COMPRA EN IMPRESIONES,Educación,1079.63,compra en impresiones
-$Cabify,Transporte,87.03,cabify
-boliche,Ocio y Servicios,719.45,boliche
-pago RTP,Transporte,110.41,pago rtp
-$Libreria Gandhi,Educación,1749.47,libreria gandhi
-pago Six Flags,Ocio y Servicios,678.55,pago six flags
-pago vulcanizadora,Transporte,137.19,pago vulcanizadora
-COMPRA EN RTP,Transporte,388.89,compra en rtp
-pago con tarjeta en receta,Salud,1065.34,pago con tarjeta en receta
-SUPERMERCADO,Alimentación,755.66,supermercado
-Zoologico,Ocio y Servicios,598.33,zoologico
-pago Crunchyroll,Ocio y Servicios,999.44,pago crunchyroll
-compra HBO,Ocio y Servicios,436.56,compra hbo
-Tablet,Educación,1177.33,tablet
-carniceria,Alimentación,537.88,carniceria
-parque de diversiones,Ocio y Servicios,684.21,parque de diversiones
-pago Planet Fitness,Ocio y Servicios,884.0,pago planet fitness
-compra AXA,Salud,268.29,compra axa
-pago con tarjeta en Netflix,Ocio y Servicios,361.96,pago con tarjeta en netflix
-*pollo asado*,Alimentación,472.58,pollo asado
-pago con tarjeta en consulta medica,Salud,935.08,pago con tarjeta en consulta medica
-$Uber Eats,Alimentación,104.9,uber eats
-pago receta,Salud,748.89,pago receta
-COMPRA EN FARMACIAS DEL AHORRO,Salud,826.71,compra en farmacias del ahorro
-Crunchyroll,Ocio y Servicios,823.08,crunchyroll
-Pollo Asado,Alimentación,349.12,pollo asado
-musica,Educación,1255.02,musica
-pago parque de diversiones,Ocio y Servicios,729.72,pago parque de diversiones
-Axa,Salud,374.09,axa
-pago con tarjeta en musica,Educación,1343.92,pago con tarjeta en musica
-optometria,Salud,1408.21,optometria
-pago lavanderia,Ocio y Servicios,208.02,pago lavanderia
-Microondas,Vivienda,1781.93,microondas
-CONSULTA MEDICA,Salud,913.3,consulta medica
-pago verificacion,Transporte,211.95,pago verificacion
-pago con tarjeta en libros,Educación,1092.71,pago con tarjeta en libros
-*reparacion*,Vivienda,2863.24,reparacion
-COMPRA EN POLLO FELIZ,Alimentación,772.2,compra en pollo feliz
-$internet,Vivienda,2976.02,internet
-*ChatGPT*,Educación,1312.17,chatgpt
-pago con tarjeta en inscripcion,Educación,1608.11,pago con tarjeta en inscripcion
-pago con tarjeta en Indrive,Transporte,423.13,pago con tarjeta en indrive
-Sams Club,Alimentación,276.55,sams club
-*curacion*,Salud,1034.57,curacion
-camion,Transporte,91.86,camion
-compra Premium,Transporte,373.7,compra premium
-*Mexibus*,Transporte,276.97,mexibus
-Zoologico,Ocio y Servicios,659.87,zoologico
-pago con tarjeta en internet,Vivienda,2259.08,pago con tarjeta en internet
-pago diplomado,Educación,621.63,pago diplomado
-EXCURSIONES,Educación,941.16,excursiones
-pago con tarjeta en impresiones,Educación,1415.63,pago con tarjeta en impresiones
-LAVADORA,Vivienda,3214.49,lavadora
-*cerveceria*,Ocio y Servicios,783.99,cerveceria
-Administracion Condominios,Vivienda,4523.86,administracion condominios
-COMPRA EN ANÁLISIS,Salud,613.74,compra en analisis
-*cantarito*,Ocio y Servicios,115.95,cantarito
-Walmart,Alimentación,102.45,walmart
-$computadora,Educación,1226.34,computadora
-SEGURO DE GASTOS MEDICOS,Salud,366.45,seguro de gastos medicos
-pago Cabify,Transporte,194.21,pago cabify
-*ultrasonido*,Salud,751.29,ultrasonido
-billar,Ocio y Servicios,963.58,billar
-pago con tarjeta en Domestika,Educación,423.91,pago con tarjeta en domestika
-pago con tarjeta en TotalEnergies,Transporte,414.47,pago con tarjeta en totalenergies
-COMPRA EN CORTINAS,Vivienda,4079.52,compra en cortinas
-*boliche*,Ocio y Servicios,429.35,boliche
-boletos,Ocio y Servicios,930.65,boletos
-pago con tarjeta en renta,Vivienda,3522.01,pago con tarjeta en renta
-$gas,Vivienda,901.06,gas
-$miscelanea,Alimentación,169.48,miscelanea
-arte,Educación,675.94,arte
-pago autolavado,Transporte,202.84,pago autolavado
-pago con tarjeta en Shell,Transporte,285.83,pago con tarjeta en shell
-dentista,Salud,491.58,dentista
-pago Magna,Transporte,267.53,pago magna
-$Farmacias Similares,Salud,893.21,farmacias similares
-compra Infanavit,Vivienda,1023.65,compra infanavit
-AUTOLAVADO,Transporte,343.67,autolavado
-$TotalEnergies,Transporte,87.81,totalenergies
-pago con tarjeta en muebles,Vivienda,1951.38,pago con tarjeta en muebles
-pago doctor,Salud,413.06,pago doctor
-pago plaza,Ocio y Servicios,658.92,pago plaza
-pago con tarjeta en Walmart,Alimentación,409.52,pago con tarjeta en walmart
-compra Rappi,Alimentación,504.69,compra rappi
-parque de diversiones,Ocio y Servicios,527.44,parque de diversiones
-pago con tarjeta en Comer,Alimentación,549.73,pago con tarjeta en comer
-Rtp,Transporte,32.39,rtp
-mariscos,Alimentación,109.97,mariscos
-ikea,Vivienda,2477.8,ikea
-pago gas,Vivienda,3425.9,pago gas
-DERMATOLOGO,Salud,890.22,dermatologo
-pago con tarjeta en taxi,Transporte,47.92,pago con tarjeta en taxi
-COMPRA EN DERMATOLOGO,Salud,516.3,compra en dermatologo
-ANÁLISIS,Salud,204.48,analisis
-LAVADORA,Vivienda,1299.95,lavadora
-elektra,Vivienda,3349.35,elektra
-*Didi Food*,Alimentación,215.6,didi food
-$OfficeMax,Educación,909.56,officemax
-*Office Depot*,Educación,1098.46,office depot
-*gimnasio*,Ocio y Servicios,746.93,gimnasio
-*boletos*,Ocio y Servicios,445.35,boletos
-$Farmacias del Ahorro,Salud,1206.47,farmacias del ahorro
-*pizarron*,Educación,360.51,pizarron
-Colegio,Educación,1685.18,colegio
-Colegiatura,Educación,1622.92,colegiatura
-libreria gandhi,Educación,805.68,libreria gandhi
-Carniceria,Alimentación,683.27,carniceria
-maestria,Educación,1742.85,maestria
-COMPRA EN SEGURO HOGAR,Vivienda,4148.09,compra en seguro hogar
-$Coursera,Educación,845.55,coursera
-compra combustible,Transporte,478.56,compra combustible
-pago con tarjeta en panaderia,Alimentación,566.1,pago con tarjeta en panaderia
-compra microondas,Vivienda,4283.92,compra microondas
-Refaccionaria,Transporte,416.06,refaccionaria
-$RTP,Transporte,325.6,rtp
-COMPRA EN NEVERIA,Alimentación,711.84,compra en neveria
-compra Libreria Gandhi,Educación,942.22,compra libreria gandhi
-pago con tarjeta en computadora,Educación,1517.79,pago con tarjeta en computadora
-CINNABON,Alimentación,103.44,cinnabon
-bodega aurrera,Alimentación,603.13,bodega aurrera
-tag pase,Transporte,187.86,tag pase
-MEDICAMENTO,Salud,359.27,medicamento
-Clinica,Salud,1024.42,clinica
-compra refrendo,Transporte,161.81,compra refrendo
-pago panaderia,Alimentación,550.51,pago panaderia
-curacion,Salud,1184.49,curacion
-*Costco*,Alimentación,81.46,costco
-Taxi,Transporte,80.11,taxi
-pago aparato ortopedico,Salud,942.63,pago aparato ortopedico
-pago Libreria Gandhi,Educación,343.38,pago libreria gandhi
-pago taqueria,Alimentación,218.46,pago taqueria
-pago con tarjeta en taqueria,Alimentación,172.76,pago con tarjeta en taqueria
-home depot,Vivienda,1046.76,home depot
-compra GNP,Salud,1004.14,compra gnp
-*analisis clinicos*,Salud,1330.98,analisis clinicos
-pago cuota de mantenimiento,Vivienda,3362.32,pago cuota de mantenimiento
-COMPRA EN CINEPOLIS,Ocio y Servicios,760.78,compra en cinepolis
-*Netflix*,Ocio y Servicios,673.35,netflix
-$Farmacias Similares,Salud,1478.54,farmacias similares
-pago Crunchyroll,Ocio y Servicios,152.55,pago crunchyroll
-musica,Educación,1653.79,musica
-COMPRA EN FARMACIAS SAN PABLO,Salud,579.34,compra en farmacias san pablo
-Pool,Ocio y Servicios,610.83,pool
-*ginecologo*,Salud,1064.44,ginecologo
-pago con tarjeta en refrigerador,Vivienda,3925.05,pago con tarjeta en refrigerador
-COMPRA EN AUTOPISTA,Transporte,138.41,compra en autopista
-compra cursos,Educación,628.01,compra cursos
-pago analisis clinicos,Salud,385.65,pago analisis clinicos
-*pesero*,Transporte,315.19,pesero
-pago con tarjeta en Autozone,Transporte,286.03,pago con tarjeta en autozone
-$cerveceria,Ocio y Servicios,841.05,cerveceria
-pago con tarjeta en gimnasio,Ocio y Servicios,960.17,pago con tarjeta en gimnasio
-TIENDITA,Alimentación,681.48,tiendita
-Lavanderia,Ocio y Servicios,168.48,lavanderia
-libros,Educación,1582.76,libros
-Tintoreria,Ocio y Servicios,679.89,tintoreria
-*bar*,Ocio y Servicios,53.06,bar
-parque de diversiones,Ocio y Servicios,222.25,parque de diversiones
-compra uniforme,Educación,1217.58,compra uniforme
-GAS LP,Vivienda,791.84,gas lp
-aeromexico,Transporte,45.35,aeromexico
-pago TotalEnergies,Transporte,309.03,pago totalenergies
-compra predial,Vivienda,3364.21,compra predial
-COMPRA EN FARMACIAS SIMILARES,Salud,567.93,compra en farmacias similares
-Masaje,Ocio y Servicios,799.18,masaje
-monterrey,Salud,271.33,monterrey
-compra tienda de conveniencia,Alimentación,116.45,compra tienda de conveniencia
-pago con tarjeta en cilindro de gas,Vivienda,4699.01,pago con tarjeta en cilindro de gas
-compra El Sotano,Educación,1311.35,compra el sotano
-$microondas,Vivienda,4960.07,microondas
-*plomeria*,Vivienda,3073.43,plomeria
-pago pizarron,Educación,414.06,pago pizarron
-$oftalmologo,Salud,482.3,oftalmologo
-CINNABON,Alimentación,755.51,cinnabon
-TREN LIGERO,Transporte,200.92,tren ligero
-compra uniforme,Educación,926.84,compra uniforme
-$OfficeMax,Educación,1299.22,officemax
-*antro*,Ocio y Servicios,521.64,antro
-pago con tarjeta en jugueria,Alimentación,55.27,pago con tarjeta en jugueria
-pago con tarjeta en deposito,Alimentación,613.53,pago con tarjeta en deposito
-Rappi,Alimentación,101.72,rappi
-$Infanavit,Vivienda,1677.68,infanavit
-COMPRA EN LABORATORIOS DEL CHOPO,Salud,1464.77,compra en laboratorios del chopo
-pago con tarjeta en Epic Games,Ocio y Servicios,787.88,pago con tarjeta en epic games
-mantenimiento,Vivienda,651.26,mantenimiento
-pago con tarjeta en seguro hogar,Vivienda,2056.64,pago con tarjeta en seguro hogar
-*Mexibus*,Transporte,61.48,mexibus
-COMPRA EN URBANO,Transporte,283.19,compra en urbano
-COMPRA EN CHATGPT,Educación,594.3,compra en chatgpt
-Didi Food,Alimentación,242.4,didi food
-Farmacias San Pablo,Salud,891.46,farmacias san pablo
-Farmacias Benavides,Salud,951.94,farmacias benavides
-compra pasteleria,Alimentación,163.44,compra pasteleria
-pago con tarjeta en Infanavit,Vivienda,4327.77,pago con tarjeta en infanavit
-COMPRA EN 7-ELEVEN,Alimentación,136.08,compra en 7 eleven
-pago con tarjeta en Mobil,Transporte,400.02,pago con tarjeta en mobil
-pago 7-Eleven,Alimentación,111.29,pago 7 eleven
-compra Planet Fitness,Ocio y Servicios,457.2,compra planet fitness
-$universidad,Educación,1714.95,universidad
-pago taxi,Transporte,433.75,pago taxi
-$termometro,Salud,506.82,termometro
-SPOTIFY,Ocio y Servicios,99.36,spotify
-*KFC*,Alimentación,704.1,kfc
-magna,Transporte,269.31,magna
-$musica,Educación,407.08,musica
-pago con tarjeta en YouTube Premium,Ocio y Servicios,582.17,pago con tarjeta en youtube premium
-compra Naturgy,Vivienda,622.25,compra naturgy
-COMPRA EN SORIANA,Alimentación,261.82,compra en soriana
-AEROMEXICO,Transporte,70.63,aeromexico
-pago con tarjeta en Totalplay,Vivienda,2288.22,pago con tarjeta en totalplay
-Ginecologo,Salud,1450.27,ginecologo
-COMPRA EN REPARACION,Vivienda,1792.12,compra en reparacion
-cuota de mantenimiento,Vivienda,1743.99,cuota de mantenimiento
-COMPRA EN TAMALES,Alimentación,440.14,compra en tamales
-$basura,Vivienda,4069.68,basura
-AXA,Salud,1356.06,axa
-$aparato ortopedico,Salud,297.0,aparato ortopedico
-COMPRA EN TIENDA DE CONVENIENCIA,Alimentación,720.49,compra en tienda de conveniencia
-Microondas,Vivienda,2481.46,microondas
-$parque de diversiones,Ocio y Servicios,864.03,parque de diversiones
-*pollo asado*,Alimentación,775.34,pollo asado
-pago colegiatura,Educación,415.31,pago colegiatura
-*Epic Games*,Ocio y Servicios,173.34,epic games
-DIPLOMADO,Educación,1102.06,diplomado
-pago tiendita,Alimentación,207.31,pago tiendita
-BOLETOS,Ocio y Servicios,228.04,boletos
-tablet,Educación,1844.6,tablet
-pago con tarjeta en lavanderia,Ocio y Servicios,497.61,pago con tarjeta en lavanderia
-pago con tarjeta en articulo de limpieza,Vivienda,2110.09,pago con tarjeta en articulo de limpieza
-MOTOTAXI,Transporte,442.31,mototaxi
-Apple Music,Ocio y Servicios,157.3,apple music
-Mexibus,Transporte,221.66,mexibus
-AUTOZONE,Transporte,236.17,autozone
-pago con tarjeta en caseta,Transporte,229.04,pago con tarjeta en caseta
-Belleza,Ocio y Servicios,815.89,belleza
-SPA,Ocio y Servicios,79.56,spa
-pago deporte,Educación,717.7,pago deporte
-*refrigerador*,Vivienda,1252.09,refrigerador
-COMPRA EN RENTA,Vivienda,827.02,compra en renta
-pago con tarjeta en hospital,Salud,401.74,pago con tarjeta en hospital
-pago con tarjeta en Office Depot,Educación,677.5,pago con tarjeta en office depot
-gimnasio,Ocio y Servicios,877.64,gimnasio
-pago Uber Eats,Alimentación,538.08,pago uber eats
-*YouTube Premium*,Ocio y Servicios,210.63,youtube premium
-$car wash,Transporte,128.83,car wash
-COMPUTADORA,Educación,884.25,computadora
-compra plaza,Ocio y Servicios,89.92,compra plaza
-$Apple Music,Ocio y Servicios,316.04,apple music
-MERCADO,Alimentación,669.53,mercado
-análisis,Salud,1474.52,analisis
-*HBO*,Ocio y Servicios,556.04,hbo
-metlife,Salud,257.61,metlife
-COMPRA EN ESTETICA,Ocio y Servicios,300.15,compra en estetica
+*supermercado*,Alimentación,647.41,supermercado
+COMPRA EN SUPERMERCADO,Alimentación,498.99,compra en supermercado
+*supermercado*,Alimentación,384.37,supermercado
+*supermercado*,Alimentación,93.56,supermercado
+COMPRA EN SUPERMERCADO,Alimentación,300.28,compra en supermercado
+COMPRA EN WALMART,Alimentación,581.05,compra en walmart
+$Walmart,Alimentación,92.31,walmart
+COMPRA EN WALMART,Alimentación,674.33,compra en walmart
+$Walmart,Alimentación,50.58,walmart
+Walmart,Alimentación,513.11,walmart
+$Soriana,Alimentación,55.3,soriana
+pago con tarjeta en Soriana,Alimentación,268.42,pago con tarjeta en soriana
+SORIANA,Alimentación,336.85,soriana
+soriana,Alimentación,494.31,soriana
+SORIANA,Alimentación,694.96,soriana
+*Chedraui*,Alimentación,177.89,chedraui
+*Chedraui*,Alimentación,59.95,chedraui
+pago con tarjeta en Chedraui,Alimentación,774.22,pago con tarjeta en chedraui
+pago Chedraui,Alimentación,339.06,pago chedraui
+Chedraui,Alimentación,223.17,chedraui
+*Bodega Aurrera*,Alimentación,507.5,bodega aurrera
+COMPRA EN BODEGA AURRERA,Alimentación,75.79,compra en bodega aurrera
+compra Bodega Aurrera,Alimentación,244.08,compra bodega aurrera
+COMPRA EN BODEGA AURRERA,Alimentación,616.52,compra en bodega aurrera
+$Bodega Aurrera,Alimentación,205.96,bodega aurrera
+comer,Alimentación,188.64,comer
+pago Comer,Alimentación,631.35,pago comer
+pago Comer,Alimentación,346.36,pago comer
+comer,Alimentación,498.42,comer
+COMPRA EN COMER,Alimentación,477.83,compra en comer
+pago con tarjeta en restaurante,Alimentación,770.88,pago con tarjeta en restaurante
+Restaurante,Alimentación,341.51,restaurante
+pago restaurante,Alimentación,454.77,pago restaurante
+COMPRA EN RESTAURANTE,Alimentación,317.56,compra en restaurante
+pago con tarjeta en restaurante,Alimentación,272.21,pago con tarjeta en restaurante
+compra tortilleria,Alimentación,61.73,compra tortilleria
+pago con tarjeta en tortilleria,Alimentación,629.18,pago con tarjeta en tortilleria
+COMPRA EN TORTILLERIA,Alimentación,54.14,compra en tortilleria
+TORTILLERIA,Alimentación,580.14,tortilleria
+TORTILLERIA,Alimentación,642.63,tortilleria
+Panaderia,Alimentación,744.73,panaderia
+pago con tarjeta en panaderia,Alimentación,736.22,pago con tarjeta en panaderia
+pago con tarjeta en panaderia,Alimentación,517.47,pago con tarjeta en panaderia
+pago panaderia,Alimentación,121.56,pago panaderia
+*panaderia*,Alimentación,283.24,panaderia
+COMPRA EN FRUTERIA,Alimentación,549.44,compra en fruteria
+COMPRA EN FRUTERIA,Alimentación,256.04,compra en fruteria
+FRUTERIA,Alimentación,404.16,fruteria
+Fruteria,Alimentación,778.78,fruteria
+FRUTERIA,Alimentación,620.59,fruteria
+*carniceria*,Alimentación,628.23,carniceria
+*carniceria*,Alimentación,80.33,carniceria
+CARNICERIA,Alimentación,73.57,carniceria
+*carniceria*,Alimentación,406.53,carniceria
+carniceria,Alimentación,730.67,carniceria
+*pollo asado*,Alimentación,503.31,pollo asado
+pollo asado,Alimentación,757.14,pollo asado
+*pollo asado*,Alimentación,267.31,pollo asado
+$pollo asado,Alimentación,710.35,pollo asado
+pago con tarjeta en pollo asado,Alimentación,129.12,pago con tarjeta en pollo asado
+quesadilla,Alimentación,719.42,quesadilla
+*quesadilla*,Alimentación,722.07,quesadilla
+*quesadilla*,Alimentación,730.12,quesadilla
+compra quesadilla,Alimentación,220.95,compra quesadilla
+pago con tarjeta en quesadilla,Alimentación,663.51,pago con tarjeta en quesadilla
+pago con tarjeta en tacos,Alimentación,278.59,pago con tarjeta en tacos
+$tacos,Alimentación,433.06,tacos
+pago con tarjeta en tacos,Alimentación,413.62,pago con tarjeta en tacos
+compra tacos,Alimentación,139.9,compra tacos
+COMPRA EN TACOS,Alimentación,757.18,compra en tacos
+$mariscos,Alimentación,214.07,mariscos
+COMPRA EN MARISCOS,Alimentación,577.26,compra en mariscos
+compra mariscos,Alimentación,98.67,compra mariscos
+mariscos,Alimentación,235.16,mariscos
+*mariscos*,Alimentación,422.94,mariscos
+compra OXXO,Alimentación,161.07,compra oxxo
+COMPRA EN OXXO,Alimentación,77.67,compra en oxxo
+compra OXXO,Alimentación,782.46,compra oxxo
+$OXXO,Alimentación,74.79,oxxo
+compra OXXO,Alimentación,525.76,compra oxxo
+pago 7-Eleven,Alimentación,448.2,pago 7 eleven
+$7-Eleven,Alimentación,231.54,7 eleven
+7-eleven,Alimentación,110.64,7 eleven
+COMPRA EN 7-ELEVEN,Alimentación,228.23,compra en 7 eleven
+$7-Eleven,Alimentación,325.84,7 eleven
+abarrotes,Alimentación,787.57,abarrotes
+$abarrotes,Alimentación,451.83,abarrotes
+compra abarrotes,Alimentación,163.04,compra abarrotes
+$abarrotes,Alimentación,571.86,abarrotes
+ABARROTES,Alimentación,493.17,abarrotes
+mercado,Alimentación,62.44,mercado
+MERCADO,Alimentación,657.13,mercado
+mercado,Alimentación,533.88,mercado
+mercado,Alimentación,755.39,mercado
+COMPRA EN MERCADO,Alimentación,340.05,compra en mercado
+pago tiendita,Alimentación,678.28,pago tiendita
+pago con tarjeta en tiendita,Alimentación,135.11,pago con tarjeta en tiendita
+*tiendita*,Alimentación,456.09,tiendita
+TIENDITA,Alimentación,221.41,tiendita
+pago con tarjeta en tiendita,Alimentación,437.48,pago con tarjeta en tiendita
+compra comida corrida,Alimentación,231.39,compra comida corrida
+Comida Corrida,Alimentación,725.31,comida corrida
+*comida corrida*,Alimentación,304.27,comida corrida
+COMIDA CORRIDA,Alimentación,575.27,comida corrida
+COMIDA CORRIDA,Alimentación,692.24,comida corrida
+$loncheria,Alimentación,634.91,loncheria
+COMPRA EN LONCHERIA,Alimentación,688.2,compra en loncheria
+compra loncheria,Alimentación,171.22,compra loncheria
+$loncheria,Alimentación,551.74,loncheria
+LONCHERIA,Alimentación,329.21,loncheria
+pago con tarjeta en neveria,Alimentación,547.63,pago con tarjeta en neveria
+pago neveria,Alimentación,170.61,pago neveria
+pago neveria,Alimentación,414.21,pago neveria
+NEVERIA,Alimentación,538.97,neveria
+pago con tarjeta en neveria,Alimentación,181.94,pago con tarjeta en neveria
+jugueria,Alimentación,227.94,jugueria
+Jugueria,Alimentación,184.12,jugueria
+COMPRA EN JUGUERIA,Alimentación,537.22,compra en jugueria
+*jugueria*,Alimentación,590.7,jugueria
+compra jugueria,Alimentación,456.91,compra jugueria
+COSTCO,Alimentación,527.25,costco
+$Costco,Alimentación,232.99,costco
+$Costco,Alimentación,784.17,costco
+COSTCO,Alimentación,719.03,costco
+pago Costco,Alimentación,312.56,pago costco
+compra Sams Club,Alimentación,482.68,compra sams club
+compra Sams Club,Alimentación,196.43,compra sams club
+SAMS CLUB,Alimentación,479.0,sams club
+compra Sams Club,Alimentación,82.7,compra sams club
+Sams Club,Alimentación,712.62,sams club
+pago con tarjeta en City Market,Alimentación,764.8,pago con tarjeta en city market
+compra City Market,Alimentación,464.57,compra city market
+CITY MARKET,Alimentación,785.25,city market
+city market,Alimentación,270.84,city market
+City Market,Alimentación,193.18,city market
+compra Fresko,Alimentación,287.69,compra fresko
+pago Fresko,Alimentación,467.6,pago fresko
+$Fresko,Alimentación,572.02,fresko
+COMPRA EN FRESKO,Alimentación,102.81,compra en fresko
+pago Fresko,Alimentación,511.26,pago fresko
+$Starbucks,Alimentación,318.99,starbucks
+pago Starbucks,Alimentación,291.91,pago starbucks
+COMPRA EN STARBUCKS,Alimentación,572.76,compra en starbucks
+$Starbucks,Alimentación,319.62,starbucks
+*Starbucks*,Alimentación,364.84,starbucks
+pago McDonalds,Alimentación,700.3,pago mcdonalds
+*McDonalds*,Alimentación,426.14,mcdonalds
+mcdonalds,Alimentación,537.47,mcdonalds
+MCDONALDS,Alimentación,303.5,mcdonalds
+pago McDonalds,Alimentación,120.49,pago mcdonalds
+*Burger King*,Alimentación,554.02,burger king
+BURGER KING,Alimentación,399.2,burger king
+$Burger King,Alimentación,493.12,burger king
+$Burger King,Alimentación,237.69,burger king
+$Burger King,Alimentación,277.45,burger king
+Kfc,Alimentación,441.68,kfc
+Kfc,Alimentación,253.66,kfc
+Kfc,Alimentación,392.95,kfc
+$KFC,Alimentación,88.76,kfc
+kfc,Alimentación,358.52,kfc
+DOMINO'S,Alimentación,528.07,domino s
+domino's,Alimentación,149.56,domino s
+pago Domino's,Alimentación,437.23,pago domino s
+DOMINO'S,Alimentación,646.39,domino s
+DOMINO'S,Alimentación,379.23,domino s
+*Little Caesars*,Alimentación,238.15,little caesars
+Little Caesars,Alimentación,110.65,little caesars
+pago con tarjeta en Little Caesars,Alimentación,566.37,pago con tarjeta en little caesars
+compra Little Caesars,Alimentación,179.97,compra little caesars
+compra Little Caesars,Alimentación,381.76,compra little caesars
+$Uber Eats,Alimentación,585.95,uber eats
+COMPRA EN UBER EATS,Alimentación,750.96,compra en uber eats
+compra Uber Eats,Alimentación,766.15,compra uber eats
+*Uber Eats*,Alimentación,542.83,uber eats
+Uber Eats,Alimentación,508.79,uber eats
+*Rappi*,Alimentación,85.79,rappi
+RAPPI,Alimentación,618.38,rappi
+pago con tarjeta en Rappi,Alimentación,306.41,pago con tarjeta en rappi
+Rappi,Alimentación,120.62,rappi
+rappi,Alimentación,181.5,rappi
+Didi Food,Alimentación,405.1,didi food
+compra Didi Food,Alimentación,398.51,compra didi food
+Didi Food,Alimentación,348.88,didi food
+$Didi Food,Alimentación,526.32,didi food
+pago Didi Food,Alimentación,245.67,pago didi food
+PIZZERIA,Alimentación,427.35,pizzeria
+compra pizzeria,Alimentación,454.53,compra pizzeria
+pizzeria,Alimentación,511.89,pizzeria
+*pizzeria*,Alimentación,758.19,pizzeria
+pizzeria,Alimentación,481.61,pizzeria
+pago cafeteria,Alimentación,480.03,pago cafeteria
+compra cafeteria,Alimentación,393.69,compra cafeteria
+CAFETERIA,Alimentación,665.48,cafeteria
+CAFETERIA,Alimentación,665.32,cafeteria
+COMPRA EN CAFETERIA,Alimentación,729.01,compra en cafeteria
+pago taqueria,Alimentación,79.22,pago taqueria
+pago taqueria,Alimentación,562.26,pago taqueria
+compra taqueria,Alimentación,541.79,compra taqueria
+pago taqueria,Alimentación,245.52,pago taqueria
+*taqueria*,Alimentación,138.62,taqueria
+Pasteleria,Alimentación,311.25,pasteleria
+COMPRA EN PASTELERIA,Alimentación,601.3,compra en pasteleria
+Pasteleria,Alimentación,775.69,pasteleria
+pasteleria,Alimentación,183.08,pasteleria
+pago con tarjeta en pasteleria,Alimentación,476.39,pago con tarjeta en pasteleria
+POLLO FELIZ,Alimentación,792.88,pollo feliz
+pollo feliz,Alimentación,329.01,pollo feliz
+*Pollo Feliz*,Alimentación,485.41,pollo feliz
+*Pollo Feliz*,Alimentación,748.07,pollo feliz
+Pollo Feliz,Alimentación,228.95,pollo feliz
+*El Globo*,Alimentación,613.15,el globo
+pago con tarjeta en El Globo,Alimentación,228.68,pago con tarjeta en el globo
+compra El Globo,Alimentación,450.75,compra el globo
+el globo,Alimentación,669.84,el globo
+$El Globo,Alimentación,273.23,el globo
+NUTRISA,Alimentación,341.9,nutrisa
+pago con tarjeta en Nutrisa,Alimentación,685.36,pago con tarjeta en nutrisa
+pago con tarjeta en Nutrisa,Alimentación,289.49,pago con tarjeta en nutrisa
+nutrisa,Alimentación,480.08,nutrisa
+Nutrisa,Alimentación,118.78,nutrisa
+pago con tarjeta en Cinnabon,Alimentación,465.28,pago con tarjeta en cinnabon
+Cinnabon,Alimentación,614.28,cinnabon
+*Cinnabon*,Alimentación,635.97,cinnabon
+*Cinnabon*,Alimentación,118.4,cinnabon
+*Cinnabon*,Alimentación,796.95,cinnabon
+Krispy Kreme,Alimentación,602.78,krispy kreme
+pago Krispy Kreme,Alimentación,776.49,pago krispy kreme
+pago con tarjeta en Krispy Kreme,Alimentación,621.13,pago con tarjeta en krispy kreme
+compra Krispy Kreme,Alimentación,125.84,compra krispy kreme
+*Krispy Kreme*,Alimentación,369.57,krispy kreme
+COMPRA EN TAMALES,Alimentación,104.57,compra en tamales
+pago tamales,Alimentación,718.92,pago tamales
+pago tamales,Alimentación,111.01,pago tamales
+Tamales,Alimentación,224.92,tamales
+COMPRA EN TAMALES,Alimentación,330.7,compra en tamales
+compra carnitas,Alimentación,710.27,compra carnitas
+compra carnitas,Alimentación,760.44,compra carnitas
+pago con tarjeta en carnitas,Alimentación,493.92,pago con tarjeta en carnitas
+carnitas,Alimentación,332.19,carnitas
+CARNITAS,Alimentación,632.86,carnitas
+$pasticceria,Alimentación,578.81,pasticceria
+PASTICCERIA,Alimentación,133.4,pasticceria
+PASTICCERIA,Alimentación,240.26,pasticceria
+pago pasticceria,Alimentación,401.5,pago pasticceria
+pasticceria,Alimentación,139.11,pasticceria
+pago con tarjeta en alitas,Alimentación,608.16,pago con tarjeta en alitas
+ALITAS,Alimentación,487.53,alitas
+pago con tarjeta en alitas,Alimentación,331.15,pago con tarjeta en alitas
+compra alitas,Alimentación,112.17,compra alitas
+compra alitas,Alimentación,217.7,compra alitas
+$sushi,Alimentación,651.58,sushi
+Sushi,Alimentación,82.55,sushi
+Sushi,Alimentación,794.72,sushi
+Sushi,Alimentación,239.74,sushi
+SUSHI,Alimentación,776.98,sushi
+pago buffet,Alimentación,174.66,pago buffet
+compra buffet,Alimentación,571.81,compra buffet
+compra buffet,Alimentación,520.67,compra buffet
+$buffet,Alimentación,338.15,buffet
+*buffet*,Alimentación,84.08,buffet
+COMPRA EN MISCELANEA,Alimentación,345.89,compra en miscelanea
+COMPRA EN MISCELANEA,Alimentación,515.1,compra en miscelanea
+COMPRA EN MISCELANEA,Alimentación,177.26,compra en miscelanea
+miscelanea,Alimentación,397.77,miscelanea
+pago miscelanea,Alimentación,249.45,pago miscelanea
+Deposito,Alimentación,780.8,deposito
+$deposito,Alimentación,74.24,deposito
+pago con tarjeta en deposito,Alimentación,282.15,pago con tarjeta en deposito
+deposito,Alimentación,502.09,deposito
+DEPOSITO,Alimentación,666.9,deposito
+pago tienda de conveniencia,Alimentación,362.48,pago tienda de conveniencia
+Tienda De Conveniencia,Alimentación,510.06,tienda de conveniencia
+pago tienda de conveniencia,Alimentación,112.06,pago tienda de conveniencia
+pago tienda de conveniencia,Alimentación,463.69,pago tienda de conveniencia
+Tienda De Conveniencia,Alimentación,69.78,tienda de conveniencia
+compra Uber,Transporte,393.25,compra uber
+pago Uber,Transporte,493.89,pago uber
+compra Uber,Transporte,200.83,compra uber
+pago con tarjeta en Uber,Transporte,485.56,pago con tarjeta en uber
+compra Uber,Transporte,422.4,compra uber
+pago Did,Transporte,37.67,pago did
+compra Did,Transporte,26.56,compra did
+*Did*,Transporte,435.07,did
+compra Did,Transporte,276.49,compra did
+Did,Transporte,498.39,did
+Gasolina,Transporte,300.87,gasolina
+Gasolina,Transporte,473.49,gasolina
+GASOLINA,Transporte,138.73,gasolina
+pago con tarjeta en gasolina,Transporte,82.0,pago con tarjeta en gasolina
+GASOLINA,Transporte,151.87,gasolina
+magna,Transporte,129.75,magna
+compra Magna,Transporte,383.36,compra magna
+pago Magna,Transporte,191.92,pago magna
+COMPRA EN MAGNA,Transporte,30.65,compra en magna
+pago Magna,Transporte,248.58,pago magna
+PREMIUM,Transporte,269.68,premium
+compra Premium,Transporte,284.92,compra premium
+Premium,Transporte,62.44,premium
+pago con tarjeta en Premium,Transporte,303.18,pago con tarjeta en premium
+*Premium*,Transporte,382.47,premium
+Diesel,Transporte,326.89,diesel
+DIESEL,Transporte,453.51,diesel
+pago Diesel,Transporte,188.28,pago diesel
+pago Diesel,Transporte,325.59,pago diesel
+DIESEL,Transporte,454.0,diesel
+metrobus,Transporte,282.77,metrobus
+compra Metrobus,Transporte,396.15,compra metrobus
+*Metrobus*,Transporte,271.33,metrobus
+compra Metrobus,Transporte,475.77,compra metrobus
+metrobus,Transporte,240.49,metrobus
+compra RTP,Transporte,256.22,compra rtp
+rtp,Transporte,240.39,rtp
+pago RTP,Transporte,317.99,pago rtp
+pago RTP,Transporte,177.8,pago rtp
+RTP,Transporte,277.89,rtp
+*ECOBICI*,Transporte,81.46,ecobici
+$ECOBICI,Transporte,354.88,ecobici
+ecobici,Transporte,107.3,ecobici
+COMPRA EN ECOBICI,Transporte,217.6,compra en ecobici
+ECOBICI,Transporte,267.31,ecobici
+pago taxi,Transporte,308.93,pago taxi
+TAXI,Transporte,39.62,taxi
+Taxi,Transporte,185.64,taxi
+$taxi,Transporte,62.58,taxi
+compra taxi,Transporte,276.52,compra taxi
+pago caseta,Transporte,81.8,pago caseta
+pago con tarjeta en caseta,Transporte,64.3,pago con tarjeta en caseta
+pago con tarjeta en caseta,Transporte,350.14,pago con tarjeta en caseta
+COMPRA EN CASETA,Transporte,439.32,compra en caseta
+compra caseta,Transporte,152.9,compra caseta
+compra peaje,Transporte,60.57,compra peaje
+PEAJE,Transporte,108.57,peaje
+COMPRA EN PEAJE,Transporte,252.57,compra en peaje
+*peaje*,Transporte,275.01,peaje
+pago peaje,Transporte,378.79,pago peaje
+COMPRA EN COMBUSTIBLE,Transporte,83.9,compra en combustible
+COMBUSTIBLE,Transporte,449.7,combustible
+pago combustible,Transporte,234.76,pago combustible
+COMBUSTIBLE,Transporte,210.64,combustible
+pago con tarjeta en combustible,Transporte,373.95,pago con tarjeta en combustible
+*estacionamiento*,Transporte,174.6,estacionamiento
+*estacionamiento*,Transporte,62.82,estacionamiento
+pago con tarjeta en estacionamiento,Transporte,447.45,pago con tarjeta en estacionamiento
+estacionamiento,Transporte,247.51,estacionamiento
+ESTACIONAMIENTO,Transporte,331.43,estacionamiento
+pago valet parking,Transporte,61.72,pago valet parking
+$valet parking,Transporte,301.68,valet parking
+COMPRA EN VALET PARKING,Transporte,301.54,compra en valet parking
+VALET PARKING,Transporte,201.81,valet parking
+Valet Parking,Transporte,194.28,valet parking
+pago autopista,Transporte,137.29,pago autopista
+$autopista,Transporte,310.77,autopista
+compra autopista,Transporte,23.62,compra autopista
+Autopista,Transporte,93.37,autopista
+*autopista*,Transporte,254.15,autopista
+COMPRA EN TREN SUBURBANO,Transporte,450.45,compra en tren suburbano
+*Tren Suburbano*,Transporte,44.79,tren suburbano
+COMPRA EN TREN SUBURBANO,Transporte,354.54,compra en tren suburbano
+COMPRA EN TREN SUBURBANO,Transporte,73.78,compra en tren suburbano
+pago Tren Suburbano,Transporte,296.48,pago tren suburbano
+metro,Transporte,22.54,metro
+$metro,Transporte,143.79,metro
+COMPRA EN METRO,Transporte,366.99,compra en metro
+pago con tarjeta en metro,Transporte,364.86,pago con tarjeta en metro
+COMPRA EN METRO,Transporte,248.78,compra en metro
+Camion,Transporte,109.78,camion
+$camion,Transporte,361.26,camion
+camion,Transporte,263.65,camion
+compra camion,Transporte,274.32,compra camion
+compra camion,Transporte,313.1,compra camion
+$combi,Transporte,298.99,combi
+combi,Transporte,173.91,combi
+COMBI,Transporte,44.88,combi
+pago combi,Transporte,238.05,pago combi
+Combi,Transporte,50.42,combi
+pago pesero,Transporte,174.73,pago pesero
+pago pesero,Transporte,62.18,pago pesero
+Pesero,Transporte,21.3,pesero
+pago con tarjeta en pesero,Transporte,305.91,pago con tarjeta en pesero
+COMPRA EN PESERO,Transporte,310.93,compra en pesero
+MOTOTAXI,Transporte,187.46,mototaxi
+compra mototaxi,Transporte,428.35,compra mototaxi
+pago mototaxi,Transporte,79.66,pago mototaxi
+COMPRA EN MOTOTAXI,Transporte,495.65,compra en mototaxi
+pago mototaxi,Transporte,106.99,pago mototaxi
+CABIFY,Transporte,464.7,cabify
+$Cabify,Transporte,43.09,cabify
+COMPRA EN CABIFY,Transporte,417.41,compra en cabify
+Cabify,Transporte,116.78,cabify
+CABIFY,Transporte,98.85,cabify
+Indrive,Transporte,133.13,indrive
+indrive,Transporte,171.77,indrive
+pago con tarjeta en Indrive,Transporte,347.83,pago con tarjeta en indrive
+COMPRA EN INDRIVE,Transporte,230.78,compra en indrive
+INDRIVE,Transporte,319.57,indrive
+compra Pemex,Transporte,378.85,compra pemex
+compra Pemex,Transporte,131.46,compra pemex
+compra Pemex,Transporte,207.91,compra pemex
+pago Pemex,Transporte,280.91,pago pemex
+COMPRA EN PEMEX,Transporte,129.93,compra en pemex
+*BP*,Transporte,76.11,bp
+$BP,Transporte,179.75,bp
+BP,Transporte,180.75,bp
+bp,Transporte,401.13,bp
+compra BP,Transporte,276.06,compra bp
+*Shell*,Transporte,295.11,shell
+$Shell,Transporte,381.15,shell
+Shell,Transporte,393.71,shell
+compra Shell,Transporte,36.1,compra shell
+$Shell,Transporte,362.75,shell
+Mobil,Transporte,440.85,mobil
+compra Mobil,Transporte,69.4,compra mobil
+mobil,Transporte,239.36,mobil
+mobil,Transporte,210.7,mobil
+COMPRA EN MOBIL,Transporte,91.96,compra en mobil
+g500,Transporte,366.68,g500
+pago G500,Transporte,25.86,pago g500
+G500,Transporte,353.1,g500
+g500,Transporte,363.77,g500
+G500,Transporte,416.86,g500
+COMPRA EN TOTALENERGIES,Transporte,300.03,compra en totalenergies
+COMPRA EN TOTALENERGIES,Transporte,223.33,compra en totalenergies
+COMPRA EN TOTALENERGIES,Transporte,262.83,compra en totalenergies
+pago con tarjeta en TotalEnergies,Transporte,142.89,pago con tarjeta en totalenergies
+COMPRA EN TOTALENERGIES,Transporte,438.62,compra en totalenergies
+tag pase,Transporte,461.0,tag pase
+Tag Pase,Transporte,462.8,tag pase
+COMPRA EN TAG PASE,Transporte,332.66,compra en tag pase
+compra TAG Pase,Transporte,296.62,compra tag pase
+pago con tarjeta en TAG Pase,Transporte,223.58,pago con tarjeta en tag pase
+COMPRA EN URBANO,Transporte,423.41,compra en urbano
+*Urbano*,Transporte,78.95,urbano
+Urbano,Transporte,492.72,urbano
+urbano,Transporte,79.84,urbano
+pago con tarjeta en Urbano,Transporte,179.43,pago con tarjeta en urbano
+$Mexibus,Transporte,269.04,mexibus
+COMPRA EN MEXIBUS,Transporte,311.79,compra en mexibus
+pago con tarjeta en Mexibus,Transporte,377.24,pago con tarjeta en mexibus
+mexibus,Transporte,398.14,mexibus
+pago con tarjeta en Mexibus,Transporte,74.85,pago con tarjeta en mexibus
+cablebus,Transporte,277.95,cablebus
+$Cablebus,Transporte,186.25,cablebus
+pago Cablebus,Transporte,250.8,pago cablebus
+compra Cablebus,Transporte,301.79,compra cablebus
+CABLEBUS,Transporte,139.15,cablebus
+pago con tarjeta en Tren Ligero,Transporte,259.22,pago con tarjeta en tren ligero
+$Tren Ligero,Transporte,36.26,tren ligero
+compra Tren Ligero,Transporte,193.95,compra tren ligero
+$Tren Ligero,Transporte,125.65,tren ligero
+pago Tren Ligero,Transporte,338.5,pago tren ligero
+*verificacion*,Transporte,488.26,verificacion
+pago con tarjeta en verificacion,Transporte,91.36,pago con tarjeta en verificacion
+$verificacion,Transporte,433.1,verificacion
+COMPRA EN VERIFICACION,Transporte,261.05,compra en verificacion
+compra verificacion,Transporte,168.77,compra verificacion
+*tenencia*,Transporte,224.86,tenencia
+COMPRA EN TENENCIA,Transporte,451.07,compra en tenencia
+compra tenencia,Transporte,37.54,compra tenencia
+COMPRA EN TENENCIA,Transporte,301.98,compra en tenencia
+compra tenencia,Transporte,392.25,compra tenencia
+pago refrendo,Transporte,271.71,pago refrendo
+compra refrendo,Transporte,212.37,compra refrendo
+$refrendo,Transporte,387.37,refrendo
+refrendo,Transporte,107.33,refrendo
+*refrendo*,Transporte,474.14,refrendo
+TALLER MECANICO,Transporte,329.12,taller mecanico
+compra taller mecanico,Transporte,32.19,compra taller mecanico
+pago taller mecanico,Transporte,436.16,pago taller mecanico
+COMPRA EN TALLER MECANICO,Transporte,33.01,compra en taller mecanico
+*taller mecanico*,Transporte,141.87,taller mecanico
+*refaccionaria*,Transporte,342.51,refaccionaria
+COMPRA EN REFACCIONARIA,Transporte,69.97,compra en refaccionaria
+Refaccionaria,Transporte,105.7,refaccionaria
+compra refaccionaria,Transporte,287.23,compra refaccionaria
+COMPRA EN REFACCIONARIA,Transporte,67.73,compra en refaccionaria
+COMPRA EN AUTOZONE,Transporte,366.69,compra en autozone
+COMPRA EN AUTOZONE,Transporte,407.29,compra en autozone
+autozone,Transporte,473.32,autozone
+$Autozone,Transporte,118.39,autozone
+*Autozone*,Transporte,450.24,autozone
+*llanteria*,Transporte,323.96,llanteria
+compra llanteria,Transporte,119.79,compra llanteria
+LLANTERIA,Transporte,78.93,llanteria
+LLANTERIA,Transporte,299.86,llanteria
+pago llanteria,Transporte,448.48,pago llanteria
+Vulcanizadora,Transporte,184.07,vulcanizadora
+pago vulcanizadora,Transporte,194.27,pago vulcanizadora
+*vulcanizadora*,Transporte,148.67,vulcanizadora
+Vulcanizadora,Transporte,185.69,vulcanizadora
+pago con tarjeta en vulcanizadora,Transporte,229.34,pago con tarjeta en vulcanizadora
+ALINEACION Y BALANCEO,Transporte,475.26,alineacion y balanceo
+$alineacion y balanceo,Transporte,394.28,alineacion y balanceo
+compra alineacion y balanceo,Transporte,436.86,compra alineacion y balanceo
+COMPRA EN ALINEACION Y BALANCEO,Transporte,492.98,compra en alineacion y balanceo
+*alineacion y balanceo*,Transporte,403.93,alineacion y balanceo
+compra autolavado,Transporte,252.69,compra autolavado
+compra autolavado,Transporte,148.97,compra autolavado
+COMPRA EN AUTOLAVADO,Transporte,355.45,compra en autolavado
+pago con tarjeta en autolavado,Transporte,143.79,pago con tarjeta en autolavado
+$autolavado,Transporte,329.63,autolavado
+car wash,Transporte,83.49,car wash
+pago car wash,Transporte,150.71,pago car wash
+$car wash,Transporte,458.86,car wash
+Car Wash,Transporte,411.23,car wash
+pago con tarjeta en car wash,Transporte,151.55,pago con tarjeta en car wash
+compra boletos de autobus,Transporte,214.52,compra boletos de autobus
+$boletos de autobus,Transporte,418.28,boletos de autobus
+*boletos de autobus*,Transporte,71.16,boletos de autobus
+$boletos de autobus,Transporte,85.71,boletos de autobus
+pago con tarjeta en boletos de autobus,Transporte,147.92,pago con tarjeta en boletos de autobus
+COMPRA EN ADO,Transporte,140.35,compra en ado
+pago con tarjeta en ADO,Transporte,257.25,pago con tarjeta en ado
+compra ADO,Transporte,221.01,compra ado
+pago ADO,Transporte,99.82,pago ado
+compra ADO,Transporte,59.74,compra ado
+etn,Transporte,390.07,etn
+Etn,Transporte,421.8,etn
+etn,Transporte,365.14,etn
+*ETN*,Transporte,312.99,etn
+$ETN,Transporte,248.5,etn
+COMPRA EN PRIMERA PLUS,Transporte,469.68,compra en primera plus
+Primera Plus,Transporte,252.2,primera plus
+primera plus,Transporte,279.12,primera plus
+PRIMERA PLUS,Transporte,305.64,primera plus
+compra Primera Plus,Transporte,258.26,compra primera plus
+pago vuelo,Transporte,319.2,pago vuelo
+pago vuelo,Transporte,71.17,pago vuelo
+pago con tarjeta en vuelo,Transporte,188.74,pago con tarjeta en vuelo
+compra vuelo,Transporte,257.84,compra vuelo
+COMPRA EN VUELO,Transporte,228.72,compra en vuelo
+*Aeromexico*,Transporte,56.45,aeromexico
+pago Aeromexico,Transporte,403.72,pago aeromexico
+AEROMEXICO,Transporte,150.63,aeromexico
+pago Aeromexico,Transporte,69.48,pago aeromexico
+Aeromexico,Transporte,63.96,aeromexico
+compra Volaris,Transporte,85.67,compra volaris
+pago con tarjeta en Volaris,Transporte,234.08,pago con tarjeta en volaris
+COMPRA EN VOLARIS,Transporte,384.03,compra en volaris
+Volaris,Transporte,384.34,volaris
+Volaris,Transporte,352.29,volaris
+$VivaAerobus,Transporte,490.68,vivaaerobus
+pago VivaAerobus,Transporte,254.92,pago vivaaerobus
+pago con tarjeta en VivaAerobus,Transporte,473.15,pago con tarjeta en vivaaerobus
+*VivaAerobus*,Transporte,499.69,vivaaerobus
+Vivaaerobus,Transporte,247.14,vivaaerobus
+*farmacia*,Salud,147.52,farmacia
+Farmacia,Salud,1123.43,farmacia
+FARMACIA,Salud,1394.15,farmacia
+pago farmacia,Salud,690.47,pago farmacia
+pago farmacia,Salud,1143.09,pago farmacia
+doctor,Salud,1282.37,doctor
+pago doctor,Salud,831.41,pago doctor
+*doctor*,Salud,151.81,doctor
+COMPRA EN DOCTOR,Salud,422.01,compra en doctor
+pago doctor,Salud,1339.0,pago doctor
+COMPRA EN DENTISTA,Salud,717.45,compra en dentista
+*dentista*,Salud,191.5,dentista
+COMPRA EN DENTISTA,Salud,855.29,compra en dentista
+$dentista,Salud,546.25,dentista
+pago dentista,Salud,828.24,pago dentista
+pago hospital,Salud,134.16,pago hospital
+pago hospital,Salud,129.78,pago hospital
+*hospital*,Salud,359.66,hospital
+pago hospital,Salud,1414.69,pago hospital
+HOSPITAL,Salud,198.04,hospital
+clinica,Salud,173.76,clinica
+compra clinica,Salud,662.7,compra clinica
+Clinica,Salud,771.69,clinica
+COMPRA EN CLINICA,Salud,480.36,compra en clinica
+pago con tarjeta en clinica,Salud,1175.58,pago con tarjeta en clinica
+pago con tarjeta en seguro,Salud,570.92,pago con tarjeta en seguro
+seguro,Salud,1132.62,seguro
+compra seguro,Salud,254.66,compra seguro
+COMPRA EN SEGURO,Salud,502.13,compra en seguro
+seguro,Salud,1101.77,seguro
+Medicamento,Salud,158.93,medicamento
+compra medicamento,Salud,1374.47,compra medicamento
+pago con tarjeta en medicamento,Salud,253.25,pago con tarjeta en medicamento
+pago con tarjeta en medicamento,Salud,1051.51,pago con tarjeta en medicamento
+Medicamento,Salud,1200.88,medicamento
+$receta,Salud,1475.26,receta
+COMPRA EN RECETA,Salud,754.36,compra en receta
+pago receta,Salud,333.85,pago receta
+receta,Salud,190.98,receta
+COMPRA EN RECETA,Salud,1419.82,compra en receta
+$análisis,Salud,950.83,analisis
+pago análisis,Salud,637.73,pago analisis
+pago con tarjeta en análisis,Salud,361.01,pago con tarjeta en analisis
+ANÁLISIS,Salud,1256.69,analisis
+Análisis,Salud,180.98,analisis
+*rayos x*,Salud,1337.3,rayos x
+RAYOS X,Salud,936.18,rayos x
+compra rayos x,Salud,343.45,compra rayos x
+RAYOS X,Salud,1161.53,rayos x
+compra rayos x,Salud,315.45,compra rayos x
+VACUNA,Salud,414.22,vacuna
+COMPRA EN VACUNA,Salud,1147.02,compra en vacuna
+pago con tarjeta en vacuna,Salud,930.12,pago con tarjeta en vacuna
+Vacuna,Salud,228.08,vacuna
+pago con tarjeta en vacuna,Salud,647.64,pago con tarjeta en vacuna
+pago con tarjeta en psicologo,Salud,162.13,pago con tarjeta en psicologo
+pago psicologo,Salud,1306.98,pago psicologo
+pago con tarjeta en psicologo,Salud,560.67,pago con tarjeta en psicologo
+pago con tarjeta en psicologo,Salud,871.2,pago con tarjeta en psicologo
+pago psicologo,Salud,671.83,pago psicologo
+$nutriologo,Salud,463.66,nutriologo
+Nutriologo,Salud,168.3,nutriologo
+pago nutriologo,Salud,213.46,pago nutriologo
+Nutriologo,Salud,1488.07,nutriologo
+pago nutriologo,Salud,793.21,pago nutriologo
+FISIOTERAPIA,Salud,1254.55,fisioterapia
+COMPRA EN FISIOTERAPIA,Salud,1026.96,compra en fisioterapia
+COMPRA EN FISIOTERAPIA,Salud,892.02,compra en fisioterapia
+compra fisioterapia,Salud,1330.08,compra fisioterapia
+FISIOTERAPIA,Salud,1315.43,fisioterapia
+compra optometria,Salud,320.28,compra optometria
+pago con tarjeta en optometria,Salud,567.61,pago con tarjeta en optometria
+pago con tarjeta en optometria,Salud,1402.13,pago con tarjeta en optometria
+optometria,Salud,966.06,optometria
+$optometria,Salud,364.91,optometria
+Audiologia,Salud,1333.22,audiologia
+pago con tarjeta en audiologia,Salud,140.95,pago con tarjeta en audiologia
+*audiologia*,Salud,107.2,audiologia
+Audiologia,Salud,1140.91,audiologia
+pago audiologia,Salud,1245.15,pago audiologia
+*cardiologia*,Salud,370.39,cardiologia
+compra cardiologia,Salud,883.78,compra cardiologia
+COMPRA EN CARDIOLOGIA,Salud,463.73,compra en cardiologia
+COMPRA EN CARDIOLOGIA,Salud,1246.15,compra en cardiologia
+$cardiologia,Salud,496.68,cardiologia
+*pediatra*,Salud,857.77,pediatra
+pago pediatra,Salud,578.62,pago pediatra
+Pediatra,Salud,243.51,pediatra
+pediatra,Salud,343.25,pediatra
+pediatra,Salud,194.97,pediatra
+compra ginecologo,Salud,1179.38,compra ginecologo
+compra ginecologo,Salud,915.04,compra ginecologo
+compra ginecologo,Salud,181.09,compra ginecologo
+COMPRA EN GINECOLOGO,Salud,164.04,compra en ginecologo
+pago ginecologo,Salud,1486.21,pago ginecologo
+traumatologo,Salud,1006.6,traumatologo
+traumatologo,Salud,1161.57,traumatologo
+*traumatologo*,Salud,191.88,traumatologo
+compra traumatologo,Salud,553.05,compra traumatologo
+TRAUMATOLOGO,Salud,453.51,traumatologo
+*Farmacias del Ahorro*,Salud,724.26,farmacias del ahorro
+pago Farmacias del Ahorro,Salud,1495.97,pago farmacias del ahorro
+compra Farmacias del Ahorro,Salud,243.07,compra farmacias del ahorro
+pago con tarjeta en Farmacias del Ahorro,Salud,329.07,pago con tarjeta en farmacias del ahorro
+*Farmacias del Ahorro*,Salud,1256.29,farmacias del ahorro
+farmacias similares,Salud,1275.93,farmacias similares
+farmacias similares,Salud,1016.32,farmacias similares
+FARMACIAS SIMILARES,Salud,1431.21,farmacias similares
+COMPRA EN FARMACIAS SIMILARES,Salud,705.27,compra en farmacias similares
+Farmacias Similares,Salud,1373.33,farmacias similares
+Farmacias San Pablo,Salud,993.94,farmacias san pablo
+$Farmacias San Pablo,Salud,1164.13,farmacias san pablo
+Farmacias San Pablo,Salud,1477.57,farmacias san pablo
+compra Farmacias San Pablo,Salud,549.04,compra farmacias san pablo
+$Farmacias San Pablo,Salud,421.94,farmacias san pablo
+FARMACIAS GUADALAJARA,Salud,143.59,farmacias guadalajara
+pago con tarjeta en Farmacias Guadalajara,Salud,1100.89,pago con tarjeta en farmacias guadalajara
+pago Farmacias Guadalajara,Salud,1310.1,pago farmacias guadalajara
+COMPRA EN FARMACIAS GUADALAJARA,Salud,322.94,compra en farmacias guadalajara
+pago con tarjeta en Farmacias Guadalajara,Salud,1316.07,pago con tarjeta en farmacias guadalajara
+Farmacias Benavides,Salud,315.12,farmacias benavides
+pago Farmacias Benavides,Salud,1165.43,pago farmacias benavides
+FARMACIAS BENAVIDES,Salud,1215.52,farmacias benavides
+Farmacias Benavides,Salud,1376.57,farmacias benavides
+FARMACIAS BENAVIDES,Salud,359.64,farmacias benavides
+pago con tarjeta en Laboratorios Chopo,Salud,101.72,pago con tarjeta en laboratorios chopo
+*Laboratorios Chopo*,Salud,275.26,laboratorios chopo
+laboratorios chopo,Salud,702.43,laboratorios chopo
+$Laboratorios Chopo,Salud,415.76,laboratorios chopo
+$Laboratorios Chopo,Salud,914.76,laboratorios chopo
+Salud Digna,Salud,926.37,salud digna
+COMPRA EN SALUD DIGNA,Salud,534.51,compra en salud digna
+compra Salud Digna,Salud,116.27,compra salud digna
+pago Salud Digna,Salud,1052.64,pago salud digna
+pago Salud Digna,Salud,771.91,pago salud digna
+$Laboratorios del Chopo,Salud,508.33,laboratorios del chopo
+pago con tarjeta en Laboratorios del Chopo,Salud,1304.17,pago con tarjeta en laboratorios del chopo
+$Laboratorios del Chopo,Salud,1370.95,laboratorios del chopo
+$Laboratorios del Chopo,Salud,1148.83,laboratorios del chopo
+pago con tarjeta en Laboratorios del Chopo,Salud,438.86,pago con tarjeta en laboratorios del chopo
+pago con tarjeta en consulta medica,Salud,899.27,pago con tarjeta en consulta medica
+$consulta medica,Salud,965.42,consulta medica
+consulta medica,Salud,584.42,consulta medica
+COMPRA EN CONSULTA MEDICA,Salud,113.68,compra en consulta medica
+compra consulta medica,Salud,824.8,compra consulta medica
+compra oftalmologo,Salud,1335.55,compra oftalmologo
+compra oftalmologo,Salud,1254.32,compra oftalmologo
+$oftalmologo,Salud,550.93,oftalmologo
+$oftalmologo,Salud,894.56,oftalmologo
+pago oftalmologo,Salud,1250.02,pago oftalmologo
+*dermatologo*,Salud,1038.54,dermatologo
+COMPRA EN DERMATOLOGO,Salud,991.0,compra en dermatologo
+DERMATOLOGO,Salud,1354.71,dermatologo
+pago con tarjeta en dermatologo,Salud,1410.7,pago con tarjeta en dermatologo
+*dermatologo*,Salud,958.12,dermatologo
+pago con tarjeta en analisis clinicos,Salud,1092.68,pago con tarjeta en analisis clinicos
+COMPRA EN ANALISIS CLINICOS,Salud,1426.29,compra en analisis clinicos
+analisis clinicos,Salud,575.23,analisis clinicos
+*analisis clinicos*,Salud,1025.15,analisis clinicos
+analisis clinicos,Salud,936.47,analisis clinicos
+$estudios medicos,Salud,733.25,estudios medicos
+ESTUDIOS MEDICOS,Salud,157.06,estudios medicos
+pago estudios medicos,Salud,184.49,pago estudios medicos
+*estudios medicos*,Salud,1010.41,estudios medicos
+pago con tarjeta en estudios medicos,Salud,1320.5,pago con tarjeta en estudios medicos
+ULTRASONIDO,Salud,1466.21,ultrasonido
+ultrasonido,Salud,1141.99,ultrasonido
+*ultrasonido*,Salud,707.12,ultrasonido
+ULTRASONIDO,Salud,326.34,ultrasonido
+$ultrasonido,Salud,1106.88,ultrasonido
+$resonancia,Salud,565.24,resonancia
+COMPRA EN RESONANCIA,Salud,1464.71,compra en resonancia
+RESONANCIA,Salud,214.14,resonancia
+RESONANCIA,Salud,1052.32,resonancia
+$resonancia,Salud,142.91,resonancia
+compra curacion,Salud,1276.63,compra curacion
+compra curacion,Salud,1315.58,compra curacion
+COMPRA EN CURACION,Salud,695.69,compra en curacion
+curacion,Salud,1129.49,curacion
+curacion,Salud,806.78,curacion
+pago gasa,Salud,1313.84,pago gasa
+pago con tarjeta en gasa,Salud,714.06,pago con tarjeta en gasa
+Gasa,Salud,653.72,gasa
+gasa,Salud,1322.79,gasa
+pago gasa,Salud,1210.14,pago gasa
+*jeringas*,Salud,487.56,jeringas
+JERINGAS,Salud,497.4,jeringas
+JERINGAS,Salud,972.15,jeringas
+COMPRA EN JERINGAS,Salud,1270.4,compra en jeringas
+compra jeringas,Salud,284.19,compra jeringas
+COMPRA EN TERMOMETRO,Salud,667.43,compra en termometro
+*termometro*,Salud,985.56,termometro
+pago termometro,Salud,353.37,pago termometro
+Termometro,Salud,196.79,termometro
+pago con tarjeta en termometro,Salud,446.12,pago con tarjeta en termometro
+COMPRA EN APARATO ORTOPEDICO,Salud,911.18,compra en aparato ortopedico
+aparato ortopedico,Salud,930.13,aparato ortopedico
+$aparato ortopedico,Salud,1012.97,aparato ortopedico
+pago con tarjeta en aparato ortopedico,Salud,1457.18,pago con tarjeta en aparato ortopedico
+pago aparato ortopedico,Salud,1301.18,pago aparato ortopedico
+Lentes,Salud,555.27,lentes
+COMPRA EN LENTES,Salud,938.2,compra en lentes
+lentes,Salud,1457.75,lentes
+LENTES,Salud,718.83,lentes
+pago con tarjeta en lentes,Salud,703.24,pago con tarjeta en lentes
+devlyn,Salud,923.04,devlyn
+compra Devlyn,Salud,453.54,compra devlyn
+$Devlyn,Salud,334.67,devlyn
+pago con tarjeta en Devlyn,Salud,947.75,pago con tarjeta en devlyn
+Devlyn,Salud,846.92,devlyn
+compra Mas Vision,Salud,1281.84,compra mas vision
+COMPRA EN MAS VISION,Salud,919.5,compra en mas vision
+$Mas Vision,Salud,388.18,mas vision
+mas vision,Salud,477.65,mas vision
+pago Mas Vision,Salud,272.16,pago mas vision
+Seguro De Gastos Medicos,Salud,1411.25,seguro de gastos medicos
+compra seguro de gastos medicos,Salud,270.95,compra seguro de gastos medicos
+$seguro de gastos medicos,Salud,352.01,seguro de gastos medicos
+Seguro De Gastos Medicos,Salud,244.63,seguro de gastos medicos
+SEGURO DE GASTOS MEDICOS,Salud,158.2,seguro de gastos medicos
+axa,Salud,1481.28,axa
+COMPRA EN AXA,Salud,1060.35,compra en axa
+pago AXA,Salud,552.38,pago axa
+pago con tarjeta en AXA,Salud,912.16,pago con tarjeta en axa
+COMPRA EN AXA,Salud,821.83,compra en axa
+pago GNP,Salud,579.71,pago gnp
+$GNP,Salud,295.51,gnp
+gnp,Salud,1086.55,gnp
+*GNP*,Salud,327.33,gnp
+Gnp,Salud,231.46,gnp
+COMPRA EN METLIFE,Salud,318.63,compra en metlife
+$MetLife,Salud,1315.4,metlife
+$MetLife,Salud,457.43,metlife
+compra MetLife,Salud,1273.36,compra metlife
+pago MetLife,Salud,441.81,pago metlife
+COMPRA EN MONTERREY,Salud,1310.45,compra en monterrey
+compra Monterrey,Salud,142.54,compra monterrey
+COMPRA EN MONTERREY,Salud,1213.71,compra en monterrey
+monterrey,Salud,1047.12,monterrey
+MONTERREY,Salud,1417.23,monterrey
+Renta,Vivienda,3501.37,renta
+pago con tarjeta en renta,Vivienda,979.67,pago con tarjeta en renta
+pago renta,Vivienda,4997.36,pago renta
+$renta,Vivienda,1931.5,renta
+compra renta,Vivienda,2331.09,compra renta
+pago con tarjeta en hipoteca,Vivienda,907.17,pago con tarjeta en hipoteca
+pago con tarjeta en hipoteca,Vivienda,990.99,pago con tarjeta en hipoteca
+pago hipoteca,Vivienda,2318.63,pago hipoteca
+hipoteca,Vivienda,3504.17,hipoteca
+$hipoteca,Vivienda,4556.19,hipoteca
+pago con tarjeta en agua,Vivienda,1927.38,pago con tarjeta en agua
+compra agua,Vivienda,1040.94,compra agua
+$agua,Vivienda,3420.84,agua
+Agua,Vivienda,1960.64,agua
+*agua*,Vivienda,3035.48,agua
+LUZ,Vivienda,2248.51,luz
+pago con tarjeta en luz,Vivienda,3184.18,pago con tarjeta en luz
+compra luz,Vivienda,2499.89,compra luz
+$luz,Vivienda,829.38,luz
+LUZ,Vivienda,1258.0,luz
+pago CFE,Vivienda,2585.72,pago cfe
+CFE,Vivienda,2940.64,cfe
+COMPRA EN CFE,Vivienda,2835.87,compra en cfe
+$CFE,Vivienda,4614.06,cfe
+pago con tarjeta en CFE,Vivienda,2210.88,pago con tarjeta en cfe
+pago gas,Vivienda,2869.81,pago gas
+gas,Vivienda,3235.57,gas
+*gas*,Vivienda,4158.44,gas
+pago gas,Vivienda,3719.71,pago gas
+Gas,Vivienda,1381.0,gas
+*internet*,Vivienda,4535.21,internet
+Internet,Vivienda,4541.14,internet
+pago con tarjeta en internet,Vivienda,3446.12,pago con tarjeta en internet
+INTERNET,Vivienda,771.2,internet
+Internet,Vivienda,2656.32,internet
+TELEFONO,Vivienda,956.39,telefono
+telefono,Vivienda,1655.49,telefono
+telefono,Vivienda,3515.43,telefono
+TELEFONO,Vivienda,3114.19,telefono
+telefono,Vivienda,3729.36,telefono
+pago mantenimiento,Vivienda,1726.81,pago mantenimiento
+mantenimiento,Vivienda,4204.28,mantenimiento
+*mantenimiento*,Vivienda,3565.03,mantenimiento
+*mantenimiento*,Vivienda,2863.24,mantenimiento
+*mantenimiento*,Vivienda,1828.75,mantenimiento
+compra reparacion,Vivienda,3052.9,compra reparacion
+COMPRA EN REPARACION,Vivienda,4833.17,compra en reparacion
+reparacion,Vivienda,891.68,reparacion
+$reparacion,Vivienda,2976.02,reparacion
+COMPRA EN REPARACION,Vivienda,2869.25,compra en reparacion
+*plomeria*,Vivienda,3370.93,plomeria
+Plomeria,Vivienda,4478.93,plomeria
+pago con tarjeta en plomeria,Vivienda,4071.85,pago con tarjeta en plomeria
+COMPRA EN PLOMERIA,Vivienda,2349.63,compra en plomeria
+COMPRA EN PLOMERIA,Vivienda,3964.75,compra en plomeria
+compra electricidad,Vivienda,1565.92,compra electricidad
+Electricidad,Vivienda,1859.27,electricidad
+COMPRA EN ELECTRICIDAD,Vivienda,4201.76,compra en electricidad
+*electricidad*,Vivienda,3503.97,electricidad
+pago electricidad,Vivienda,3949.95,pago electricidad
+compra pintura,Vivienda,2407.75,compra pintura
+Pintura,Vivienda,1256.06,pintura
+PINTURA,Vivienda,4411.67,pintura
+compra pintura,Vivienda,1475.33,compra pintura
+compra pintura,Vivienda,1303.01,compra pintura
+Muebles,Vivienda,3388.87,muebles
+*muebles*,Vivienda,2960.14,muebles
+pago con tarjeta en muebles,Vivienda,2259.08,pago con tarjeta en muebles
+pago con tarjeta en muebles,Vivienda,2735.45,pago con tarjeta en muebles
+pago muebles,Vivienda,1735.43,pago muebles
+*electrodomesticos*,Vivienda,3628.15,electrodomesticos
+ELECTRODOMESTICOS,Vivienda,2492.23,electrodomesticos
+*electrodomesticos*,Vivienda,3760.33,electrodomesticos
+*electrodomesticos*,Vivienda,2034.91,electrodomesticos
+ELECTRODOMESTICOS,Vivienda,3214.49,electrodomesticos
+$colchon,Vivienda,3102.74,colchon
+*colchon*,Vivienda,3976.8,colchon
+colchon,Vivienda,885.46,colchon
+compra colchon,Vivienda,3180.88,compra colchon
+pago con tarjeta en colchon,Vivienda,1955.17,pago con tarjeta en colchon
+$cortinas,Vivienda,2097.48,cortinas
+cortinas,Vivienda,2490.84,cortinas
+pago cortinas,Vivienda,3513.21,pago cortinas
+Cortinas,Vivienda,1720.16,cortinas
+COMPRA EN CORTINAS,Vivienda,3428.95,compra en cortinas
+$seguro hogar,Vivienda,1538.73,seguro hogar
+SEGURO HOGAR,Vivienda,1356.46,seguro hogar
+pago seguro hogar,Vivienda,4973.63,pago seguro hogar
+pago seguro hogar,Vivienda,2133.25,pago seguro hogar
+SEGURO HOGAR,Vivienda,3787.93,seguro hogar
+predial,Vivienda,770.64,predial
+predial,Vivienda,4827.5,predial
+pago con tarjeta en predial,Vivienda,1267.15,pago con tarjeta en predial
+pago con tarjeta en predial,Vivienda,4198.13,pago con tarjeta en predial
+compra predial,Vivienda,1853.84,compra predial
+COMPRA EN BASURA,Vivienda,4079.52,compra en basura
+*basura*,Vivienda,2296.92,basura
+COMPRA EN BASURA,Vivienda,590.12,compra en basura
+basura,Vivienda,4671.5,basura
+compra basura,Vivienda,4289.15,compra basura
+Jardineria,Vivienda,918.18,jardineria
+$jardineria,Vivienda,901.06,jardineria
+*jardineria*,Vivienda,4391.09,jardineria
+Jardineria,Vivienda,4217.3,jardineria
+$jardineria,Vivienda,1216.87,jardineria
+izzi,Vivienda,1864.08,izzi
+pago Izzi,Vivienda,2037.54,pago izzi
+pago con tarjeta en Izzi,Vivienda,894.39,pago con tarjeta en izzi
+pago con tarjeta en Izzi,Vivienda,2992.11,pago con tarjeta en izzi
+IZZI,Vivienda,2286.42,izzi
+*Totalplay*,Vivienda,4740.74,totalplay
+pago Totalplay,Vivienda,2820.56,pago totalplay
+TOTALPLAY,Vivienda,4038.24,totalplay
+$Totalplay,Vivienda,3049.59,totalplay
+totalplay,Vivienda,1438.3,totalplay
+compra Telmex,Vivienda,1023.65,compra telmex
+pago Telmex,Vivienda,3325.78,pago telmex
+COMPRA EN TELMEX,Vivienda,2896.17,compra en telmex
+$Telmex,Vivienda,1135.75,telmex
+*Telmex*,Vivienda,1871.06,telmex
+pago con tarjeta en Megacable,Vivienda,1951.38,pago con tarjeta en megacable
+MEGACABLE,Vivienda,1280.86,megacable
+pago Megacable,Vivienda,1506.26,pago megacable
+megacable,Vivienda,3078.69,megacable
+pago con tarjeta en Megacable,Vivienda,3088.24,pago con tarjeta en megacable
+$Naturgy,Vivienda,1911.77,naturgy
+compra Naturgy,Vivienda,3228.14,compra naturgy
+$Naturgy,Vivienda,4232.0,naturgy
+naturgy,Vivienda,2761.55,naturgy
+pago con tarjeta en Naturgy,Vivienda,4213.4,pago con tarjeta en naturgy
+Gas Natural,Vivienda,1047.93,gas natural
+Gas Natural,Vivienda,616.15,gas natural
+pago con tarjeta en Gas Natural,Vivienda,1546.48,pago con tarjeta en gas natural
+gas natural,Vivienda,2477.8,gas natural
+$Gas Natural,Vivienda,501.5,gas natural
+pago cilindro de gas,Vivienda,3425.9,pago cilindro de gas
+CILINDRO DE GAS,Vivienda,2239.07,cilindro de gas
+Cilindro De Gas,Vivienda,4013.43,cilindro de gas
+pago con tarjeta en cilindro de gas,Vivienda,761.74,pago con tarjeta en cilindro de gas
+pago cilindro de gas,Vivienda,760.01,pago cilindro de gas
+COMPRA EN GAS LP,Vivienda,1838.1,compra en gas lp
+*gas lp*,Vivienda,1576.31,gas lp
+GAS LP,Vivienda,835.83,gas lp
+GAS LP,Vivienda,1299.95,gas lp
+compra gas lp,Vivienda,2792.4,compra gas lp
+*Home Depot*,Vivienda,1530.03,home depot
+Home Depot,Vivienda,3268.49,home depot
+home depot,Vivienda,1281.89,home depot
+home depot,Vivienda,2871.69,home depot
+*Home Depot*,Vivienda,3759.43,home depot
+Sodimac,Vivienda,4489.72,sodimac
+SODIMAC,Vivienda,2154.92,sodimac
+$Sodimac,Vivienda,4223.92,sodimac
+Sodimac,Vivienda,2241.85,sodimac
+Sodimac,Vivienda,549.64,sodimac
+pago IKEA,Vivienda,1102.12,pago ikea
+Ikea,Vivienda,586.37,ikea
+Ikea,Vivienda,3921.3,ikea
+COMPRA EN IKEA,Vivienda,2908.9,compra en ikea
+compra IKEA,Vivienda,1955.75,compra ikea
+pago Elektra,Vivienda,3331.84,pago elektra
+Elektra,Vivienda,4106.92,elektra
+elektra,Vivienda,2171.34,elektra
+compra Elektra,Vivienda,2965.82,compra elektra
+Elektra,Vivienda,4299.61,elektra
+*Coppel*,Vivienda,1171.57,coppel
+coppel,Vivienda,4390.97,coppel
+pago Coppel,Vivienda,2642.08,pago coppel
+pago con tarjeta en Coppel,Vivienda,3263.37,pago con tarjeta en coppel
+$Coppel,Vivienda,2265.77,coppel
+compra ferreteria,Vivienda,4799.01,compra ferreteria
+compra ferreteria,Vivienda,3464.11,compra ferreteria
+pago con tarjeta en ferreteria,Vivienda,3596.61,pago con tarjeta en ferreteria
+compra ferreteria,Vivienda,4283.92,compra ferreteria
+COMPRA EN FERRETERIA,Vivienda,2576.65,compra en ferreteria
+*cerrajero*,Vivienda,3467.09,cerrajero
+$cerrajero,Vivienda,3365.01,cerrajero
+compra cerrajero,Vivienda,799.93,compra cerrajero
+COMPRA EN CERRAJERO,Vivienda,4471.07,compra en cerrajero
+Cerrajero,Vivienda,3818.45,cerrajero
+compra fumigacion,Vivienda,2494.73,compra fumigacion
+COMPRA EN FUMIGACION,Vivienda,687.53,compra en fumigacion
+pago con tarjeta en fumigacion,Vivienda,3857.93,pago con tarjeta en fumigacion
+compra fumigacion,Vivienda,824.38,compra fumigacion
+COMPRA EN FUMIGACION,Vivienda,974.15,compra en fumigacion
+compra vigilancia,Vivienda,4804.26,compra vigilancia
+Vigilancia,Vivienda,2244.18,vigilancia
+vigilancia,Vivienda,2073.66,vigilancia
+VIGILANCIA,Vivienda,3476.17,vigilancia
+VIGILANCIA,Vivienda,1283.49,vigilancia
+Seguridad Privada,Vivienda,2973.27,seguridad privada
+$seguridad privada,Vivienda,3939.68,seguridad privada
+$seguridad privada,Vivienda,871.78,seguridad privada
+compra seguridad privada,Vivienda,1829.5,compra seguridad privada
+COMPRA EN SEGURIDAD PRIVADA,Vivienda,3310.99,compra en seguridad privada
+pago administracion condominios,Vivienda,3503.08,pago administracion condominios
+ADMINISTRACION CONDOMINIOS,Vivienda,1046.24,administracion condominios
+administracion condominios,Vivienda,3985.85,administracion condominios
+pago con tarjeta en administracion condominios,Vivienda,4819.22,pago con tarjeta en administracion condominios
+*administracion condominios*,Vivienda,688.78,administracion condominios
+pago cuota de mantenimiento,Vivienda,1949.97,pago cuota de mantenimiento
+cuota de mantenimiento,Vivienda,1817.7,cuota de mantenimiento
+COMPRA EN CUOTA DE MANTENIMIENTO,Vivienda,1012.8,compra en cuota de mantenimiento
+Cuota De Mantenimiento,Vivienda,4641.34,cuota de mantenimiento
+pago cuota de mantenimiento,Vivienda,1076.43,pago cuota de mantenimiento
+compra Infanavit,Vivienda,4676.38,compra infanavit
+*Infanavit*,Vivienda,927.55,infanavit
+COMPRA EN INFANAVIT,Vivienda,2444.35,compra en infanavit
+pago con tarjeta en Infanavit,Vivienda,1236.58,pago con tarjeta en infanavit
+infanavit,Vivienda,1583.12,infanavit
+Fovissste,Vivienda,3541.92,fovissste
+FOVISSSTE,Vivienda,4491.16,fovissste
+COMPRA EN FOVISSSTE,Vivienda,4965.87,compra en fovissste
+*Fovissste*,Vivienda,4456.71,fovissste
+pago con tarjeta en Fovissste,Vivienda,2948.07,pago con tarjeta en fovissste
+Articulo De Limpieza,Vivienda,3897.69,articulo de limpieza
+Articulo De Limpieza,Vivienda,4902.79,articulo de limpieza
+COMPRA EN ARTICULO DE LIMPIEZA,Vivienda,3010.16,compra en articulo de limpieza
+*articulo de limpieza*,Vivienda,3452.73,articulo de limpieza
+$articulo de limpieza,Vivienda,3889.34,articulo de limpieza
+pago con tarjeta en detergente,Vivienda,4718.25,pago con tarjeta en detergente
+pago detergente,Vivienda,985.75,pago detergente
+Detergente,Vivienda,3766.91,detergente
+pago detergente,Vivienda,1460.8,pago detergente
+DETERGENTE,Vivienda,1178.04,detergente
+$lavadora,Vivienda,2940.07,lavadora
+compra lavadora,Vivienda,2787.62,compra lavadora
+$lavadora,Vivienda,3042.6,lavadora
+*lavadora*,Vivienda,3097.28,lavadora
+pago con tarjeta en lavadora,Vivienda,3925.05,pago con tarjeta en lavadora
+COMPRA EN REFRIGERADOR,Vivienda,2577.01,compra en refrigerador
+COMPRA EN REFRIGERADOR,Vivienda,1610.05,compra en refrigerador
+Refrigerador,Vivienda,4466.53,refrigerador
+refrigerador,Vivienda,946.3,refrigerador
+pago refrigerador,Vivienda,1418.16,pago refrigerador
+Microondas,Vivienda,3798.82,microondas
+*microondas*,Vivienda,3267.4,microondas
+pago microondas,Vivienda,2099.23,pago microondas
+pago con tarjeta en microondas,Vivienda,2994.02,pago con tarjeta en microondas
+$microondas,Vivienda,4316.22,microondas
+$colegio,Educación,1682.09,colegio
+pago con tarjeta en colegio,Educación,1920.34,pago con tarjeta en colegio
+pago con tarjeta en colegio,Educación,1388.92,pago con tarjeta en colegio
+COLEGIO,Educación,1699.74,colegio
+$colegio,Educación,1765.64,colegio
+Universidad,Educación,336.96,universidad
+universidad,Educación,1471.93,universidad
+COMPRA EN UNIVERSIDAD,Educación,512.7,compra en universidad
+Universidad,Educación,1359.78,universidad
+$universidad,Educación,1421.67,universidad
+Cursos,Educación,155.24,cursos
+cursos,Educación,444.51,cursos
+cursos,Educación,864.42,cursos
+*cursos*,Educación,1013.85,cursos
+CURSOS,Educación,223.22,cursos
+*libros*,Educación,1435.59,libros
+COMPRA EN LIBROS,Educación,1246.63,compra en libros
+pago libros,Educación,1238.8,pago libros
+LIBROS,Educación,612.66,libros
+LIBROS,Educación,1046.69,libros
+CUADERNOS,Educación,211.25,cuadernos
+$cuadernos,Educación,498.7,cuadernos
+cuadernos,Educación,1082.81,cuadernos
+cuadernos,Educación,332.52,cuadernos
+compra cuadernos,Educación,924.64,compra cuadernos
+pago lapiceros,Educación,805.7,pago lapiceros
+compra lapiceros,Educación,1236.63,compra lapiceros
+pago con tarjeta en lapiceros,Educación,1872.92,pago con tarjeta en lapiceros
+compra lapiceros,Educación,900.37,compra lapiceros
+lapiceros,Educación,1042.72,lapiceros
+$mochila,Educación,1983.14,mochila
+*mochila*,Educación,1186.56,mochila
+Mochila,Educación,450.5,mochila
+pago mochila,Educación,414.06,pago mochila
+compra mochila,Educación,1213.04,compra mochila
+$computadora,Educación,618.83,computadora
+compra computadora,Educación,1866.27,compra computadora
+COMPUTADORA,Educación,1887.29,computadora
+COMPUTADORA,Educación,916.35,computadora
+COMPUTADORA,Educación,816.14,computadora
+Tablet,Educación,1013.72,tablet
+Tablet,Educación,970.56,tablet
+Tablet,Educación,1441.44,tablet
+tablet,Educación,194.7,tablet
+*tablet*,Educación,1043.28,tablet
+compra pizarron,Educación,1582.4,compra pizarron
+pizarron,Educación,1554.47,pizarron
+$pizarron,Educación,527.93,pizarron
+pago con tarjeta en pizarron,Educación,1527.61,pago con tarjeta en pizarron
+COMPRA EN PIZARRON,Educación,996.91,compra en pizarron
+Tutorias,Educación,231.02,tutorias
+$tutorias,Educación,597.24,tutorias
+TUTORIAS,Educación,623.66,tutorias
+COMPRA EN TUTORIAS,Educación,1952.19,compra en tutorias
+$tutorias,Educación,914.89,tutorias
+pago con tarjeta en ingles,Educación,1575.75,pago con tarjeta en ingles
+pago con tarjeta en ingles,Educación,1026.39,pago con tarjeta en ingles
+COMPRA EN INGLES,Educación,188.35,compra en ingles
+pago ingles,Educación,1822.23,pago ingles
+pago con tarjeta en ingles,Educación,757.25,pago con tarjeta en ingles
+pago computacion,Educación,881.08,pago computacion
+*computacion*,Educación,264.21,computacion
+pago computacion,Educación,1491.65,pago computacion
+computacion,Educación,343.18,computacion
+*computacion*,Educación,847.55,computacion
+COMPRA EN ARTE,Educación,594.3,compra en arte
+pago con tarjeta en arte,Educación,1039.51,pago con tarjeta en arte
+Arte,Educación,587.41,arte
+ARTE,Educación,1477.8,arte
+Arte,Educación,1174.13,arte
+MUSICA,Educación,686.53,musica
+Musica,Educación,1256.2,musica
+pago con tarjeta en musica,Educación,447.73,pago con tarjeta en musica
+compra musica,Educación,387.37,compra musica
+musica,Educación,894.18,musica
+pago con tarjeta en deporte,Educación,1716.17,pago con tarjeta en deporte
+*deporte*,Educación,1135.7,deporte
+COMPRA EN DEPORTE,Educación,318.06,compra en deporte
+pago deporte,Educación,867.56,pago deporte
+pago con tarjeta en deporte,Educación,1604.23,pago con tarjeta en deporte
+compra actividades,Educación,1132.72,compra actividades
+$actividades,Educación,529.68,actividades
+pago actividades,Educación,1020.92,pago actividades
+Actividades,Educación,367.82,actividades
+$actividades,Educación,1714.95,actividades
+pago excursiones,Educación,285.37,pago excursiones
+EXCURSIONES,Educación,1336.85,excursiones
+$excursiones,Educación,652.12,excursiones
+COMPRA EN EXCURSIONES,Educación,312.68,compra en excursiones
+EXCURSIONES,Educación,198.72,excursiones
+compra material,Educación,482.59,compra material
+*material*,Educación,1757.06,material
+material,Educación,1537.83,material
+$material,Educación,134.1,material
+COMPRA EN MATERIAL,Educación,1767.88,compra en material
+$uniforme,Educación,407.08,uniforme
+pago con tarjeta en uniforme,Educación,1164.35,pago con tarjeta en uniforme
+compra uniforme,Educación,151.62,compra uniforme
+pago con tarjeta en uniforme,Educación,278.89,pago con tarjeta en uniforme
+UNIFORME,Educación,1827.52,uniforme
+compra colegiatura,Educación,842.38,compra colegiatura
+COLEGIATURA,Educación,300.4,colegiatura
+colegiatura,Educación,958.22,colegiatura
+pago colegiatura,Educación,277.48,pago colegiatura
+Colegiatura,Educación,1932.51,colegiatura
+COMPRA EN INSCRIPCION,Educación,454.77,compra en inscripcion
+COMPRA EN INSCRIPCION,Educación,645.56,compra en inscripcion
+pago con tarjeta en inscripcion,Educación,1197.43,pago con tarjeta en inscripcion
+Inscripcion,Educación,693.46,inscripcion
+pago con tarjeta en inscripcion,Educación,852.34,pago con tarjeta en inscripcion
+COMPRA EN REINSCRIPCION,Educación,1088.36,compra en reinscripcion
+reinscripcion,Educación,1159.86,reinscripcion
+pago reinscripcion,Educación,701.85,pago reinscripcion
+REINSCRIPCION,Educación,789.89,reinscripcion
+pago reinscripcion,Educación,420.82,pago reinscripcion
+$tramite escolar,Educación,367.35,tramite escolar
+compra tramite escolar,Educación,163.43,compra tramite escolar
+COMPRA EN TRAMITE ESCOLAR,Educación,1798.58,compra en tramite escolar
+Tramite Escolar,Educación,936.61,tramite escolar
+$tramite escolar,Educación,1938.74,tramite escolar
+DIPLOMADO,Educación,1776.59,diplomado
+*diplomado*,Educación,1937.54,diplomado
+*diplomado*,Educación,332.62,diplomado
+pago diplomado,Educación,415.31,pago diplomado
+$diplomado,Educación,1961.59,diplomado
+*maestria*,Educación,346.67,maestria
+Maestria,Educación,1163.54,maestria
+compra maestria,Educación,155.79,compra maestria
+maestria,Educación,1791.49,maestria
+Maestria,Educación,1949.57,maestria
+pago con tarjeta en certificacion,Educación,1656.22,pago con tarjeta en certificacion
+pago certificacion,Educación,310.42,pago certificacion
+pago con tarjeta en certificacion,Educación,995.22,pago con tarjeta en certificacion
+pago con tarjeta en certificacion,Educación,779.82,pago con tarjeta en certificacion
+pago certificacion,Educación,1656.58,pago certificacion
+Udemy,Educación,314.59,udemy
+compra Udemy,Educación,555.76,compra udemy
+udemy,Educación,1820.18,udemy
+UDEMY,Educación,955.67,udemy
+pago con tarjeta en Udemy,Educación,927.46,pago con tarjeta en udemy
+$Coursera,Educación,1502.33,coursera
+COURSERA,Educación,159.12,coursera
+pago Coursera,Educación,717.7,pago coursera
+COMPRA EN COURSERA,Educación,107.25,compra en coursera
+*Coursera*,Educación,417.55,coursera
+platzi,Educación,531.64,platzi
+COMPRA EN PLATZI,Educación,238.07,compra en platzi
+PLATZI,Educación,1418.89,platzi
+pago con tarjeta en Platzi,Educación,509.51,pago con tarjeta en platzi
+Platzi,Educación,163.06,platzi
+Domestika,Educación,875.78,domestika
+domestika,Educación,1882.78,domestika
+compra Domestika,Educación,1555.52,compra domestika
+DOMESTIKA,Educación,212.28,domestika
+pago Domestika,Educación,1336.46,pago domestika
+$Libreria Gandhi,Educación,1374.39,libreria gandhi
+*Libreria Gandhi*,Educación,421.25,libreria gandhi
+pago Libreria Gandhi,Educación,949.41,pago libreria gandhi
+$Libreria Gandhi,Educación,530.79,libreria gandhi
+Libreria Gandhi,Educación,1138.63,libreria gandhi
+EL SOTANO,Educación,884.25,el sotano
+el sotano,Educación,134.2,el sotano
+COMPRA EN EL SOTANO,Educación,1505.82,compra en el sotano
+$El Sotano,Educación,632.07,el sotano
+pago con tarjeta en El Sotano,Educación,655.21,pago con tarjeta en el sotano
+PORRUA,Educación,1669.47,porrua
+PORRUA,Educación,1629.32,porrua
+porrua,Educación,1965.42,porrua
+pago con tarjeta en Porrua,Educación,679.03,pago con tarjeta en porrua
+*Porrua*,Educación,1112.08,porrua
+OFFICE DEPOT,Educación,1758.23,office depot
+COMPRA EN OFFICE DEPOT,Educación,1437.0,compra en office depot
+office depot,Educación,283.42,office depot
+pago con tarjeta en Office Depot,Educación,123.57,pago con tarjeta en office depot
+COMPRA EN OFFICE DEPOT,Educación,639.27,compra en office depot
+Officemax,Educación,664.75,officemax
+pago con tarjeta en OfficeMax,Educación,191.47,pago con tarjeta en officemax
+officemax,Educación,1766.75,officemax
+pago OfficeMax,Educación,1368.83,pago officemax
+$OfficeMax,Educación,1795.37,officemax
+*papeleria*,Educación,1109.5,papeleria
+compra papeleria,Educación,642.05,compra papeleria
+PAPELERIA,Educación,608.78,papeleria
+pago papeleria,Educación,1189.36,pago papeleria
+Papeleria,Educación,220.92,papeleria
+fotocopias,Educación,518.43,fotocopias
+compra fotocopias,Educación,1501.37,compra fotocopias
+pago con tarjeta en fotocopias,Educación,1828.29,pago con tarjeta en fotocopias
+fotocopias,Educación,1750.25,fotocopias
+pago fotocopias,Educación,1770.06,pago fotocopias
+compra impresiones,Educación,147.77,compra impresiones
+*impresiones*,Educación,917.81,impresiones
+$impresiones,Educación,925.73,impresiones
+pago con tarjeta en impresiones,Educación,747.55,pago con tarjeta en impresiones
+impresiones,Educación,942.42,impresiones
+COMPRA EN ESCANEO,Educación,1901.41,compra en escaneo
+$escaneo,Educación,1224.22,escaneo
+ESCANEO,Educación,551.12,escaneo
+*escaneo*,Educación,350.22,escaneo
+escaneo,Educación,830.57,escaneo
+LICENCIA SOFTWARE,Educación,1339.23,licencia software
+pago licencia software,Educación,615.98,pago licencia software
+*licencia software*,Educación,1969.3,licencia software
+COMPRA EN LICENCIA SOFTWARE,Educación,1304.8,compra en licencia software
+$licencia software,Educación,1793.81,licencia software
+pago ChatGPT,Educación,787.52,pago chatgpt
+$ChatGPT,Educación,186.73,chatgpt
+COMPRA EN CHATGPT,Educación,553.83,compra en chatgpt
+compra ChatGPT,Educación,955.88,compra chatgpt
+compra ChatGPT,Educación,1282.79,compra chatgpt
+PLAGIUM,Educación,950.19,plagium
+plagium,Educación,493.29,plagium
+$Plagium,Educación,1722.86,plagium
+compra Plagium,Educación,516.23,compra plagium
+plagium,Educación,305.25,plagium
+*Duolingo*,Educación,1624.91,duolingo
+compra Duolingo,Educación,515.17,compra duolingo
+$Duolingo,Educación,1870.33,duolingo
+pago con tarjeta en Duolingo,Educación,1651.7,pago con tarjeta en duolingo
+compra Duolingo,Educación,1272.43,compra duolingo
+COMPRA EN CLASES PARTICULARES,Educación,1110.04,compra en clases particulares
+*clases particulares*,Educación,1192.08,clases particulares
+*clases particulares*,Educación,1037.74,clases particulares
+CLASES PARTICULARES,Educación,956.13,clases particulares
+compra clases particulares,Educación,840.76,compra clases particulares
+REGULARIZACION,Educación,880.94,regularizacion
+COMPRA EN REGULARIZACION,Educación,1374.79,compra en regularizacion
+compra regularizacion,Educación,1665.2,compra regularizacion
+*regularizacion*,Educación,1912.66,regularizacion
+Regularizacion,Educación,102.97,regularizacion
+*cine*,Ocio y Servicios,731.69,cine
+*cine*,Ocio y Servicios,88.53,cine
+cine,Ocio y Servicios,702.26,cine
+pago cine,Ocio y Servicios,682.03,pago cine
+compra cine,Ocio y Servicios,483.42,compra cine
+pago teatro,Ocio y Servicios,137.67,pago teatro
+COMPRA EN TEATRO,Ocio y Servicios,763.62,compra en teatro
+compra teatro,Ocio y Servicios,434.03,compra teatro
+TEATRO,Ocio y Servicios,387.03,teatro
+*teatro*,Ocio y Servicios,442.04,teatro
+pago con tarjeta en concierto,Ocio y Servicios,664.13,pago con tarjeta en concierto
+CONCIERTO,Ocio y Servicios,613.98,concierto
+pago concierto,Ocio y Servicios,181.93,pago concierto
+pago con tarjeta en concierto,Ocio y Servicios,631.94,pago con tarjeta en concierto
+CONCIERTO,Ocio y Servicios,737.77,concierto
+Evento,Ocio y Servicios,907.33,evento
+$evento,Ocio y Servicios,837.57,evento
+COMPRA EN EVENTO,Ocio y Servicios,829.01,compra en evento
+pago con tarjeta en evento,Ocio y Servicios,450.93,pago con tarjeta en evento
+EVENTO,Ocio y Servicios,476.41,evento
+*boletos*,Ocio y Servicios,598.34,boletos
+Boletos,Ocio y Servicios,166.85,boletos
+compra boletos,Ocio y Servicios,255.25,compra boletos
+pago con tarjeta en boletos,Ocio y Servicios,742.71,pago con tarjeta en boletos
+pago con tarjeta en boletos,Ocio y Servicios,114.02,pago con tarjeta en boletos
+Suscripcion,Ocio y Servicios,707.87,suscripcion
+pago suscripcion,Ocio y Servicios,433.7,pago suscripcion
+*suscripcion*,Ocio y Servicios,565.41,suscripcion
+$suscripcion,Ocio y Servicios,799.54,suscripcion
+pago suscripcion,Ocio y Servicios,415.03,pago suscripcion
+NETFLIX,Ocio y Servicios,864.68,netflix
+pago con tarjeta en Netflix,Ocio y Servicios,459.44,pago con tarjeta en netflix
+COMPRA EN NETFLIX,Ocio y Servicios,895.17,compra en netflix
+pago con tarjeta en Netflix,Ocio y Servicios,76.05,pago con tarjeta en netflix
+compra Netflix,Ocio y Servicios,549.52,compra netflix
+pago Disney+,Ocio y Servicios,208.52,pago disney
+Disney+,Ocio y Servicios,663.45,disney
+Disney+,Ocio y Servicios,895.59,disney
+compra Disney+,Ocio y Servicios,949.31,compra disney
+DISNEY+,Ocio y Servicios,74.18,disney
+pago HBO,Ocio y Servicios,655.06,pago hbo
+compra HBO,Ocio y Servicios,146.2,compra hbo
+Hbo,Ocio y Servicios,554.53,hbo
+hbo,Ocio y Servicios,601.21,hbo
+$HBO,Ocio y Servicios,481.3,hbo
+spotify,Ocio y Servicios,208.99,spotify
+pago Spotify,Ocio y Servicios,511.31,pago spotify
+COMPRA EN SPOTIFY,Ocio y Servicios,978.58,compra en spotify
+SPOTIFY,Ocio y Servicios,965.82,spotify
+spotify,Ocio y Servicios,144.34,spotify
+$videojuegos,Ocio y Servicios,929.36,videojuegos
+VIDEOJUEGOS,Ocio y Servicios,72.18,videojuegos
+Videojuegos,Ocio y Servicios,324.78,videojuegos
+Videojuegos,Ocio y Servicios,843.71,videojuegos
+Videojuegos,Ocio y Servicios,958.12,videojuegos
+Playstation,Ocio y Servicios,500.31,playstation
+$playstation,Ocio y Servicios,622.8,playstation
+pago con tarjeta en playstation,Ocio y Servicios,984.81,pago con tarjeta en playstation
+playstation,Ocio y Servicios,79.39,playstation
+$playstation,Ocio y Servicios,564.34,playstation
+Xbox,Ocio y Servicios,503.98,xbox
+pago xbox,Ocio y Servicios,209.92,pago xbox
+Xbox,Ocio y Servicios,841.97,xbox
+XBOX,Ocio y Servicios,388.38,xbox
+pago xbox,Ocio y Servicios,296.37,pago xbox
+GIMNASIO,Ocio y Servicios,218.31,gimnasio
+Gimnasio,Ocio y Servicios,375.33,gimnasio
+Gimnasio,Ocio y Servicios,968.1,gimnasio
+*gimnasio*,Ocio y Servicios,567.59,gimnasio
+compra gimnasio,Ocio y Servicios,601.44,compra gimnasio
+COMPRA EN SPA,Ocio y Servicios,999.73,compra en spa
+pago spa,Ocio y Servicios,514.45,pago spa
+SPA,Ocio y Servicios,793.27,spa
+SPA,Ocio y Servicios,886.3,spa
+COMPRA EN SPA,Ocio y Servicios,359.53,compra en spa
+COMPRA EN SALON,Ocio y Servicios,639.63,compra en salon
+Salon,Ocio y Servicios,744.28,salon
+COMPRA EN SALON,Ocio y Servicios,87.49,compra en salon
+compra salon,Ocio y Servicios,725.34,compra salon
+$salon,Ocio y Servicios,266.36,salon
+Belleza,Ocio y Servicios,619.16,belleza
+$belleza,Ocio y Servicios,556.72,belleza
+$belleza,Ocio y Servicios,174.12,belleza
+*belleza*,Ocio y Servicios,168.58,belleza
+compra belleza,Ocio y Servicios,696.72,compra belleza
+pago con tarjeta en barberia,Ocio y Servicios,883.24,pago con tarjeta en barberia
+$barberia,Ocio y Servicios,191.36,barberia
+BARBERIA,Ocio y Servicios,537.26,barberia
+barberia,Ocio y Servicios,870.37,barberia
+*barberia*,Ocio y Servicios,406.56,barberia
+$lavanderia,Ocio y Servicios,546.32,lavanderia
+COMPRA EN LAVANDERIA,Ocio y Servicios,469.16,compra en lavanderia
+pago con tarjeta en lavanderia,Ocio y Servicios,394.15,pago con tarjeta en lavanderia
+compra lavanderia,Ocio y Servicios,872.3,compra lavanderia
+pago lavanderia,Ocio y Servicios,471.28,pago lavanderia
+plaza,Ocio y Servicios,816.26,plaza
+PLAZA,Ocio y Servicios,240.45,plaza
+pago con tarjeta en plaza,Ocio y Servicios,106.5,pago con tarjeta en plaza
+compra plaza,Ocio y Servicios,658.19,compra plaza
+compra plaza,Ocio y Servicios,898.44,compra plaza
+CINEPOLIS,Ocio y Servicios,346.3,cinepolis
+CINEPOLIS,Ocio y Servicios,475.9,cinepolis
+*Cinepolis*,Ocio y Servicios,68.16,cinepolis
+$Cinepolis,Ocio y Servicios,703.34,cinepolis
+CINEPOLIS,Ocio y Servicios,707.91,cinepolis
+Cinemex,Ocio y Servicios,390.78,cinemex
+pago Cinemex,Ocio y Servicios,366.74,pago cinemex
+CINEMEX,Ocio y Servicios,250.17,cinemex
+pago con tarjeta en Cinemex,Ocio y Servicios,803.72,pago con tarjeta en cinemex
+CINEMEX,Ocio y Servicios,997.93,cinemex
+COMPRA EN TICKETMASTER,Ocio y Servicios,994.92,compra en ticketmaster
+COMPRA EN TICKETMASTER,Ocio y Servicios,329.89,compra en ticketmaster
+*Ticketmaster*,Ocio y Servicios,91.95,ticketmaster
+ticketmaster,Ocio y Servicios,842.44,ticketmaster
+compra Ticketmaster,Ocio y Servicios,115.58,compra ticketmaster
+COMPRA EN SUPERBOLETOS,Ocio y Servicios,940.24,compra en superboletos
+pago con tarjeta en Superboletos,Ocio y Servicios,777.81,pago con tarjeta en superboletos
+superboletos,Ocio y Servicios,715.03,superboletos
+COMPRA EN SUPERBOLETOS,Ocio y Servicios,429.15,compra en superboletos
+pago Superboletos,Ocio y Servicios,123.77,pago superboletos
+prime video,Ocio y Servicios,436.75,prime video
+$Prime Video,Ocio y Servicios,340.83,prime video
+COMPRA EN PRIME VIDEO,Ocio y Servicios,155.45,compra en prime video
+pago Prime Video,Ocio y Servicios,55.78,pago prime video
+PRIME VIDEO,Ocio y Servicios,546.45,prime video
+pago Apple Music,Ocio y Servicios,123.02,pago apple music
+*Apple Music*,Ocio y Servicios,849.97,apple music
+$Apple Music,Ocio y Servicios,97.71,apple music
+pago Apple Music,Ocio y Servicios,724.6,pago apple music
+COMPRA EN APPLE MUSIC,Ocio y Servicios,330.53,compra en apple music
+pago YouTube Premium,Ocio y Servicios,316.95,pago youtube premium
+COMPRA EN YOUTUBE PREMIUM,Ocio y Servicios,327.89,compra en youtube premium
+COMPRA EN YOUTUBE PREMIUM,Ocio y Servicios,434.85,compra en youtube premium
+$YouTube Premium,Ocio y Servicios,355.42,youtube premium
+Youtube Premium,Ocio y Servicios,850.12,youtube premium
+compra Crunchyroll,Ocio y Servicios,658.45,compra crunchyroll
+Crunchyroll,Ocio y Servicios,81.99,crunchyroll
+CRUNCHYROLL,Ocio y Servicios,389.92,crunchyroll
+pago con tarjeta en Crunchyroll,Ocio y Servicios,771.63,pago con tarjeta en crunchyroll
+compra Crunchyroll,Ocio y Servicios,733.8,compra crunchyroll
+nintendo switch,Ocio y Servicios,643.54,nintendo switch
+nintendo switch,Ocio y Servicios,655.24,nintendo switch
+pago Nintendo Switch,Ocio y Servicios,279.84,pago nintendo switch
+nintendo switch,Ocio y Servicios,338.03,nintendo switch
+$Nintendo Switch,Ocio y Servicios,585.12,nintendo switch
+steam,Ocio y Servicios,185.73,steam
+*Steam*,Ocio y Servicios,734.62,steam
+*Steam*,Ocio y Servicios,200.69,steam
+pago Steam,Ocio y Servicios,177.14,pago steam
+pago Steam,Ocio y Servicios,735.64,pago steam
+pago con tarjeta en Epic Games,Ocio y Servicios,761.21,pago con tarjeta en epic games
+pago con tarjeta en Epic Games,Ocio y Servicios,50.13,pago con tarjeta en epic games
+pago Epic Games,Ocio y Servicios,312.36,pago epic games
+$Epic Games,Ocio y Servicios,900.94,epic games
+COMPRA EN EPIC GAMES,Ocio y Servicios,847.37,compra en epic games
+pago con tarjeta en Smart Fit,Ocio y Servicios,373.35,pago con tarjeta en smart fit
+pago con tarjeta en Smart Fit,Ocio y Servicios,128.58,pago con tarjeta en smart fit
+pago con tarjeta en Smart Fit,Ocio y Servicios,392.22,pago con tarjeta en smart fit
+SMART FIT,Ocio y Servicios,586.74,smart fit
+pago Smart Fit,Ocio y Servicios,347.68,pago smart fit
+sports world,Ocio y Servicios,911.84,sports world
+SPORTS WORLD,Ocio y Servicios,462.13,sports world
+compra Sports World,Ocio y Servicios,408.45,compra sports world
+COMPRA EN SPORTS WORLD,Ocio y Servicios,965.87,compra en sports world
+Sports World,Ocio y Servicios,160.22,sports world
+*Planet Fitness*,Ocio y Servicios,519.12,planet fitness
+compra Planet Fitness,Ocio y Servicios,933.66,compra planet fitness
+pago con tarjeta en Planet Fitness,Ocio y Servicios,718.66,pago con tarjeta en planet fitness
+*Planet Fitness*,Ocio y Servicios,291.52,planet fitness
+Planet Fitness,Ocio y Servicios,967.75,planet fitness
+compra tintoreria,Ocio y Servicios,692.3,compra tintoreria
+pago con tarjeta en tintoreria,Ocio y Servicios,333.15,pago con tarjeta en tintoreria
+Tintoreria,Ocio y Servicios,501.64,tintoreria
+TINTORERIA,Ocio y Servicios,661.94,tintoreria
+compra tintoreria,Ocio y Servicios,392.05,compra tintoreria
+*estetica*,Ocio y Servicios,525.38,estetica
+pago con tarjeta en estetica,Ocio y Servicios,502.17,pago con tarjeta en estetica
+pago estetica,Ocio y Servicios,652.7,pago estetica
+ESTETICA,Ocio y Servicios,401.32,estetica
+*estetica*,Ocio y Servicios,779.19,estetica
+pago unas,Ocio y Servicios,574.47,pago unas
+unas,Ocio y Servicios,857.83,unas
+pago con tarjeta en unas,Ocio y Servicios,674.49,pago con tarjeta en unas
+$unas,Ocio y Servicios,886.15,unas
+compra unas,Ocio y Servicios,806.43,compra unas
+*masaje*,Ocio y Servicios,627.36,masaje
+pago masaje,Ocio y Servicios,425.0,pago masaje
+COMPRA EN MASAJE,Ocio y Servicios,669.06,compra en masaje
+pago masaje,Ocio y Servicios,750.24,pago masaje
+$masaje,Ocio y Servicios,662.59,masaje
+Antro,Ocio y Servicios,698.08,antro
+$antro,Ocio y Servicios,239.25,antro
+antro,Ocio y Servicios,131.07,antro
+ANTRO,Ocio y Servicios,683.52,antro
+compra antro,Ocio y Servicios,155.94,compra antro
+Bar,Ocio y Servicios,304.21,bar
+Bar,Ocio y Servicios,703.64,bar
+Bar,Ocio y Servicios,915.52,bar
+pago bar,Ocio y Servicios,68.36,pago bar
+bar,Ocio y Servicios,951.4,bar
+CANTARITO,Ocio y Servicios,518.22,cantarito
+$cantarito,Ocio y Servicios,554.39,cantarito
+$cantarito,Ocio y Servicios,303.34,cantarito
+pago con tarjeta en cantarito,Ocio y Servicios,965.32,pago con tarjeta en cantarito
+$cantarito,Ocio y Servicios,774.19,cantarito
+*cerveceria*,Ocio y Servicios,785.29,cerveceria
+compra cerveceria,Ocio y Servicios,545.23,compra cerveceria
+$cerveceria,Ocio y Servicios,66.1,cerveceria
+pago con tarjeta en cerveceria,Ocio y Servicios,164.2,pago con tarjeta en cerveceria
+$cerveceria,Ocio y Servicios,463.73,cerveceria
+Pool,Ocio y Servicios,374.71,pool
+*pool*,Ocio y Servicios,542.06,pool
+pool,Ocio y Servicios,659.77,pool
+Pool,Ocio y Servicios,664.14,pool
+*pool*,Ocio y Servicios,885.29,pool
+BILLAR,Ocio y Servicios,72.42,billar
+COMPRA EN BILLAR,Ocio y Servicios,794.04,compra en billar
+pago con tarjeta en billar,Ocio y Servicios,326.59,pago con tarjeta en billar
+$billar,Ocio y Servicios,194.71,billar
+COMPRA EN BILLAR,Ocio y Servicios,112.41,compra en billar
+pago con tarjeta en boliche,Ocio y Servicios,940.51,pago con tarjeta en boliche
+pago boliche,Ocio y Servicios,509.87,pago boliche
+*boliche*,Ocio y Servicios,688.06,boliche
+boliche,Ocio y Servicios,959.9,boliche
+pago con tarjeta en boliche,Ocio y Servicios,277.2,pago con tarjeta en boliche
+COMPRA EN PARQUE DE DIVERSIONES,Ocio y Servicios,991.76,compra en parque de diversiones
+pago parque de diversiones,Ocio y Servicios,662.36,pago parque de diversiones
+$parque de diversiones,Ocio y Servicios,397.4,parque de diversiones
+*parque de diversiones*,Ocio y Servicios,183.76,parque de diversiones
+pago con tarjeta en parque de diversiones,Ocio y Servicios,792.26,pago con tarjeta en parque de diversiones
+SIX FLAGS,Ocio y Servicios,189.61,six flags
+Six Flags,Ocio y Servicios,550.9,six flags
+six flags,Ocio y Servicios,418.76,six flags
+compra Six Flags,Ocio y Servicios,377.93,compra six flags
+six flags,Ocio y Servicios,370.47,six flags
+$zoologico,Ocio y Servicios,496.49,zoologico
+pago con tarjeta en zoologico,Ocio y Servicios,705.5,pago con tarjeta en zoologico
+compra zoologico,Ocio y Servicios,934.08,compra zoologico
+zoologico,Ocio y Servicios,649.38,zoologico
+COMPRA EN ZOOLOGICO,Ocio y Servicios,177.56,compra en zoologico
+pago museo,Ocio y Servicios,336.82,pago museo
+pago museo,Ocio y Servicios,279.8,pago museo
+Museo,Ocio y Servicios,964.19,museo
+$museo,Ocio y Servicios,310.97,museo
+$museo,Ocio y Servicios,772.81,museo
+STREAMING,Ocio y Servicios,207.46,streaming
+COMPRA EN STREAMING,Ocio y Servicios,248.73,compra en streaming
+compra streaming,Ocio y Servicios,180.15,compra streaming
+pago streaming,Ocio y Servicios,861.1,pago streaming
+$streaming,Ocio y Servicios,153.45,streaming
+discord,Ocio y Servicios,953.86,discord
+COMPRA EN DISCORD,Ocio y Servicios,726.14,compra en discord
+pago con tarjeta en Discord,Ocio y Servicios,258.16,pago con tarjeta en discord
+Discord,Ocio y Servicios,465.15,discord
+DISCORD,Ocio y Servicios,217.29,discord
+$barberia,Ocio y Servicios,230.6,barberia
+pago consulta medica,Salud,1077.64,pago consulta medica
+pago audiologia,Salud,1453.87,pago audiologia
+COMPRA EN CHATGPT,Educación,1568.87,compra en chatgpt
+compra refrigerador,Vivienda,2562.06,compra refrigerador
+COMPRA EN TIENDITA,Alimentación,622.68,compra en tiendita
+pago con tarjeta en inscripcion,Educación,1687.27,pago con tarjeta en inscripcion
+Fumigacion,Vivienda,1499.34,fumigacion
+pago administracion condominios,Vivienda,2816.08,pago administracion condominios
+Farmacias Similares,Salud,444.13,farmacias similares
+cursos,Educación,648.88,cursos
+ULTRASONIDO,Salud,792.55,ultrasonido
+*Starbucks*,Alimentación,328.79,starbucks
+Basura,Vivienda,646.78,basura
+compra termometro,Salud,1202.57,compra termometro
+gas lp,Vivienda,3082.29,gas lp
+compra Magna,Transporte,135.39,compra magna
+bp,Transporte,68.87,bp
+pago con tarjeta en caseta,Transporte,38.69,pago con tarjeta en caseta
+compra Uber,Transporte,91.13,compra uber
+licencia software,Educación,1205.08,licencia software
+FARMACIAS DEL AHORRO,Salud,556.87,farmacias del ahorro
+*ginecologo*,Salud,1351.73,ginecologo
+Refaccionaria,Transporte,221.34,refaccionaria
+totalplay,Vivienda,2738.93,totalplay
+COMPRA EN DETERGENTE,Vivienda,1337.61,compra en detergente
+*Monterrey*,Salud,145.93,monterrey
+youtube premium,Ocio y Servicios,330.48,youtube premium
+compra gasa,Salud,673.18,compra gasa
+aparato ortopedico,Salud,1071.07,aparato ortopedico
+MAGNA,Transporte,267.52,magna
+Neveria,Alimentación,261.85,neveria
+Cuadernos,Educación,1554.54,cuadernos
+$deposito,Alimentación,90.98,deposito
+*refaccionaria*,Transporte,117.72,refaccionaria
+UNIFORME,Educación,1777.2,uniforme
+six flags,Ocio y Servicios,968.5,six flags
+discord,Ocio y Servicios,754.8,discord
+*computacion*,Educación,1258.3,computacion
+pago con tarjeta en unas,Ocio y Servicios,290.17,pago con tarjeta en unas
+pago con tarjeta en fisioterapia,Salud,619.32,pago con tarjeta en fisioterapia
+$MetLife,Salud,668.05,metlife
+$Cinepolis,Ocio y Servicios,611.11,cinepolis
+*OXXO*,Alimentación,458.37,oxxo
+pago Urbano,Transporte,394.7,pago urbano
+$7-Eleven,Alimentación,248.99,7 eleven
+microondas,Vivienda,3344.72,microondas
+Farmacias Del Ahorro,Salud,243.52,farmacias del ahorro
+COSTCO,Alimentación,326.96,costco
+pago jugueria,Alimentación,572.91,pago jugueria
+compra seguro,Salud,270.84,compra seguro
+pago con tarjeta en taller mecanico,Transporte,151.55,pago con tarjeta en taller mecanico
+pago con tarjeta en lentes,Salud,583.48,pago con tarjeta en lentes
+plaza,Ocio y Servicios,199.46,plaza
+*pasticceria*,Alimentación,461.98,pasticceria
+soriana,Alimentación,639.65,soriana
+compra seguro hogar,Vivienda,613.37,compra seguro hogar
+COMPRA EN FERRETERIA,Vivienda,4088.96,compra en ferreteria
+pago tacos,Alimentación,378.25,pago tacos
+TELMEX,Vivienda,3677.87,telmex
+COMPRA EN PASTICCERIA,Alimentación,88.75,compra en pasticceria
+$Bodega Aurrera,Alimentación,138.87,bodega aurrera
+TINTORERIA,Ocio y Servicios,426.73,tintoreria
+pago con tarjeta en Mas Vision,Salud,320.18,pago con tarjeta en mas vision
+*articulo de limpieza*,Vivienda,1924.47,articulo de limpieza
+pago con tarjeta en Discord,Ocio y Servicios,806.85,pago con tarjeta en discord
+pago concierto,Ocio y Servicios,841.19,pago concierto
+pediatra,Salud,1043.63,pediatra
+compra Elektra,Vivienda,589.08,compra elektra
+Tutorias,Educación,770.62,tutorias
+compra Comer,Alimentación,372.91,compra comer
+Muebles,Vivienda,807.59,muebles
+pago estudios medicos,Salud,705.87,pago estudios medicos
+Farmacias Similares,Salud,200.96,farmacias similares
+*Six Flags*,Ocio y Servicios,947.23,six flags
+$uniforme,Educación,1493.62,uniforme
+TICKETMASTER,Ocio y Servicios,796.01,ticketmaster
+COMPRA EN UNIFORME,Educación,625.01,compra en uniforme
+pago con tarjeta en Autozone,Transporte,25.51,pago con tarjeta en autozone
+compra Nintendo Switch,Ocio y Servicios,147.97,compra nintendo switch
+pago con tarjeta en Premium,Transporte,374.18,pago con tarjeta en premium
+pago con tarjeta en combi,Transporte,118.13,pago con tarjeta en combi
+*pollo asado*,Alimentación,248.21,pollo asado
+pago con tarjeta en Cablebus,Transporte,375.28,pago con tarjeta en cablebus
+$Indrive,Transporte,484.9,indrive
+$termometro,Salud,195.67,termometro
+deposito,Alimentación,499.28,deposito
+pago ferreteria,Vivienda,1703.31,pago ferreteria
+MOTOTAXI,Transporte,199.16,mototaxi
+pago con tarjeta en rayos x,Salud,1089.28,pago con tarjeta en rayos x
+cantarito,Ocio y Servicios,287.05,cantarito
+g500,Transporte,474.43,g500
+Pemex,Transporte,473.47,pemex
+Discord,Ocio y Servicios,242.5,discord
+pago estetica,Ocio y Servicios,404.88,pago estetica
+compra Udemy,Educación,129.25,compra udemy
+compra internet,Vivienda,2938.96,compra internet
+farmacia,Salud,1116.02,farmacia
+$cerveceria,Ocio y Servicios,978.16,cerveceria
+pago fruteria,Alimentación,607.12,pago fruteria
+tren ligero,Transporte,379.22,tren ligero
+fresko,Alimentación,375.8,fresko
+CITY MARKET,Alimentación,492.09,city market
+pago con tarjeta en El Globo,Alimentación,553.01,pago con tarjeta en el globo
+COMPRA EN COMBI,Transporte,333.92,compra en combi
+reinscripcion,Educación,126.12,reinscripcion
+Krispy Kreme,Alimentación,107.86,krispy kreme
+pago refaccionaria,Transporte,371.71,pago refaccionaria
+pago Mexibus,Transporte,198.66,pago mexibus
+$metro,Transporte,203.98,metro
+COMPRA EN PINTURA,Vivienda,1401.27,compra en pintura
+compra refrendo,Transporte,141.61,compra refrendo
+COMPRA EN GNP,Salud,195.84,compra en gnp
+pago con tarjeta en Tren Suburbano,Transporte,118.98,pago con tarjeta en tren suburbano
+*Farmacias Benavides*,Salud,476.39,farmacias benavides
+$Elektra,Vivienda,4369.21,elektra
+pago pesero,Transporte,322.52,pago pesero
+COMPRA EN JERINGAS,Salud,719.56,compra en jeringas
+Fovissste,Vivienda,4027.94,fovissste
+$Cablebus,Transporte,396.85,cablebus
+combustible,Transporte,303.31,combustible
+$Plagium,Educación,153.79,plagium
+compra electrodomesticos,Vivienda,3939.98,compra electrodomesticos
+pago masaje,Ocio y Servicios,438.34,pago masaje
+Masaje,Ocio y Servicios,202.44,masaje
+Pizarron,Educación,1518.88,pizarron
+axa,Salud,724.68,axa
+compra CFE,Vivienda,1894.13,compra cfe
+COMPRA EN GAS NATURAL,Vivienda,2990.21,compra en gas natural
+comida corrida,Alimentación,704.48,comida corrida
+*regularizacion*,Educación,1910.35,regularizacion
+compra lavadora,Vivienda,2775.35,compra lavadora
+Pasticceria,Alimentación,727.67,pasticceria
+DISCORD,Ocio y Servicios,381.45,discord
+Deposito,Alimentación,557.71,deposito
+*pollo asado*,Alimentación,396.38,pollo asado
+pago con tarjeta en Cinemex,Ocio y Servicios,202.35,pago con tarjeta en cinemex
+reinscripcion,Educación,536.24,reinscripcion
+*actividades*,Educación,103.79,actividades
+$tenencia,Transporte,398.93,tenencia
+$Cinemex,Ocio y Servicios,129.38,cinemex
+EL GLOBO,Alimentación,231.15,el globo
+BOLETOS DE AUTOBUS,Transporte,126.73,boletos de autobus
+*Pollo Feliz*,Alimentación,93.3,pollo feliz
+$lavanderia,Ocio y Servicios,258.58,lavanderia
+COMPRA EN TELMEX,Vivienda,4938.11,compra en telmex
+compra tamales,Alimentación,371.71,compra tamales
+COMPRA EN DENTISTA,Salud,1083.0,compra en dentista
+pago Starbucks,Alimentación,295.66,pago starbucks
+pago colegio,Educación,142.07,pago colegio
+*Coursera*,Educación,371.4,coursera
+*Tren Suburbano*,Transporte,74.86,tren suburbano
+ETN,Transporte,118.07,etn
+Cafeteria,Alimentación,632.37,cafeteria
+pago con tarjeta en belleza,Ocio y Servicios,689.58,pago con tarjeta en belleza
+Optometria,Salud,410.66,optometria
+pago con tarjeta en autopista,Transporte,371.03,pago con tarjeta en autopista
+pago con tarjeta en supermercado,Alimentación,705.63,pago con tarjeta en supermercado
+SUSHI,Alimentación,264.13,sushi
+NINTENDO SWITCH,Ocio y Servicios,829.57,nintendo switch
+CINNABON,Alimentación,60.03,cinnabon
+pago con tarjeta en Steam,Ocio y Servicios,813.36,pago con tarjeta en steam
+pago Monterrey,Salud,193.76,pago monterrey
+pago con tarjeta en suscripcion,Ocio y Servicios,755.93,pago con tarjeta en suscripcion
+pago detergente,Vivienda,2189.61,pago detergente
+musica,Educación,1994.65,musica
+DEVLYN,Salud,408.16,devlyn
+COMPRA EN GIMNASIO,Ocio y Servicios,115.28,compra en gimnasio
+evento,Ocio y Servicios,93.05,evento
+pago analisis clinicos,Salud,1026.36,pago analisis clinicos
+pago panaderia,Alimentación,629.61,pago panaderia
+COMPRA EN RAPPI,Alimentación,369.55,compra en rappi
+*tenencia*,Transporte,345.19,tenencia
+CORTINAS,Vivienda,3520.21,cortinas
+*gas lp*,Vivienda,3481.18,gas lp
+compra gas,Vivienda,1662.04,compra gas
+farmacias del ahorro,Salud,1293.62,farmacias del ahorro
+$inscripcion,Educación,833.8,inscripcion
+pago aparato ortopedico,Salud,694.79,pago aparato ortopedico
+compra reparacion,Vivienda,3131.01,compra reparacion
+PEAJE,Transporte,414.48,peaje
+compra Urbano,Transporte,150.53,compra urbano
+SIX FLAGS,Ocio y Servicios,942.12,six flags
+Cine,Ocio y Servicios,709.91,cine
+certificacion,Educación,1665.16,certificacion
+Taller Mecanico,Transporte,411.17,taller mecanico
+*IKEA*,Vivienda,4924.88,ikea
+fumigacion,Vivienda,2157.56,fumigacion
+compra telefono,Vivienda,2587.96,compra telefono
+Suscripcion,Ocio y Servicios,894.04,suscripcion
+pago regularizacion,Educación,1589.17,pago regularizacion
+COMPRA EN KRISPY KREME,Alimentación,293.97,compra en krispy kreme
+COMPRA EN MOCHILA,Educación,1366.87,compra en mochila
+COMPRA EN DID,Transporte,139.52,compra en did
+masaje,Ocio y Servicios,907.94,masaje
+DOMESTIKA,Educación,1995.49,domestika
+compra dermatologo,Salud,1445.62,compra dermatologo
+FARMACIAS DEL AHORRO,Salud,668.42,farmacias del ahorro
+Zoologico,Ocio y Servicios,270.42,zoologico
+COMPRA EN EPIC GAMES,Ocio y Servicios,642.56,compra en epic games
