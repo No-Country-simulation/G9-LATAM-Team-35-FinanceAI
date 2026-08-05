@@ -2,3 +2,4 @@
 venv/
 env/
 ENV/
+data-science/src/__pycache__/prediction_wrapper.cpython-310.pyc

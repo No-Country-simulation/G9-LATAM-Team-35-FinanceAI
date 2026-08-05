@@ -4,7 +4,7 @@ from pathlib import Path
 
 np.random.seed(42)  # Tener los mismos resultados
 
-n_samples = 400  # Cambiar para modificar el tamaño del dataset
+n_samples = 700  # Cambiar para modificar el tamaño del dataset
 
 # Definición de rangos a usar
 ingreso_min, ingreso_max = 9582, 120000
@@ -69,12 +69,12 @@ for idx in indices_ruido:
 
 # Estructura del csv en formato diccionario
 datos = {
-    "Ingreso_Mensual": np.round(ingreso_mensual, 2),
-    "Proporcion_Gasto": np.round(porcentaje_gasto * 100, 2),
-    "Gasto_Total": np.round(gasto_total, 2),
-    "Nivel_Endeudamiento": np.round(rango_nivel_endeudamiento, 2),
-    "Frecuencia_Ahorro": rango_frecuencia_ahorro,
-    "Perfil_Financiero": perfil_financiero,
+    "ingreso_mensual": np.round(ingreso_mensual, 2),
+    "proporcion_gasto": np.round(porcentaje_gasto * 100, 2),
+    "gasto_total": np.round(gasto_total, 2),
+    "nivel_endeudamiento": np.round(rango_nivel_endeudamiento, 2),
+    "frecuencia_ahorro": rango_frecuencia_ahorro,
+    "perfil_financiero": perfil_financiero,
 }
 
 df = pd.DataFrame(datos)
