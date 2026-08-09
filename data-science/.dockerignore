@@ -1,0 +1,32 @@
+# Archivos de entorno y credenciales
+.venv
+*.pem
+.env
+.config
+
+# Jupyter Notebooks
+notebooks/
+*.ipynb
+.ipynb_checkpoints/
+
+# Cache de Python y Git
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.git
+.gitignore
+
+# Documentación y Docker
+Dockerfile
+.dockerignore
+README.md
+
+# Archivos pesados si los descarga oci_service en tiempo de ejecución
+# (Ignorar solo si la app descarga los .joblib / .csv al arrancar)
+# models/
+data/
+
+# Scripts de generación de datos (uso manual, no runtime)
+generar_dataset_transacciones.py
+generar_dataset_perfiles.py

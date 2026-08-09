@@ -5,27 +5,55 @@ from pathlib import Path
 import joblib, re, unicodedata
 import pandas as pd
 
+from oci_service import OCIService
+
+"""
+Ancla las rutas a la ubicación de este archivo, 
+no al directorio desde donde se ejecuta el proceso 
+(necesario porque Docker corre uvicorn)
+"""
+BASE_DIR = Path(__file__).resolve().parent
+MODELS_DIR = BASE_DIR / ".." / "models"
+
+
 app = FastAPI(title="FinanceAI - Microservicio de clasificación y perfil financiero")
 
 
 @app.exception_handler(Exception)
 async def manejador_global(request: Request, exc: Exception):
-    """Red de seguridad para errores no anticipados (no reemplaza la validación de Pydantic, que ya rechaza inputs invalidos antes de llegar aqui)"""
+    """
+    Red de seguridad para errores no anticipados
+    (no reemplaza la validación de Pydantic, que ya
+    rechaza inputs invalidos antes de llegar aqui)
+    """
     return JSONResponse(
         status_code=500,
         content={"detail": "Ocurrió un error inesperado procesando la solicitud."},
     )
 
 
-@app.post("/probar-error")
-def probar_error():
-    raise ValueError("Esto es una prueba")
+# Comentar si no se usara con alguna key para validar el OCI
+# oci_service = OCIService(bucket_name="bucket")
 
+"""Modelos en local"""
+modelo_perfil_financiero = joblib.load(MODELS_DIR / "modelo_perfil_financiero.joblib")
+modelo_clasificador_gastos = joblib.load(MODELS_DIR / "clasificador_gastos.joblib")
 
-modelo_perfil_financiero = joblib.load(
-    Path("../models/modelo_perfil_financiero.joblib")
-)
-modelo_clasificador_gastos = joblib.load(Path("../models/clasificador_gastos.joblib"))
+"""Modelo OCI en RAM"""
+# modelo_perfil_financiero = oci_service.cargar_modelo_joblib(
+#     "modelo_perfil_financiero.joblib"
+# )
+# modelo_clasificador_gastos = oci_service.cargar_modelo_joblib(
+#     "clasificador_gastos.joblib"
+# )
+
+"""Modelo OCI en cache (carpeta temp)"""
+# modelo_perfil_financiero = oci_service.cargar_modelo_con_cache(
+#     "modelo_perfil_financiero.joblib"
+# )
+# modelo_clasificador_gastos = oci_service.cargar_modelo_con_cache(
+#     "clasificador_gastos.joblib"
+# )
 
 
 def limpiar_texto(texto):
@@ -111,10 +139,18 @@ def generar_recomendaciones(
 
         # Alerta basada en el ingreso mensual: una sola categoría absorbiendo demasiado
         if pct_ingreso >= 15:
-            recomendaciones.append(
-                f"Atención: '{categoria_top}' representa el {pct_ingreso:.1f}% de tu ingreso mensual "
-                f"por sí solo — considera si ese porcentaje es sostenible."
-            )
+            if pct_ingreso > 100:
+                recomendaciones.append(
+                    f"Atención: '{categoria_top}' por sí solo supera por completo tu ingreso "
+                    f"mensual reportado (${ingreso_mensual:,.2f}) — revisa que el ingreso "
+                    f"capturado sea correcto."
+                )
+            else:
+                recomendaciones.append(
+                    f"Atención: '{categoria_top}' por sí solo absorbe el {pct_ingreso:.1f}% de tu ingreso "
+                    f"mensual completo (${ingreso_mensual:,.2f}), más allá de lo reportado aquí, "
+                    f"vale la pena vigilar ese porcentaje."
+                )
 
     # Recomendaciones generales basadas en el perfil de riesgo
     perfil_clean = perfil.lower()
@@ -140,7 +176,7 @@ def generar_recomendaciones(
 
 
 class PerfilRequest(BaseModel):
-    ingreso_mensual: float = Field(..., ge=9582, le=120000)
+    ingreso_mensual: float = Field(..., ge=0)
     nivel_endeudamiento: float = Field(..., ge=0, le=100)
     frecuencia_ahorro: str
     transacciones: list[Transaccion] = Field(..., min_length=1)
