@@ -7,8 +7,8 @@ np.random.seed(42)  # Tener los mismos resultados
 n_samples = 700  # Cambiar para modificar el tamaño del dataset
 
 # Definición de rangos a usar
-ingreso_min, ingreso_max = 9582, 120000
-rango_gasto_min, rango_gasto_max = 0.30, 1.10
+ingreso_min, ingreso_max = 2000, 120000
+rango_gasto_min, rango_gasto_max = 0.05, 1.10
 
 rango_nivel_endeudamiento = np.random.uniform(0, 100, n_samples)
 
