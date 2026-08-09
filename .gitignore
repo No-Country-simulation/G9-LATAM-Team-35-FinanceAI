@@ -1,8 +1,17 @@
+# Entornos virtuales (ignora cualquier carpeta .venv en cualquier nivel)
 .venv/
 venv/
 env/
 ENV/
-data-science/src/__pycache__/prediction_wrapper.cpython-310.pyc
-data-science/.env
+
+# Archivos de Python compilados y caché (ignora todo __pycache__ del proyecto)
+**/__pycache__/
+*.pyc
+
+# Variables de entorno y configuraciones
+.env
+*.env
 data-science/.config
-data-science/Dockerfile
+
+# Claves privadas (protege archivos .pem en cualquier carpeta)
+*.pem
