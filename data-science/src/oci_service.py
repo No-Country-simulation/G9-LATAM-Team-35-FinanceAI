@@ -14,8 +14,8 @@ class OCIService:
         self.namespace = self.object_storage_client.get_namespace().data
         self.bucket_name = bucket_name
 
-    def subir_archivo(self, nombre_objeto, ruta_nube):
-        with open(ruta_nube, "rb") as f:
+    def subir_archivo(self, nombre_objeto, ruta_local):
+        with open(ruta_local, "rb") as f:
             response = self.object_storage_client.put_object(
                 namespace_name=self.namespace,
                 bucket_name=self.bucket_name,
