@@ -31,13 +31,35 @@ const formTipo = ref('GASTO')
 const formCategoria = ref('Sin definir')
 const formFecha = ref(new Date().toISOString().split('T')[0])
 
-const transacciones = ref([
-  { id: 1, descripcion: 'Suscripción Netflix', categoria: 'ENTRETENIMIENTO', valor: 14.99, tipo: 'GASTO', fecha: '22 Oct, 2023' },
-  { id: 2, descripcion: 'Salario Mensual', categoria: 'INGRESOS', valor: 3250.00, tipo: 'INGRESO', fecha: '20 Oct, 2023' },
-  { id: 3, descripcion: 'Supermercado Central', categoria: 'ALIMENTACIÓN', valor: 142.30, tipo: 'GASTO', fecha: '18 Oct, 2023' },
-  { id: 4, descripcion: 'Uber Trip', categoria: 'TRANSPORTE', valor: 12.50, tipo: 'GASTO', fecha: '17 Oct, 2023' },
-  { id: 5, descripcion: 'Venta Artículo Usado', categoria: 'OTROS', valor: 85.00, tipo: 'INGRESO', fecha: '15 Oct, 2023' }
-])
+// La lista parte vacía; se llena desde el backend en onMounted y tras cada operación CRUD.
+const transacciones = ref([])
+const loadingList = ref(false)
+const apiError = ref(false)
+
+/** Recarga la lista completa de transacciones desde el backend */
+const recargarTransacciones = async () => {
+  loadingList.value = true
+  apiError.value = false
+  try {
+    const res = await transaccionesService.obtenerTransacciones()
+    // TransaccionDetails devuelve: id, descripcion, valor, tipo, categoria, fecha, creadoEn
+    transacciones.value = Array.isArray(res)
+      ? res.map(t => ({
+          id: t.id,
+          descripcion: t.descripcion,
+          categoria: t.categoria || 'OTROS',
+          valor: t.valor ?? 0,
+          tipo: t.tipo || 'GASTO',
+          fecha: t.fecha || 'Reciente'
+        }))
+      : []
+  } catch (err) {
+    console.warn('[TransaccionesView] No se pudo cargar desde el API:', err.message)
+    apiError.value = true
+  } finally {
+    loadingList.value = false
+  }
+}
 
 const openNewModal = () => {
   isEditing.value = false
@@ -94,34 +116,29 @@ const guardarTransaccion = async () => {
   loading.value = true
   const valorNum = parseFloat(formValor.value) || 0
 
+  // Campos exactos que espera TransaccionRegister en el backend:
+  //   valor       → BigDecimal (@NotNull, @Positive)
+  //   categoriaNombre → String (opcional)
   const payload = {
     descripcion: formDescripcion.value,
-    monto: valorNum,
+    valor: valorNum,
     tipo: formTipo.value,
-    categoria: formCategoria.value,
+    categoriaNombre: formCategoria.value !== 'Sin definir' ? formCategoria.value : null,
     fecha: formFecha.value
   }
 
   try {
     if (isEditing.value && currentEditId.value) {
       await transaccionesService.editarTransaccion(currentEditId.value, payload)
-      const index = transacciones.value.findIndex(t => t.id === currentEditId.value)
-      if (index !== -1) {
-        transacciones.value[index] = { ...transacciones.value[index], ...payload, valor: valorNum }
-      }
     } else {
-      const res = await transaccionesService.registrarTransaccion(payload)
-      transacciones.value.unshift({
-        id: res?.id || Date.now(),
-        descripcion: formDescripcion.value,
-        categoria: formCategoria.value,
-        valor: valorNum,
-        tipo: formTipo.value,
-        fecha: 'Hoy'
-      })
+      await transaccionesService.registrarTransaccion(payload)
     }
+    // Recarga desde el backend para mantener sincronía real con la BD
+    await recargarTransacciones()
   } catch (err) {
-    console.warn('API transaction error, using client-side update:', err)
+    console.warn('[guardarTransaccion] Error en API:', err.message)
+    // Fallback visual solo si el backend no responde: muestra el cambio localmente
+    // (se perderá al recargar la página, ya que no llegó a guardarse en BD)
     if (isEditing.value && currentEditId.value) {
       const index = transacciones.value.findIndex(t => t.id === currentEditId.value)
       if (index !== -1) {
@@ -152,10 +169,13 @@ const guardarTransaccion = async () => {
 const eliminarTransaccion = async (id) => {
   try {
     await transaccionesService.eliminarTransaccion(id)
+    // Recarga desde backend para confirmar el estado real
+    await recargarTransacciones()
   } catch (err) {
-    console.warn('API delete error, removing locally:', err)
+    console.warn('[eliminarTransaccion] Error en API, eliminando localmente:', err.message)
+    // Fallback: eliminación visual solo en memoria
+    transacciones.value = transacciones.value.filter(t => t.id !== id)
   }
-  transacciones.value = transacciones.value.filter(t => t.id !== id)
 }
 
 const getCategoryBadgeClass = (categoria) => {
@@ -174,21 +194,7 @@ const getCategoryBadgeClass = (categoria) => {
 }
 
 onMounted(async () => {
-  try {
-    const res = await transaccionesService.obtenerTransacciones()
-    if (res && Array.isArray(res) && res.length > 0) {
-      transacciones.value = res.map(t => ({
-        id: t.id,
-        descripcion: t.descripcion,
-        categoria: t.categoria || 'OTROS',
-        valor: t.monto || t.valor || 0,
-        tipo: t.tipo || 'GASTO',
-        fecha: t.fecha || 'Reciente'
-      }))
-    }
-  } catch (err) {
-    console.warn('Loaded mock transactions due to API status:', err)
-  }
+  await recargarTransacciones()
 })
 </script>
 
@@ -241,7 +247,25 @@ onMounted(async () => {
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-100 text-sm">
-                <tr v-for="t in transacciones" :key="t.id" class="hover:bg-slate-50/60 transition-colors">
+                <!-- Estado de carga -->
+                <tr v-if="loadingList">
+                  <td colspan="6" class="py-12 text-center text-slate-400 text-sm">
+                    <span class="inline-block animate-pulse">Cargando transacciones...</span>
+                  </td>
+                </tr>
+                <!-- Error de conexión -->
+                <tr v-else-if="apiError">
+                  <td colspan="6" class="py-12 text-center">
+                    <p class="text-red-400 text-sm font-semibold">No se pudo conectar con el servidor.</p>
+                    <button @click="recargarTransacciones" class="mt-2 text-xs text-[#0f4c54] underline cursor-pointer">Reintentar</button>
+                  </td>
+                </tr>
+                <!-- Sin transacciones -->
+                <tr v-else-if="transacciones.length === 0">
+                  <td colspan="6" class="py-12 text-center text-slate-400 text-sm">Aún no hay transacciones registradas.</td>
+                </tr>
+                <!-- Filas de datos -->
+                <tr v-else v-for="t in transacciones" :key="t.id" class="hover:bg-slate-50/60 transition-colors">
                   <td class="py-4 px-6 font-semibold text-[#0f4c54]">{{ t.descripcion }}</td>
                   <td class="py-4 px-6">
                     <span :class="['px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase', getCategoryBadgeClass(t.categoria)]">
@@ -273,7 +297,7 @@ onMounted(async () => {
 
           <!-- Table Footer / Pagination -->
           <div class="py-4 px-6 border-t border-slate-100 flex justify-between items-center text-xs text-slate-400 font-medium">
-            <span>Mostrando {{ transacciones.length }} de 42 transacciones</span>
+            <span>Mostrando {{ transacciones.length }} transacciones</span>
             <div class="flex items-center gap-2">
               <button class="w-7 h-7 rounded-lg hover:bg-slate-100 flex items-center justify-center text-slate-500 transition-colors cursor-pointer">
                 <PhCaretLeft :size="14" />
