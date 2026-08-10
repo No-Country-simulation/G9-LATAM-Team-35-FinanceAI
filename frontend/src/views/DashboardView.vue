@@ -76,11 +76,14 @@ const handleCrearTransaccion = async () => {
   }
 
   try {
+    // Campos exactos que espera TransaccionRegister en el backend:
+    //   valor           → BigDecimal (@NotNull, @Positive)
+    //   categoriaNombre → String (opcional)
     const payload = {
-      monto: numMonto,
+      valor: numMonto,
       descripcion: descripcion.value,
       tipo: tipoTransaccion.value,
-      categoria: categoria.value,
+      categoriaNombre: categoria.value !== 'Sin definir' ? categoria.value : null,
       fecha: fecha.value
     }
     await transaccionesService.registrarTransaccion(payload)
