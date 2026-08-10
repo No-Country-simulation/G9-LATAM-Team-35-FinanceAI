@@ -56,5 +56,6 @@ public interface TransaccionRepository extends JpaRepository<Transaccion, Long> 
             @Param("fechaFin") LocalDate fechaFin
     );
 
+    List<Transaccion> findByUsuarioIdAndDescripcionContainingIgnoreCase(Long usuarioId, String descripcion);
 
 }
