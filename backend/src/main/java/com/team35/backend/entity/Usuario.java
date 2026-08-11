@@ -1,5 +1,6 @@
 package com.team35.backend.entity;
 
+import com.team35.backend.enums.Moneda;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,6 +41,11 @@ public class Usuario {
     @Column(nullable = false)
     private Boolean activo;
 
+    // Agregado para la página de Configuración. Default MXN si no se manda nada.
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 10)
+    private Moneda moneda;
+
     @PrePersist
     protected void alCrear() {
         if (creadoEn == null) {
@@ -47,6 +53,9 @@ public class Usuario {
         }
         if (activo == null) {
             activo = true;
+        }
+        if (moneda == null) {
+            moneda = Moneda.MXN;
         }
     }
 }
