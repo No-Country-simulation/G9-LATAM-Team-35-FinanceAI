@@ -13,6 +13,8 @@ import java.util.Optional;
 
 public interface TransaccionRepository extends JpaRepository<Transaccion, Long> {
 
+    List<Transaccion> findByUsuarioId(Long usuarioId);
+
     // Transacciones que aún no han sido clasificadas (categoria_id es NULL)
     List<Transaccion> findByUsuarioIdAndCategoriaIsNull(Long usuarioId);
 
