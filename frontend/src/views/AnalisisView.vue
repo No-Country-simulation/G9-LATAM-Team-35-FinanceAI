@@ -99,14 +99,7 @@ const realizarAnalisis = async () => {
       <div class="p-8 max-w-7xl mx-auto w-full">
 
         <!-- Top Header -->
-        <header class="flex justify-between items-center mb-8">
-          <div class="relative flex-1 max-w-md">
-            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
-              <PhMagnifyingGlass :size="18" />
-            </div>
-            <input type="text" placeholder="Buscar reportes o transacciones..." class="w-full pl-11 pr-4 py-2.5 bg-white border border-slate-200 rounded-full text-sm outline-none focus:border-[#19d282] shadow-sm text-slate-700">
-          </div>
-
+        <header class="flex justify-end items-center mb-8">
           <div class="flex items-center gap-4">
             <button class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-slate-600 shadow-sm border border-slate-200 hover:text-[#0f4c54] transition-colors">
               <PhBell :size="20" />
