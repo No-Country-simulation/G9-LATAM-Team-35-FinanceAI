@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import Sidebar from '../components/Sidebar.vue'
 import {
   PhMagnifyingGlass,
@@ -17,6 +17,11 @@ import {
 
 import { transaccionesService } from '../services/transaccionesService'
 import { analisisService } from '../services/analisisService'
+import { usuarioService } from '../services/usuarioService'
+import { getCurrencySymbol } from '../utils/currency'
+
+const currencySymbol = ref('$')
+const userMoneda = ref('MXN')
 
 const showModal = ref(false)
 const isEditing = ref(false)
@@ -24,6 +29,9 @@ const currentEditId = ref(null)
 const loading = ref(false)
 const classifying = ref(false)
 const searchQuery = ref('')
+const filterTipo = ref('TODOS')
+const filterCategoria = ref('TODAS')
+const filterFecha = ref('')
 
 const formDescripcion = ref('')
 const formValor = ref('')
@@ -35,6 +43,36 @@ const formFecha = ref(new Date().toISOString().split('T')[0])
 const transacciones = ref([])
 const loadingList = ref(false)
 const apiError = ref(false)
+
+const transaccionesFiltradas = computed(() => {
+  let resultado = transacciones.value
+
+  // Filtro de Texto (Búsqueda)
+  if (searchQuery.value) {
+    const query = searchQuery.value.toLowerCase()
+    resultado = resultado.filter(t => 
+      (t.descripcion && t.descripcion.toLowerCase().includes(query)) ||
+      (t.categoria && t.categoria.toLowerCase().includes(query))
+    )
+  }
+
+  // Filtro de Tipo (Ingreso / Egreso)
+  if (filterTipo.value !== 'TODOS') {
+    resultado = resultado.filter(t => t.tipo === filterTipo.value)
+  }
+
+  // Filtro de Categoría
+  if (filterCategoria.value !== 'TODAS') {
+    resultado = resultado.filter(t => t.categoria && t.categoria.toUpperCase() === filterCategoria.value.toUpperCase())
+  }
+
+  // Filtro de Fecha (Coincidencia exacta por día YYYY-MM-DD)
+  if (filterFecha.value) {
+    resultado = resultado.filter(t => t.fecha && t.fecha.startsWith(filterFecha.value))
+  }
+
+  return resultado
+})
 
 /** Recarga la lista completa de transacciones desde el backend */
 const recargarTransacciones = async () => {
@@ -87,8 +125,9 @@ const autoClasificar = async () => {
   classifying.value = true
   try {
     const res = await analisisService.clasificarTransaccion(formDescripcion.value, parseFloat(formValor.value) || 0)
-    if (res && (res.categoria || res.categoria_sugerida)) {
-      formCategoria.value = (res.categoria || res.categoria_sugerida).toUpperCase()
+    // La respuesta de ClasificacionTransaccionResponse tiene el campo categoria_gasto
+    if (res && (res.categoria_gasto || res.categoria || res.categoria_sugerida)) {
+      formCategoria.value = (res.categoria_gasto || res.categoria || res.categoria_sugerida).toUpperCase()
     } else {
       // Fallback inteligente local si el backend no responde
       const descLower = formDescripcion.value.toLowerCase()
@@ -194,6 +233,13 @@ const getCategoryBadgeClass = (categoria) => {
 }
 
 onMounted(async () => {
+  try {
+    const perfil = await usuarioService.obtenerPerfil()
+    if (perfil && perfil.moneda) {
+      userMoneda.value = perfil.moneda
+    }
+  } catch (e) {}
+  currencySymbol.value = getCurrencySymbol(userMoneda.value)
   await recargarTransacciones()
 })
 </script>
@@ -206,14 +252,10 @@ onMounted(async () => {
       <div class="p-8 max-w-7xl mx-auto w-full">
         
         <!-- Header -->
-        <header class="flex justify-between items-center mb-8">
-          <div class="relative flex-1 max-w-md">
-            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
-              <PhMagnifyingGlass :size="18" />
-            </div>
-            <input v-model="searchQuery" type="text" placeholder="Buscar transacciones..." class="w-full pl-11 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm outline-none focus:border-[#19d282] shadow-sm text-slate-700">
+        <header class="flex justify-between items-center mb-6">
+          <div class="flex items-center gap-3">
+             <h1 class="text-3xl font-bold text-[#0f4c54]">Transacciones</h1>
           </div>
-
           <div class="flex items-center gap-4">
             <button class="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-slate-600 shadow-sm border border-slate-200 hover:text-[#0f4c54] transition-colors">
               <PhBell :size="20" />
@@ -225,10 +267,51 @@ onMounted(async () => {
           </div>
         </header>
 
-        <!-- Title Section -->
-        <div class="mb-8">
-          <h1 class="text-2xl font-bold text-[#0f4c54]">Gestión de Transacciones</h1>
-          <p class="text-slate-500 text-sm mt-1">Revisa y organiza tus movimientos financieros recientes.</p>
+        <!-- Filters & Search Section -->
+        <div class="flex flex-col md:flex-row items-end gap-6 mb-8 bg-white p-5 rounded-[20px] shadow-sm border border-slate-100">
+          
+          <!-- Búsqueda Izquierda -->
+          <div class="w-full md:w-[35%]">
+             <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">BÚSQUEDA</label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                <PhMagnifyingGlass :size="18" />
+              </div>
+              <input v-model="searchQuery" type="text" placeholder="Buscar palabras clave..." class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:border-[#19d282] shadow-sm text-slate-700">
+            </div>
+          </div>
+
+          <!-- Filtros Derecha -->
+          <div class="flex flex-1 gap-4 w-full">
+            <!-- Fecha -->
+            <div class="flex-1">
+              <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">FILTRAR POR FECHA</label>
+              <input v-model="filterFecha" type="date" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-700 outline-none focus:border-[#19d282] cursor-pointer">
+            </div>
+            <!-- Tipo -->
+            <div class="flex-1">
+              <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">TIPO DE MOVIMIENTO</label>
+              <select v-model="filterTipo" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-700 outline-none focus:border-[#19d282] cursor-pointer appearance-none">
+                <option value="TODOS">Todos los tipos</option>
+                <option value="INGRESO">Ingresos (+)</option>
+                <option value="GASTO">Egresos (-)</option>
+              </select>
+            </div>
+            <!-- Categoría -->
+            <div class="flex-1">
+              <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">FILTRAR POR CATEGORÍA</label>
+              <select v-model="filterCategoria" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-700 outline-none focus:border-[#19d282] cursor-pointer appearance-none">
+                <option value="TODAS">Todas las categorías</option>
+                <option value="ALIMENTACIÓN">Alimentación</option>
+                <option value="VIVIENDA">Vivienda</option>
+                <option value="TRANSPORTE">Transporte</option>
+                <option value="ENTRETENIMIENTO">Entretenimiento</option>
+                <option value="INGRESOS">Ingresos y Salarios</option>
+                <option value="OTROS">Otros Gastos</option>
+              </select>
+            </div>
+          </div>
+
         </div>
 
         <!-- Transactions Table Container -->
@@ -261,11 +344,13 @@ onMounted(async () => {
                   </td>
                 </tr>
                 <!-- Sin transacciones -->
-                <tr v-else-if="transacciones.length === 0">
-                  <td colspan="6" class="py-12 text-center text-slate-400 text-sm">Aún no hay transacciones registradas.</td>
+                <tr v-else-if="transaccionesFiltradas.length === 0">
+                  <td colspan="6" class="py-12 text-center text-slate-400 text-sm">
+                    {{ transacciones.length === 0 ? 'Aún no hay transacciones registradas.' : 'No se encontraron resultados para tu búsqueda.' }}
+                  </td>
                 </tr>
                 <!-- Filas de datos -->
-                <tr v-else v-for="t in transacciones" :key="t.id" class="hover:bg-slate-50/60 transition-colors">
+                <tr v-else v-for="t in transaccionesFiltradas" :key="t.id" class="hover:bg-slate-50/60 transition-colors">
                   <td class="py-4 px-6 font-semibold text-[#0f4c54]">{{ t.descripcion }}</td>
                   <td class="py-4 px-6">
                     <span :class="['px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase', getCategoryBadgeClass(t.categoria)]">
@@ -273,7 +358,7 @@ onMounted(async () => {
                     </span>
                   </td>
                   <td :class="['py-4 px-6 font-bold', t.tipo === 'INGRESO' ? 'text-emerald-600' : 'text-red-500']">
-                    {{ t.tipo === 'INGRESO' ? '+' : '-' }}${{ Math.abs(t.valor).toFixed(2) }}
+                    {{ t.tipo === 'INGRESO' ? '+' : '-' }}{{ currencySymbol }}{{ Math.abs(t.valor).toFixed(2) }}
                   </td>
                   <td class="py-4 px-6 text-center">
                     <div :class="['w-7 h-7 rounded-full flex items-center justify-center mx-auto', t.tipo === 'INGRESO' ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-500']">

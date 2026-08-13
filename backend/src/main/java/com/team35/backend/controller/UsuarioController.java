@@ -3,6 +3,7 @@ package com.team35.backend.controller;
 import com.team35.backend.dto.ActualizarUsuarioRequest;
 import com.team35.backend.dto.MonedaDisponibleDTO;
 import com.team35.backend.dto.UsuarioPerfilResponse;
+import com.team35.backend.service.AuthService;
 import com.team35.backend.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -13,31 +14,31 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("/api/usuarios")
 @Tag(name = "Configuración", description = "Perfil del usuario y preferencias (moneda) para la página de Configuración")
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
+    private final AuthService authService;
 
-    public UsuarioController(UsuarioService usuarioService) {
+    public UsuarioController(UsuarioService usuarioService, AuthService authService) {
         this.usuarioService = usuarioService;
+        this.authService = authService;
     }
 
-    // TODO: reemplazar {id} por el usuario autenticado (JWT) cuando esté listo,
-    // usando algo como GET/PUT /usuarios/me en vez de pedir el id explícito.
-
-    @Operation(summary = "Obtiene el perfil del usuario para precargar la página de Configuración")
-    @GetMapping("/{id}")
-    public ResponseEntity<UsuarioPerfilResponse> obtenerPerfil(@PathVariable Long id) {
-        return ResponseEntity.ok(usuarioService.obtenerPerfil(id));
+    @Operation(summary = "Obtiene el perfil del usuario autenticado para precargar la página de Configuración")
+    @GetMapping("/me")
+    public ResponseEntity<UsuarioPerfilResponse> obtenerPerfil() {
+        Long usuarioId = authService.getUsuarioIdAutenticado();
+        return ResponseEntity.ok(usuarioService.obtenerPerfil(usuarioId));
     }
 
-    @Operation(summary = "Actualiza nombre y/o moneda del usuario")
-    @PutMapping("/{id}")
+    @Operation(summary = "Actualiza nombre y/o moneda del usuario autenticado")
+    @PutMapping("/me")
     public ResponseEntity<UsuarioPerfilResponse> actualizarPerfil(
-            @PathVariable Long id,
             @Valid @RequestBody ActualizarUsuarioRequest request) {
-        return ResponseEntity.ok(usuarioService.actualizarPerfil(id, request));
+        Long usuarioId = authService.getUsuarioIdAutenticado();
+        return ResponseEntity.ok(usuarioService.actualizarPerfil(usuarioId, request));
     }
 
     @Operation(summary = "Lista las monedas disponibles para el selector de la página de Configuración")
