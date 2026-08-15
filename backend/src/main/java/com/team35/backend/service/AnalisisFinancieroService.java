@@ -34,7 +34,7 @@ public class AnalisisFinancieroService {
         double totalGastos = 0.0;
 
         for (TransaccionInputDTO transaccion : request.getTransacciones()) {
-            String categoria = clasificadorService.inferirCategoria(transaccion.getDescripcion());
+            String categoria = clasificadorService.clasificar(transaccion).getCategoria_gasto();
             resumenGastos.merge(categoria.toLowerCase(), transaccion.getValor(), Double::sum);
             totalGastos += transaccion.getValor();
         }

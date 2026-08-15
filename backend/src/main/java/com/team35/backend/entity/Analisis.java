@@ -64,4 +64,6 @@ public class Analisis {
         recomendacion.setAnalisis(this);
         this.recomendaciones.add(recomendacion);
     }
+
+
 }

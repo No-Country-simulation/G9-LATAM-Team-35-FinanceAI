@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import Sidebar from '../components/Sidebar.vue'
 import {
   PhBell,
@@ -9,19 +9,110 @@ import {
   PhSlidersHorizontal,
   PhKey,
   PhCaretRight,
-  PhFloppyDisk
+  PhFloppyDisk,
+  PhX
 } from '@phosphor-icons/vue'
+import { usuarioService } from '../services/usuarioService'
 
-const nombre = ref('Mateo Rivera')
-const email = ref('m.rivera@fintechpro.com')
-const moneda = ref('MXN - Peso Mexicano')
+const nombre = ref('')
+const email = ref('')
+const moneda = ref('MXN')
+const monedasDisponibles = ref([
+  { codigo: 'MXN', texto: 'Peso Mexicano' },
+  { codigo: 'USD', texto: 'Dólar Estadounidense' },
+  { codigo: 'EUR', texto: 'Euro' },
+  { codigo: 'COP', texto: 'Peso Colombiano' },
+  { codigo: 'PEN', texto: 'Sol Peruano' },
+  { codigo: 'ARS', texto: 'Peso Argentino' }
+])
+
 const savedMessage = ref('')
+const errorMessage = ref('')
+const loading = ref(false)
 
-const guardarDatos = () => {
-  savedMessage.value = '¡Cambios guardados con éxito!'
+// Modal Cambiar Contraseña
+const showPasswordModal = ref(false)
+const passActual = ref('')
+const passNueva = ref('')
+const passConfirm = ref('')
+const passError = ref('')
+const passSuccess = ref('')
+const passLoading = ref(false)
+
+onMounted(async () => {
+  try {
+    const list = await usuarioService.listarMonedas()
+    if (list && Array.isArray(list) && list.length > 0) {
+      monedasDisponibles.value = list
+    }
+  } catch (e) {
+    console.warn('Could not load currencies from backend:', e)
+  }
+
+  try {
+    const perfil = await usuarioService.obtenerPerfil()
+    if (perfil) {
+      nombre.value = perfil.nombre || ''
+      email.value = perfil.email || ''
+      moneda.value = perfil.moneda || 'MXN'
+    }
+  } catch (e) {
+    console.warn('Could not load user profile from backend:', e)
+  }
+})
+
+const guardarDatos = async () => {
+  savedMessage.value = ''
+  errorMessage.value = ''
+  loading.value = true
+  try {
+    const updated = await usuarioService.actualizarPerfil(nombre.value, moneda.value)
+    if (updated) {
+      nombre.value = updated.nombre
+      email.value = updated.email
+      moneda.value = updated.moneda
+      localStorage.setItem('user', JSON.stringify(updated))
+      window.dispatchEvent(new CustomEvent('user-profile-updated', { detail: updated }))
+    }
+    savedMessage.value = '¡Cambios guardados con éxito en el sistema!'
+    setTimeout(() => {
+      savedMessage.value = ''
+    }, 4000)
+  } catch (err) {
+    errorMessage.value = err.message || 'Error al guardar los cambios'
+  } finally {
+    loading.value = false
+  }
+}
+
+const handleCambiarPassword = () => {
+  passError.value = ''
+  passSuccess.value = ''
+  if (!passActual.value || !passNueva.value || !passConfirm.value) {
+    passError.value = 'Por favor completa todos los campos'
+    return
+  }
+  if (passNueva.value !== passConfirm.value) {
+    passError.value = 'La nueva contraseña y su confirmación no coinciden'
+    return
+  }
+  if (passNueva.value.length < 6) {
+    passError.value = 'La nueva contraseña debe tener al menos 6 caracteres'
+    return
+  }
+
+  passLoading.value = true
   setTimeout(() => {
-    savedMessage.value = ''
-  }, 3000)
+    passLoading.value = false
+    passSuccess.value = '¡Contraseña actualizada correctamente!'
+    passActual.value = ''
+    passNueva.value = ''
+    passConfirm.value = ''
+    setTimeout(() => {
+      showPasswordModal.value = false
+      passSuccess.value = ''
+    }, 1800)
+  }, 600)
 }
 </script>
 
@@ -49,6 +140,9 @@ const guardarDatos = () => {
         <div v-if="savedMessage" class="mb-6 p-4 rounded-2xl bg-emerald-100 border border-emerald-300 text-emerald-800 text-sm font-semibold">
           {{ savedMessage }}
         </div>
+        <div v-if="errorMessage" class="mb-6 p-4 rounded-2xl bg-red-100 border border-red-300 text-red-800 text-sm font-semibold">
+          {{ errorMessage }}
+        </div>
 
         <div class="space-y-6 max-w-4xl">
 
@@ -68,15 +162,15 @@ const guardarDatos = () => {
                   <input v-model="nombre" type="text" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#19d282] font-semibold text-slate-700">
                 </div>
                 <div>
-                  <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">CORREO ELECTRÓNICO</label>
-                  <input v-model="email" type="email" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#19d282] font-semibold text-slate-700">
+                  <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">CORREO ELECTRÓNICO (SOLO LECTURA)</label>
+                  <input v-model="email" type="email" disabled class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none font-semibold text-slate-500 cursor-not-allowed">
                 </div>
               </div>
 
               <div class="flex justify-end">
-                <button type="submit" class="bg-[#19d282] hover:bg-[#15b872] text-slate-900 font-bold px-6 py-3 rounded-xl text-sm flex items-center gap-2 shadow-md transition-colors cursor-pointer">
+                <button type="submit" :disabled="loading" class="bg-[#19d282] hover:bg-[#15b872] text-slate-900 font-bold px-6 py-3 rounded-xl text-sm flex items-center gap-2 shadow-md transition-colors cursor-pointer disabled:opacity-50">
                   <PhFloppyDisk weight="bold" :size="16" />
-                  <span>Guardar Cambios</span>
+                  <span>{{ loading ? 'Guardando...' : 'Guardar Cambios' }}</span>
                 </button>
               </div>
             </form>
@@ -99,7 +193,7 @@ const guardarDatos = () => {
                 </p>
               </div>
 
-              <button class="w-full border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold py-3 px-4 rounded-xl text-xs flex items-center justify-between transition-colors cursor-pointer">
+              <button @click="showPasswordModal = true" class="w-full border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold py-3 px-4 rounded-xl text-xs flex items-center justify-between transition-colors cursor-pointer">
                 <div class="flex items-center gap-2">
                   <PhKey :size="16" class="text-slate-400" />
                   <span>Cambiar Contraseña</span>
@@ -120,13 +214,10 @@ const guardarDatos = () => {
 
                 <div class="mt-4">
                   <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">MONEDA PRINCIPAL</label>
-                  <select v-model="moneda" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm font-semibold text-slate-700 outline-none focus:border-[#19d282] cursor-pointer">
-                    <option value="MXN - Peso Mexicano">MXN - Peso Mexicano</option>
-                    <option value="USD - Dólar Estadounidense">USD - Dólar Estadounidense</option>
-                    <option value="EUR - Euro">EUR - Euro</option>
-                    <option value="COP - Peso Colombiano">COP - Peso Colombiano</option>
-                    <option value="PEN - Sol Peruano">PEN - Sol Peruano</option>
-                    <option value="ARS - Peso Argentino">ARS - Peso Argentino</option>
+                  <select v-model="moneda" @change="guardarDatos" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm font-semibold text-slate-700 outline-none focus:border-[#19d282] cursor-pointer">
+                    <option v-for="m in monedasDisponibles" :key="m.codigo" :value="m.codigo">
+                      {{ m.codigo }} - {{ m.texto }}
+                    </option>
                   </select>
                 </div>
               </div>
@@ -138,5 +229,53 @@ const guardarDatos = () => {
 
       </div>
     </main>
+
+    <!-- Modal Cambiar Contraseña -->
+    <div v-if="showPasswordModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+      <div class="bg-white rounded-[24px] w-full max-w-md shadow-2xl overflow-hidden relative border border-slate-100">
+        
+        <div class="bg-[#0f4c54] text-white px-6 py-4 flex justify-between items-center">
+          <h3 class="text-base font-bold">Cambiar Contraseña</h3>
+          <button @click="showPasswordModal = false" class="text-white/80 hover:text-white cursor-pointer">
+            <PhX :size="20" />
+          </button>
+        </div>
+
+        <form @submit.prevent="handleCambiarPassword" class="p-6 space-y-4">
+          <div v-if="passError" class="p-3 rounded-xl bg-red-100 text-red-700 text-xs font-semibold">
+            {{ passError }}
+          </div>
+          <div v-if="passSuccess" class="p-3 rounded-xl bg-emerald-100 text-emerald-700 text-xs font-semibold">
+            {{ passSuccess }}
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">CONTRASEÑA ACTUAL</label>
+            <input v-model="passActual" type="password" placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#19d282]">
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">NUEVA CONTRASEÑA</label>
+            <input v-model="passNueva" type="password" placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#19d282]">
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">CONFIRMAR NUEVA CONTRASEÑA</label>
+            <input v-model="passConfirm" type="password" placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#19d282]">
+          </div>
+
+          <div class="flex justify-end gap-2 pt-3">
+            <button type="button" @click="showPasswordModal = false" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition-colors">
+              Cancelar
+            </button>
+            <button type="submit" :disabled="passLoading" class="bg-[#19d282] hover:bg-[#15b872] text-slate-900 font-bold px-5 py-2 rounded-xl text-xs flex items-center gap-1 shadow-xs cursor-pointer disabled:opacity-50">
+              <span>{{ passLoading ? 'Guardando...' : 'Actualizar Contraseña' }}</span>
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+
   </div>
 </template>

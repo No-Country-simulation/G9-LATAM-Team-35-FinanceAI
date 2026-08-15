@@ -1,11 +1,11 @@
 package com.team35.backend.controller;
 
-import com.team35.backend.dto.TransaccionDetails;
-import com.team35.backend.dto.TransaccionRegister;
+import com.team35.backend.dto.*;
 import com.team35.backend.enums.TipoTransaccion;
 import com.team35.backend.entity.Usuario;
 import com.team35.backend.repository.UsuarioRepository;
 import com.team35.backend.service.AuthService;
+import com.team35.backend.service.ClasificadorTransaccionesService;
 import com.team35.backend.service.TransaccionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +26,16 @@ public class TransaccionController {
 
     private final TransaccionService transaccionService;
     private final AuthService authService;
+    private final ClasificadorTransaccionesService clasificadorTransaccionesService;
+
+    @PostMapping("/clasificar-transaccion")
+    public ResponseEntity<List<ClasificacionTransaccionResponse>>  clasificar(
+            @Valid @RequestBody List<TransaccionInputDTO> transacciones
+    ) {
+        List<ClasificacionTransaccionResponse> respuestas =
+                clasificadorTransaccionesService.clasificarMultiples(transacciones);
+        return ResponseEntity.ok(respuestas);
+    }
 
     @Operation(summary = "Registra una nueva transacción para un usuario específico")
     @PostMapping
@@ -119,4 +129,41 @@ public class TransaccionController {
         TransaccionDetails transaccionEditada = transaccionService.editarTransaccion(transaccionId, usuarioId, datos);
         return ResponseEntity.ok(transaccionEditada);
     }
+
+    @Operation(summary = "Busca transacciones del usuario por descripción")
+    @GetMapping("/buscar")
+    public ResponseEntity<List<TransaccionDetails>> buscarPorDescripcion(
+            @RequestParam String descripcion
+    ) {
+        Long usuarioId = authService.getUsuarioIdAutenticado();
+
+        List<TransaccionDetails> transacciones = transaccionService.buscarPorDescripcion( usuarioId, descripcion);
+        return ResponseEntity.ok(transacciones);
+    }
+
+    @Operation(summary = "Calcula el ingreso mensual del usuario para usarlo en el análisis financiero")
+    @GetMapping("/ingreso-mensual")
+    public ResponseEntity<IngresoMensualDetails> calcularIngresoMensual(
+            @RequestParam int mes,
+            @RequestParam int anio
+    ) {
+        Long usuarioId = authService.getUsuarioIdAutenticado();
+
+        if (mes < 1 || mes > 12) {
+            throw new IllegalArgumentException(
+                    "El mes debe estar entre 1 y 12"
+            );
+        }
+
+        if (anio < 1800 || anio > 2200) {
+            throw new IllegalArgumentException(
+                    "El año debe estar entre 1800 y 2200"
+            );
+        }
+        IngresoMensualDetails respuesta =
+                transaccionService.calcularIngresoMensual(usuarioId, mes, anio);
+
+        return ResponseEntity.ok(respuesta);
+    }
+
 }

@@ -31,7 +31,7 @@ public class AnalisisFinancieroController {
         return ResponseEntity.ok(analisisFinancieroService.analizar(request));
     }
 
-    @Operation(summary = "Clasifica una transacción individual en una categoría financiera")
+    @Operation(summary = "Endpoint interno que clasifica una transacción individual en una categoría financiera llamando al modelo de ML")
     @PostMapping("/clasificar-transaccion")
     public ResponseEntity<ClasificacionTransaccionResponse> clasificar(@Valid @RequestBody TransaccionInputDTO transaccion) {
         return ResponseEntity.ok(clasificadorTransaccionesService.clasificar(transaccion));

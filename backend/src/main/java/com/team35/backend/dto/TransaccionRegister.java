@@ -23,6 +23,8 @@ public class TransaccionRegister {
     @NotNull(message = "La fecha de la transacción es obligatoria")
     private LocalDate fecha;
 
+    private String categoriaNombre; // Nombre de la categoría asociada a la trans
+
     public TransaccionRegister() {
     }
 
@@ -30,12 +32,15 @@ public class TransaccionRegister {
             String descripcion,
             BigDecimal valor,
             TipoTransaccion tipo,
-            LocalDate fecha
+            LocalDate fecha,
+            String categoriaNombre
     ) {
         this.descripcion = descripcion;
         this.valor = valor;
         this.tipo = tipo;
         this.fecha = fecha;
+        //si categoriaNombre es null, se asigna null, de lo contrario se asigna el valor proporcionado
+        this.categoriaNombre = categoriaNombre != null ? categoriaNombre : null;
     }
 
     public String getDescripcion() {
@@ -68,5 +73,13 @@ public class TransaccionRegister {
 
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
+    }
+
+    public String getCategoriaNombre() {
+        return categoriaNombre;
+    }
+
+    public void setCategoriaNombre(String categoriaNombre) {
+        this.categoriaNombre = categoriaNombre;
     }
 }

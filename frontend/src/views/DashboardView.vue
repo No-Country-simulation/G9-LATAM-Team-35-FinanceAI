@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import Sidebar from '../components/Sidebar.vue'
 import {
   PhMagnifyingGlass,
@@ -18,13 +18,22 @@ import {
 import Chart from 'chart.js/auto'
 import { transaccionesService } from '../services/transaccionesService'
 import { analisisService } from '../services/analisisService'
+import { distribucionService } from '../services/distribucionService'
+import { usuarioService } from '../services/usuarioService'
+import { getCurrencySymbol, formatMoney } from '../utils/currency'
 
 const barChartCanvas = ref(null)
 const doughnutChartCanvas = ref(null)
+let doughnutChartInstance = null
+let barChartInstance = null
 
 const showModal = ref(false)
 const loading = ref(false)
 const classifying = ref(false)
+
+const selectedMonth = ref('2026-08')
+const userMoneda = ref('MXN')
+const currencySymbol = ref('$')
 
 const tipoTransaccion = ref('GASTO')
 const descripcion = ref('')
@@ -32,18 +41,20 @@ const monto = ref('')
 const categoria = ref('Sin definir')
 const fecha = ref(new Date().toISOString().split('T')[0])
 
-const totalIngreso = ref(8450.00)
-const totalGasto = ref(3210.45)
+const totalIngreso = ref(0.00)
+const totalGasto = ref(0.00)
+const ingresoMensualMensaje = ref('')
 
 const transaccionesList = ref([])
+const doughnutLegendList = ref([])
 
 const autoClasificar = async () => {
   if (!descripcion.value) return
   classifying.value = true
   try {
     const res = await analisisService.clasificarTransaccion(descripcion.value, parseFloat(monto.value) || 0)
-    if (res && (res.categoria || res.categoria_sugerida)) {
-      categoria.value = (res.categoria || res.categoria_sugerida).toUpperCase()
+    if (res && (res.categoria_gasto || res.categoria || res.categoria_sugerida)) {
+      categoria.value = (res.categoria_gasto || res.categoria || res.categoria_sugerida).toUpperCase()
     } else {
       const descLower = descripcion.value.toLowerCase()
       if (descLower.includes('netflix') || descLower.includes('spotify') || descLower.includes('cine')) categoria.value = 'ENTRETENIMIENTO'
@@ -64,6 +75,159 @@ const autoClasificar = async () => {
   }
 }
 
+const calcularGastoDelMes = () => {
+  if (!selectedMonth.value || !Array.isArray(transaccionesList.value)) {
+    totalGasto.value = 0
+    return
+  }
+  const gastosMes = transaccionesList.value.filter(t => {
+    if (t.tipo !== 'GASTO' || !t.fecha) return false
+    return t.fecha.startsWith(selectedMonth.value)
+  })
+  totalGasto.value = gastosMes.reduce((sum, t) => sum + (t.valor || 0), 0)
+}
+
+const cargarDatosMes = async () => {
+  if (!selectedMonth.value) return
+  const [anioStr, mesStr] = selectedMonth.value.split('-')
+  const anio = parseInt(anioStr)
+  const mes = parseInt(mesStr)
+
+  // 1. Calcular gasto total filtrado por el mes seleccionado
+  calcularGastoDelMes()
+
+  // 2. Endpoint 4.1 — Ingreso Mensual del backend
+  try {
+    const resIngreso = await transaccionesService.calcularIngresoMensual(mes, anio)
+    if (resIngreso) {
+      totalIngreso.value = resIngreso.ingreso_mensual || 0
+      ingresoMensualMensaje.value = resIngreso.mensaje || ''
+    }
+  } catch (err) {
+    console.warn('Could not calculate monthly income from backend:', err)
+  }
+
+  // 3. Distribución de gastos por categoría (Backend Controller DistribucionGastos)
+  try {
+    const distData = await distribucionService.obtenerDistribucion(selectedMonth.value)
+    if (distData && typeof distData === 'object' && Object.keys(distData).length > 0) {
+      const labels = Object.keys(distData)
+      const values = Object.values(distData)
+      renderDoughnutChart(labels, values)
+    } else {
+      renderDoughnutChart(['Sin Gastos'], [0], ['#e2e8f0'])
+    }
+  } catch (err) {
+    console.warn('Could not fetch expense distribution from backend:', err)
+    renderDoughnutChart(['Sin Gastos'], [0], ['#e2e8f0'])
+  }
+
+  // 4. Actualizar gráfico de barras para los 6 meses
+  renderBarChart(transaccionesList.value)
+}
+
+const renderDoughnutChart = (labels, values, colors) => {
+  if (!doughnutChartCanvas.value) return
+  if (doughnutChartInstance) {
+    doughnutChartInstance.destroy()
+  }
+
+  const defaultPalette = ['#0f4c54', '#19d282', '#aebbc9', '#f59e0b', '#ef4444', '#8b5cf6']
+  const bgColors = colors || defaultPalette
+
+  const totalVal = values.reduce((a, b) => a + b, 0)
+  if (totalVal === 0) {
+    doughnutLegendList.value = [{ label: 'Sin gastos registrados', value: 0, percentage: 0, color: '#e2e8f0' }]
+  } else {
+    doughnutLegendList.value = labels.map((label, idx) => {
+      const val = values[idx] || 0
+      const pct = Math.round((val / totalVal) * 100)
+      return {
+        label: label.charAt(0).toUpperCase() + label.slice(1).toLowerCase(),
+        value: val,
+        percentage: pct,
+        color: bgColors[idx % bgColors.length]
+      }
+    })
+  }
+
+  doughnutChartInstance = new Chart(doughnutChartCanvas.value, {
+    type: 'doughnut',
+    data: {
+      labels: labels,
+      datasets: [{
+        data: values.length ? values : [1],
+        backgroundColor: values.length && totalVal > 0 ? bgColors : ['#e2e8f0'],
+        hoverOffset: 4,
+        cutout: '75%',
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } }
+    }
+  })
+}
+
+// Genera los últimos 6 meses en orden cronológico ascendente relativo al mes seleccionado
+const generarUltimos6Meses = (selectedYyyyMm) => {
+  const [yearStr, monthStr] = selectedYyyyMm.split('-')
+  const refDate = new Date(parseInt(yearStr), parseInt(monthStr) - 1, 1)
+
+  const result = []
+  for (let i = 5; i >= 0; i--) {
+    const d = new Date(refDate.getFullYear(), refDate.getMonth() - i, 1)
+    const yyyy = d.getFullYear()
+    const mm = String(d.getMonth() + 1).padStart(2, '0')
+    const key = `${yyyy}-${mm}`
+    const label = d.toLocaleString('es-ES', { month: 'short' }).toUpperCase()
+    result.push({ key, label })
+  }
+  return result
+}
+
+const renderBarChart = (transacciones) => {
+  if (!barChartCanvas.value) return
+  if (barChartInstance) {
+    barChartInstance.destroy()
+  }
+
+  const ultimosMeses = generarUltimos6Meses(selectedMonth.value)
+  const labels = ultimosMeses.map(m => m.label)
+  const data = ultimosMeses.map(m => {
+    if (!Array.isArray(transacciones)) return 0
+    const gastosEnMes = transacciones.filter(t => t.tipo === 'GASTO' && t.fecha && t.fecha.startsWith(m.key))
+    return gastosEnMes.reduce((sum, t) => sum + (t.valor || 0), 0)
+  })
+
+  barChartInstance = new Chart(barChartCanvas.value, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Gastos',
+        data: data,
+        backgroundColor: '#0f4c54',
+        borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false } },
+        y: { display: false }
+      }
+    }
+  })
+}
+
+watch(selectedMonth, () => {
+  cargarDatosMes()
+})
+
 const handleCrearTransaccion = async () => {
   if (!monto.value || !descripcion.value) return
   loading.value = true
@@ -77,13 +241,19 @@ const handleCrearTransaccion = async () => {
 
   try {
     const payload = {
-      monto: numMonto,
+      valor: numMonto,
       descripcion: descripcion.value,
       tipo: tipoTransaccion.value,
-      categoria: categoria.value,
+      categoriaNombre: categoria.value !== 'Sin definir' ? categoria.value : null,
       fecha: fecha.value
     }
     await transaccionesService.registrarTransaccion(payload)
+    const listFresh = await transaccionesService.obtenerTransacciones()
+    if (listFresh && Array.isArray(listFresh)) {
+      transaccionesList.value = listFresh
+      renderBarChart(listFresh)
+    }
+    await cargarDatosMes()
   } catch (err) {
     console.warn('API transaccion fallback active:', err.message)
   } finally {
@@ -96,6 +266,24 @@ const handleCrearTransaccion = async () => {
 }
 
 onMounted(async () => {
+  // Cargar usuario / moneda
+  try {
+    const perfil = await usuarioService.obtenerPerfil()
+    if (perfil && perfil.moneda) {
+      userMoneda.value = perfil.moneda
+    }
+  } catch (e) {}
+  currencySymbol.value = getCurrencySymbol(userMoneda.value)
+
+  // Escuchar actualización de preferencias globalmente
+  window.addEventListener('user-profile-updated', (e) => {
+    if (e.detail && e.detail.moneda) {
+      userMoneda.value = e.detail.moneda
+      currencySymbol.value = getCurrencySymbol(e.detail.moneda)
+    }
+  })
+
+  // Obtener transacciones base
   try {
     const res = await transaccionesService.obtenerTransacciones()
     if (res && Array.isArray(res)) {
@@ -105,48 +293,8 @@ onMounted(async () => {
     console.warn('Could not load transactions from API:', err.message)
   }
 
-  if (barChartCanvas.value) {
-    new Chart(barChartCanvas.value, {
-      type: 'bar',
-      data: {
-        labels: ['FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL'],
-        datasets: [{
-          label: 'Gastos',
-          data: [1200, 1900, 1500, 1300, 2200, totalGasto.value],
-          backgroundColor: '#0f4c54',
-          borderRadius: 4
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: { legend: { display: false } },
-        scales: {
-          x: { grid: { display: false } },
-          y: { display: false }
-        }
-      }
-    })
-  }
-
-  if (doughnutChartCanvas.value) {
-    new Chart(doughnutChartCanvas.value, {
-      type: 'doughnut',
-      data: {
-        labels: ['Vivienda', 'Alimentación', 'Transporte', 'Otros'],
-        datasets: [{
-          data: [45, 25, 15, 15],
-          backgroundColor: ['#0f4c54', '#19d282', '#aebbc9', '#19d282'],
-          hoverOffset: 4,
-          cutout: '75%',
-          borderWidth: 0
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: { legend: { display: false } }
-      }
-    })
-  }
+  // Cargar el mes y datos
+  await cargarDatosMes()
 })
 </script>
 
@@ -161,9 +309,9 @@ onMounted(async () => {
         <header class="flex justify-between items-center mb-8">
           <div class="flex items-center gap-4">
             <h1 class="text-3xl font-bold text-[var(--color-fintech-dark)]">Panel Principal</h1>
-            <select class="bg-white border border-gray-200 text-gray-600 rounded-full px-4 py-2 text-sm font-semibold outline-none focus:ring-2 focus:ring-[var(--color-fintech-primary)] ml-4 shadow-sm appearance-none cursor-pointer">
+            <select v-model="selectedMonth" class="bg-white border border-gray-200 text-gray-600 rounded-full px-4 py-2 text-sm font-semibold outline-none focus:ring-2 focus:ring-[var(--color-fintech-primary)] ml-4 shadow-sm appearance-none cursor-pointer">
               <option value="2026-08">Agosto 2026</option>
-              <option value="2026-07" selected>Julio 2026</option>
+              <option value="2026-07">Julio 2026</option>
               <option value="2026-06">Junio 2026</option>
               <option value="2026-05">Mayo 2026</option>
               <option value="2026-04">Abril 2026</option>
@@ -177,12 +325,6 @@ onMounted(async () => {
           </div>
           
           <div class="flex items-center gap-4">
-            <div class="relative">
-              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
-                <PhMagnifyingGlass :size="18" />
-              </div>
-              <input type="text" placeholder="Buscar movimientos..." class="w-64 pl-10 pr-4 py-2 bg-white border border-gray-200 rounded-full text-sm outline-none focus:border-[var(--color-fintech-primary)] shadow-sm">
-            </div>
             <button @click="showModal = true" class="bg-[var(--color-fintech-primary)] text-white px-4 py-2 rounded-full font-bold text-sm flex items-center gap-2 shadow hover:bg-[var(--color-fintech-primary-hover)] transition-colors cursor-pointer">
               <PhPlus weight="bold" /> Nueva Transacción
             </button>
@@ -197,8 +339,8 @@ onMounted(async () => {
           
           <!-- Metrica 1 -->
           <div class="bg-white rounded-[24px] p-6 shadow-sm border-l-4 border-[var(--color-fintech-primary)]">
-            <p class="text-xs font-bold text-gray-500 tracking-wider mb-2 uppercase">Ingreso Mensual</p>
-            <h2 class="text-4xl font-bold text-[var(--color-fintech-dark)] mb-4">${{ totalIngreso.toLocaleString('en-US', { minimumFractionDigits: 2 }) }}</h2>
+            <p class="text-xs font-bold text-gray-500 tracking-wider mb-2 uppercase">Ingreso Mensual ({{ userMoneda }})</p>
+            <h2 class="text-4xl font-bold text-[var(--color-fintech-dark)] mb-4">{{ currencySymbol }} {{ totalIngreso.toLocaleString('en-US', { minimumFractionDigits: 2 }) }}</h2>
             <div class="flex items-center gap-2">
               <div class="bg-emerald-100 text-emerald-600 px-2 py-1 rounded flex items-center gap-1 text-xs font-bold">
                 <PhArrowUpRight weight="bold" /> +12%
@@ -209,8 +351,8 @@ onMounted(async () => {
 
           <!-- Metrica 2 -->
           <div class="bg-white rounded-[24px] p-6 shadow-sm border-l-4 border-red-500">
-            <p class="text-xs font-bold text-gray-500 tracking-wider mb-2 uppercase">Gasto Total</p>
-            <h2 class="text-4xl font-bold text-[var(--color-fintech-dark)] mb-4">${{ totalGasto.toLocaleString('en-US', { minimumFractionDigits: 2 }) }}</h2>
+            <p class="text-xs font-bold text-gray-500 tracking-wider mb-2 uppercase">Gasto Total ({{ userMoneda }})</p>
+            <h2 class="text-4xl font-bold text-[var(--color-fintech-dark)] mb-4">{{ currencySymbol }} {{ totalGasto.toLocaleString('en-US', { minimumFractionDigits: 2 }) }}</h2>
             <div class="flex items-center gap-2">
               <div class="bg-red-50 text-red-500 px-2 py-1 rounded flex items-center gap-1 text-xs font-bold">
                 <PhArrowDownRight weight="bold" /> -4%
@@ -234,7 +376,7 @@ onMounted(async () => {
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
           
           <!-- Bar Chart -->
-          <div class="lg:col-span-2 bg-white rounded-[24px] p-6 shadow-sm">
+          <div class="lg:col-span-2 bg-white rounded-[24px] p-6 shadow-sm flex flex-col justify-between">
             <div class="flex justify-between items-center mb-6">
               <h3 class="text-lg font-bold text-[var(--color-fintech-dark)]">Historial de gastos</h3>
               <a href="#" class="text-sm font-semibold text-[var(--color-fintech-dark)] flex items-center gap-1 hover:underline">
@@ -254,16 +396,19 @@ onMounted(async () => {
                <canvas ref="doughnutChartCanvas"></canvas>
                <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
                  <span class="text-xs font-bold text-gray-400">TOTAL</span>
-                 <span class="text-xl font-bold text-[var(--color-fintech-dark)]">${{ Math.round(totalGasto) }}</span>
+                 <span class="text-xl font-bold text-[var(--color-fintech-dark)]">{{ currencySymbol }}{{ Math.round(totalGasto) }}</span>
                </div>
             </div>
             
-            <!-- Legend -->
-            <div class="space-y-2 mt-4 text-sm font-semibold text-gray-600">
-              <div class="flex justify-between items-center"><div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-[var(--color-fintech-dark)]"></div>Vivienda</div><span>45%</span></div>
-              <div class="flex justify-between items-center"><div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-[var(--color-fintech-primary)]"></div>Alimentación</div><span>25%</span></div>
-              <div class="flex justify-between items-center"><div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-gray-300"></div>Transporte</div><span>15%</span></div>
-              <div class="flex justify-between items-center"><div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-emerald-400"></div>Otros</div><span>15%</span></div>
+            <!-- Legend Dinámica -->
+            <div class="space-y-2.5 mt-4 text-sm font-semibold text-gray-600">
+              <div v-for="item in doughnutLegendList" :key="item.label" class="flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                  <div class="w-3 h-3 rounded-full shrink-0" :style="{ backgroundColor: item.color }"></div>
+                  <span class="truncate max-w-[120px]">{{ item.label }}</span>
+                </div>
+                <span>{{ item.percentage }}%</span>
+              </div>
             </div>
           </div>
         </div>

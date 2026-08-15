@@ -1,79 +1,84 @@
 package com.team35.backend.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.team35.backend.dto.ClasificacionTransaccionResponse;
 import com.team35.backend.dto.TransaccionInputDTO;
-import org.springframework.stereotype.Service;
+import lombok.RequiredArgsConstructor;
 
-import java.util.LinkedHashMap;
-import java.util.Locale;
-import java.util.Map;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClient;
+import org.springframework.web.client.RestTemplate;
+
+
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+
+
+import java.util.Arrays;
+import java.util.List;
+
 
 /**
- * Servicio MOCK de clasificación de transacciones.
- * TODO: reemplazar por la llamada al prediction_wrapper.py (Fase 9 de Data Science),
- * probablemente vía un microservicio Python o OCI Functions.
+ * Servicio encargado de comunicarse con el microservicio
+ * de Ciencia de Datos desarrollado en FastAPI.
+ *
+ * Su única responsabilidad es enviar la transacción,
+ * esperar la clasificación y devolver el resultado.
  */
 @Service
+@RequiredArgsConstructor
 public class ClasificadorTransaccionesService {
 
-    private static final Map<String, String> PALABRAS_CLAVE = new LinkedHashMap<>();
 
-    static {
-        PALABRAS_CLAVE.put("supermercado", "ALIMENTACION");
-        PALABRAS_CLAVE.put("restaurante", "ALIMENTACION");
-        PALABRAS_CLAVE.put("comida", "ALIMENTACION");
-        PALABRAS_CLAVE.put("mercado", "ALIMENTACION");
+    private final RestTemplate restTemplate;
+   //URL del microservicio de Ciencia de Datos (FastAPI) que clasifica transacciones.
+    @Value("${python.api.url}")
+    private String pythonApiUrl;
 
-        PALABRAS_CLAVE.put("combustible", "TRANSPORTE");
-        PALABRAS_CLAVE.put("gasolina", "TRANSPORTE");
-        PALABRAS_CLAVE.put("uber", "TRANSPORTE");
-        PALABRAS_CLAVE.put("taxi", "TRANSPORTE");
-        PALABRAS_CLAVE.put("bus", "TRANSPORTE");
 
-        PALABRAS_CLAVE.put("farmacia", "SALUD");
-        PALABRAS_CLAVE.put("medico", "SALUD");
-        PALABRAS_CLAVE.put("hospital", "SALUD");
-        PALABRAS_CLAVE.put("clinica", "SALUD");
-
-        PALABRAS_CLAVE.put("alquiler", "VIVIENDA");
-        PALABRAS_CLAVE.put("renta", "VIVIENDA");
-        PALABRAS_CLAVE.put("hipoteca", "VIVIENDA");
-
-        PALABRAS_CLAVE.put("universidad", "EDUCACION");
-        PALABRAS_CLAVE.put("curso", "EDUCACION");
-        PALABRAS_CLAVE.put("colegio", "EDUCACION");
-        PALABRAS_CLAVE.put("libros", "EDUCACION");
-
-        PALABRAS_CLAVE.put("streaming", "OCIO");
-        PALABRAS_CLAVE.put("cine", "OCIO");
-        PALABRAS_CLAVE.put("netflix", "OCIO");
-        PALABRAS_CLAVE.put("spotify", "OCIO");
-
-        PALABRAS_CLAVE.put("luz", "SERVICIOS");
-        PALABRAS_CLAVE.put("agua", "SERVICIOS");
-        PALABRAS_CLAVE.put("internet", "SERVICIOS");
-        PALABRAS_CLAVE.put("telefono", "SERVICIOS");
-        PALABRAS_CLAVE.put("electricidad", "SERVICIOS");
-    }
-
+    //  Clasificar una sola transacción (envía lista de 1)
     public ClasificacionTransaccionResponse clasificar(TransaccionInputDTO transaccion) {
-        String categoria = inferirCategoria(transaccion.getDescripcion());
-        double confianza = categoria.equals("OTROS") ? 0.40 : 0.85;
-        return new ClasificacionTransaccionResponse(
-                transaccion.getDescripcion(),
-                transaccion.getValor(),
-                categoria,
-                confianza
-        );
+        List<TransaccionInputDTO> transacciones = List.of(transaccion);
+        List<ClasificacionTransaccionResponse> resultados = clasificarMultiples(transacciones);
+        return resultados.isEmpty() ? null : resultados.get(0);
     }
 
-    public String inferirCategoria(String descripcion) {
-        String texto = descripcion.toLowerCase(Locale.ROOT);
-        for (Map.Entry<String, String> entrada : PALABRAS_CLAVE.entrySet()) {
-            if (texto.contains(entrada.getKey())) {
-                return entrada.getValue();
+    // Metodo que envía la transacción al microservicio de data science y devuelve la clasificación.
+    public List<ClasificacionTransaccionResponse> clasificarMultiples(List<TransaccionInputDTO> transacciones) {
+        try {
+
+            //  Construir la URL del endpoint de clasificación
+            String url = pythonApiUrl + "/clasificar-transaccion";
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            HttpEntity<List<TransaccionInputDTO>> request = new HttpEntity<>(transacciones, headers);
+
+            // Esperar un array de respuestas
+            ResponseEntity<ClasificacionTransaccionResponse[]> response =
+                    restTemplate.postForEntity(
+                            url,
+                            request,
+                            ClasificacionTransaccionResponse[].class
+                    );
+
+            ClasificacionTransaccionResponse[] respuestas = response.getBody();
+
+            if (respuestas != null) {
+                return Arrays.asList(respuestas);
             }
+
+            return List.of();
+
+        } catch (Exception e) {
+            System.out.println(e.getClass());
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            throw e;
         }
-        return "OTROS";
     }
 }

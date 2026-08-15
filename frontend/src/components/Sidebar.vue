@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import {
   PhSquaresFour,
@@ -11,6 +11,7 @@ import {
   PhUserPlus,
   PhWallet
 } from '@phosphor-icons/vue'
+import { usuarioService } from '../services/usuarioService'
 
 const props = defineProps({
   isGuest: {
@@ -21,6 +22,41 @@ const props = defineProps({
 
 const route = useRoute()
 const router = useRouter()
+
+const userName = ref('')
+const userEmail = ref('')
+
+onMounted(async () => {
+  if (!props.isGuest) {
+    // 1. Cargar cache local rápido
+    const localUserStr = localStorage.getItem('user')
+    if (localUserStr) {
+      try {
+        const u = JSON.parse(localUserStr)
+        userName.value = u.nombre || u.email
+        userEmail.value = u.email || ''
+      } catch (e) {}
+    }
+    
+    // 2. Traer perfil fresco del backend vía JWT
+    try {
+      const perfil = await usuarioService.obtenerPerfil()
+      if (perfil) {
+        userName.value = perfil.nombre
+        userEmail.value = perfil.email
+        localStorage.setItem('user', JSON.stringify(perfil))
+      }
+    } catch (e) {
+      // si falla (ej: sin conexion o guest), se queda con el local o default
+    }
+  }
+})
+
+const handleLogout = () => {
+  localStorage.removeItem('token')
+  localStorage.removeItem('user')
+  router.push('/login')
+}
 
 const navItems = computed(() => {
   if (props.isGuest) {
@@ -51,8 +87,8 @@ const isActive = (path) => route.path === path
         <PhWallet weight="fill" :size="28" class="text-[#19d282]" />
         <h2 class="text-xl font-bold tracking-wide">FinTech Pro</h2>
       </div>
-      <p class="text-xs text-gray-300/70 pl-[40px]" v-if="isGuest">User Account</p>
-      <p class="text-xs text-gray-300/70 pl-[40px]" v-else>User Account</p>
+      <p class="text-xs text-gray-300/70 pl-[40px]" v-if="isGuest">Cuenta Invitado</p>
+      <p class="text-xs text-gray-300/70 pl-[40px]" v-else>Cuenta Usuario</p>
     </div>
 
     <!-- Navigation -->
@@ -84,17 +120,17 @@ const isActive = (path) => route.path === path
       <template v-else>
         <!-- Logged user mini profile -->
         <div @click="router.push('/configuracion')" class="flex items-center gap-3 mb-4 cursor-pointer hover:opacity-80 transition-opacity">
-          <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-white/20">
-            <img src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="Avatar" class="w-full h-full object-cover">
+          <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-white/20 bg-[#19d282]/20 flex items-center justify-center text-white font-bold text-base">
+            {{ userName ? userName.charAt(0).toUpperCase() : 'U' }}
           </div>
-          <div>
-            <p class="text-white text-sm font-semibold leading-tight">Alex Rivera</p>
-            <p class="text-[11px] text-gray-300/80">Premium Account</p>
+          <div class="overflow-hidden">
+            <p class="text-white text-sm font-semibold leading-tight truncate">{{ userName || 'Usuario' }}</p>
+            <p class="text-[11px] text-gray-300/80 truncate">{{ userEmail || 'Cuenta Activa' }}</p>
           </div>
         </div>
       </template>
 
-      <button @click="router.push('/login')" class="flex items-center gap-2 text-xs text-gray-300 hover:text-white transition-colors w-full cursor-pointer">
+      <button @click="handleLogout" class="flex items-center gap-2 text-xs text-gray-300 hover:text-white transition-colors w-full cursor-pointer">
         <PhSignOut :size="18" />
         <span>{{ isGuest ? 'Salir' : 'Cerrar sesión' }}</span>
       </button>
