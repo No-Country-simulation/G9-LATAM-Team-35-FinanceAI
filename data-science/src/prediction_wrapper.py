@@ -99,77 +99,329 @@ def clasificar_transaccion(transacciones: list[Transaccion] = Body(..., min_leng
 # Perfil financiero
 
 
-def generar_recomendaciones(
-    perfil: str, resumen: dict, ingreso_mensual: float
-) -> list[str]:
+def identificar_patron_consumo(indicadores):
+    """
+    Identifica el patrón de consumo predominante del usuario
+    a partir de la categoría principal de gasto.
+    """
+
+    categoria = indicadores["Categoría principal"].lower()
+
+    if "ocio" in categoria:
+        return "Consumidor recreativo"
+
+    elif "alimentación" in categoria:
+        return "Consumo cotidiano"
+
+    elif "vivienda" in categoria:
+        return "Alta carga de gastos fijos"
+
+    elif "transporte" in categoria:
+        return "Alta movilidad"
+
+    elif "salud" in categoria:
+        return "Prioriza bienestar"
+
+    elif "educación" in categoria:
+        return "Inversión en desarrollo"
+
+    elif "servicios" in categoria:
+        return "Gasto operativo"
+
+    return "Consumo equilibrado"
+
+
+def generar_indicadores(
+    ingreso_mensual: float,
+    resumen_gastos: dict,
+    nivel_endeudamiento: float,
+):
+    """
+    Calcula los principales indicadores financieros
+    utilizados por el sistema.
+    """
+
+    indicadores = {}
+
+    # ==========================
+    # Liquidez
+    # ==========================
+
+    gasto_total = sum(resumen_gastos.values())
+
+    ahorro = ingreso_mensual - gasto_total
+
+    capacidad_ahorro = (ahorro / ingreso_mensual) * 100 if ingreso_mensual > 0 else 0
+
+    ratio_gasto = (gasto_total / ingreso_mensual) * 100 if ingreso_mensual > 0 else 0
+
+    # ==========================
+    # Patrón de consumo
+    # ==========================
+
+    categoria_principal = max(resumen_gastos, key=resumen_gastos.get)
+
+    gasto_principal = resumen_gastos[categoria_principal]
+
+    concentracion_gasto = gasto_principal / gasto_total * 100 if gasto_total > 0 else 0
+
+    # ==========================
+    # Diccionario final
+    # ==========================
+
+    indicadores["Ingreso mensual"] = ingreso_mensual
+    indicadores["Gasto total"] = gasto_total
+    indicadores["Ahorro estimado"] = ahorro
+    indicadores["Capacidad de ahorro (%)"] = capacidad_ahorro
+    indicadores["Ratio gasto/ingreso (%)"] = ratio_gasto
+    indicadores["Nivel de endeudamiento (%)"] = nivel_endeudamiento
+    indicadores["Categoría principal"] = categoria_principal
+    indicadores["Concentración del gasto (%)"] = concentracion_gasto
+    indicadores["Patrón de consumo"] = identificar_patron_consumo(indicadores)
+
+    return indicadores
+
+
+def generar_alertas(indicadores):
+    """
+    Genera alertas financieras a partir de los indicadores
+    calculados previamente.
+    """
+
+    alertas = []
+
+    # ===============================
+    # Liquidez
+    # ===============================
+
+    ratio = indicadores["Ratio gasto/ingreso (%)"]
+
+    if ratio >= 90:
+        alertas.append(
+            {
+                "Tipo": "Liquidez",
+                "Nivel": "Crítico",
+                "Mensaje": "Tus gastos representan más del 90% de tus ingresos.",
+            }
+        )
+
+    elif ratio >= 70:
+        alertas.append(
+            {
+                "Tipo": "Liquidez",
+                "Nivel": "Advertencia",
+                "Mensaje": "Tus gastos representan más del 70% de tus ingresos.",
+            }
+        )
+
+    # ===============================
+    # Ahorro
+    # ===============================
+
+    ahorro = indicadores["Capacidad de ahorro (%)"]
+
+    if ahorro < 0:
+        alertas.append(
+            {
+                "Tipo": "Ahorro",
+                "Nivel": "Crítico",
+                "Mensaje": "Tus gastos superan tus ingresos mensuales.",
+            }
+        )
+
+    elif ahorro < 10:
+        alertas.append(
+            {
+                "Tipo": "Ahorro",
+                "Nivel": "Advertencia",
+                "Mensaje": "Tu capacidad de ahorro es menor al 10%.",
+            }
+        )
+
+    # ===============================
+    # Endeudamiento
+    # ===============================
+
+    deuda = indicadores["Nivel de endeudamiento (%)"]
+
+    if deuda >= 80:
+        alertas.append(
+            {
+                "Tipo": "Endeudamiento",
+                "Nivel": "Crítico",
+                "Mensaje": "El nivel de endeudamiento es muy elevado.",
+            }
+        )
+
+    elif deuda >= 60:
+        alertas.append(
+            {
+                "Tipo": "Endeudamiento",
+                "Nivel": "Advertencia",
+                "Mensaje": "El nivel de endeudamiento es alto.",
+            }
+        )
+
+    # ===============================
+    # Concentración del gasto
+    # ===============================
+
+    concentracion = indicadores["Concentración del gasto (%)"]
+
+    if concentracion >= 40:
+
+        alertas.append(
+            {
+                "Tipo": "Patrón de consumo",
+                "Nivel": "Información",
+                "Mensaje": (
+                    f"El {concentracion:.1f}% de tus gastos "
+                    f"se concentra en '{indicadores['Categoría principal']}'."
+                ),
+            }
+        )
+
+    return alertas
+
+
+def generar_recomendaciones(perfil, indicadores, alertas):
+    """
+    Genera recomendaciones financieras personalizadas a partir del
+    perfil financiero, los indicadores calculados y las alertas detectadas.
+    """
+
     recomendaciones = []
 
-    if resumen:
-        categoria_top = max(resumen, key=resumen.get)
-        monto_top = resumen[categoria_top]
-        gasto_total = sum(resumen.values())
-        pct_top = (monto_top / gasto_total) * 100 if gasto_total > 0 else 0
-        pct_ingreso = (monto_top / ingreso_mensual) * 100 if ingreso_mensual > 0 else 0
+    # ==================================================
+    # Recomendaciones generales según el perfil financiero
+    # ==================================================
 
-        # Alerta dinámica basada en la categoría predominante
-        if pct_top >= 30:  # Si representa el 30% o más de sus gastos totales
-            recomendaciones.append(
-                f"Alerta: Tu mayor rubro de gasto es '{categoria_top}' con ${monto_top:,.2f} "
-                f"({pct_top:.1f}% de tus gastos totales)."
-            )
+    perfil = perfil.lower()
 
-            # Reglas específicas
-            cat_lower = categoria_top.lower()
-            if "ocio" in cat_lower or "servicios" in cat_lower:
-                recomendaciones.append(
-                    "Sugerencia: Evalúa cancelar suscripciones no utilizadas o fijar un tope semanal para entretenimiento y eventos."
-                )
-            elif "alimentación" in cat_lower:
-                recomendaciones.append(
-                    "Sugerencia: Planificar las compras del súper y reducir salidas a restaurantes o entregas a domicilio."
-                )
-            elif "transporte" in cat_lower:
-                recomendaciones.append(
-                    "Sugerencia: Considerar alternativas de movilidad o consolidar viajes para optimizar el gasto de gasolina/pasajes."
-                )
-            elif "vivienda" in cat_lower:
-                recomendaciones.append(
-                    "Sugerencia: Revisa tus consumos de servicios (luz, gas) o gastos de mantenimiento periódicos."
-                )
+    if perfil == "en riesgo":
 
-        # Alerta basada en el ingreso mensual: una sola categoría absorbiendo demasiado
-        if pct_ingreso >= 15:
-            if pct_ingreso > 100:
-                recomendaciones.append(
-                    f"Atención: '{categoria_top}' por sí solo supera por completo tu ingreso "
-                    f"mensual reportado (${ingreso_mensual:,.2f}) — revisa que el ingreso "
-                    f"capturado sea correcto."
-                )
-            else:
-                recomendaciones.append(
-                    f"Atención: '{categoria_top}' por sí solo absorbe el {pct_ingreso:.1f}% de tu ingreso "
-                    f"mensual completo (${ingreso_mensual:,.2f}), más allá de lo reportado aquí, "
-                    f"vale la pena vigilar ese porcentaje."
-                )
-
-    # Recomendaciones generales basadas en el perfil de riesgo
-    perfil_clean = perfil.lower()
-    if perfil_clean == "en riesgo":
         recomendaciones.append(
-            "Reducir gastos no esenciales de inmediato para restaurar liquidez."
+            "Prioriza la reducción de gastos no esenciales para recuperar estabilidad financiera."
         )
-        recomendaciones.append("Crear un fondo de emergencia prioritario.")
-    elif perfil_clean == "en observación":
+
         recomendaciones.append(
-            "Monitorear el balance mensual para evitar pasar al perfil de riesgo."
+            "Evita adquirir nuevas deudas hasta mejorar tu capacidad de ahorro."
         )
+
         recomendaciones.append(
-            "Destinar al menos el 10% del ingreso mensual al ahorro."
+            "Construye un fondo de emergencia equivalente a por lo menos tres meses de gastos."
         )
-    else:  # Saludable
-        recomendaciones.append("Mantener el hábito de ahorro e inversión actual.")
+
+    elif perfil == "en observación":
+
         recomendaciones.append(
-            "Considerar diversificar tu excedente en instrumentos financieros a mediano plazo."
+            "Mantén un seguimiento mensual de tus gastos para evitar deteriorar tu situación financiera."
+        )
+
+        recomendaciones.append(
+            "Procura destinar al menos el 10% de tus ingresos al ahorro."
+        )
+
+    else:
+
+        recomendaciones.append("Mantén tus hábitos financieros actuales.")
+
+        recomendaciones.append(
+            "Considera diversificar parte de tu ahorro mediante instrumentos de inversión de bajo riesgo."
+        )
+
+    # ==================================================
+    # Recomendaciones según alertas
+    # ==================================================
+
+    tipos_alerta = [a["Tipo"] for a in alertas]
+
+    if "Liquidez" in tipos_alerta:
+
+        recomendaciones.append(
+            "Reduce temporalmente los gastos variables hasta recuperar un margen de ahorro saludable."
+        )
+
+    if "Ahorro" in tipos_alerta:
+
+        recomendaciones.append(
+            "Establece una meta de ahorro automática al inicio de cada mes."
+        )
+
+    if "Endeudamiento" in tipos_alerta:
+
+        recomendaciones.append(
+            "Prioriza el pago de las deudas con mayor tasa de interés."
+        )
+
+    # ==================================================
+    # Recomendaciones según patrón de consumo
+    # ==================================================
+
+    patron = indicadores["Patrón de consumo"]
+
+    if patron == "Consumidor recreativo":
+
+        recomendaciones.append(
+            "Define un presupuesto mensual para actividades recreativas y entretenimiento."
+        )
+
+    elif patron == "Consumo cotidiano":
+
+        recomendaciones.append(
+            "Planifica las compras del hogar para reducir gastos impulsivos."
+        )
+
+    elif patron == "Alta carga de gastos fijos":
+
+        recomendaciones.append(
+            "Revisa periódicamente los costos asociados a vivienda y servicios para identificar oportunidades de ahorro."
+        )
+
+    elif patron == "Alta movilidad":
+
+        recomendaciones.append(
+            "Evalúa alternativas de transporte que reduzcan el costo de tus desplazamientos."
+        )
+
+    elif patron == "Prioriza bienestar":
+
+        recomendaciones.append(
+            "Mantén el equilibrio entre el cuidado de la salud y el resto de tus objetivos financieros."
+        )
+
+    elif patron == "Inversión en desarrollo":
+
+        recomendaciones.append(
+            "Continúa invirtiendo en educación procurando mantener un presupuesto equilibrado."
+        )
+
+    elif patron == "Gasto operativo":
+
+        recomendaciones.append(
+            "Revisa periódicamente tus suscripciones y servicios contratados."
+        )
+
+    # ==================================================
+    # Recomendaciones específicas según indicadores
+    # ==================================================
+
+    if indicadores["Capacidad de ahorro (%)"] >= 20:
+
+        recomendaciones.append(
+            "Tu capacidad de ahorro es alta; podrías considerar invertir parte del excedente para alcanzar objetivos financieros de largo plazo."
+        )
+
+    elif indicadores["Capacidad de ahorro (%)"] < 10:
+
+        recomendaciones.append(
+            "Incrementar tu capacidad de ahorro debería ser una prioridad durante los próximos meses."
+        )
+
+    if indicadores["Nivel de endeudamiento (%)"] >= 60:
+
+        recomendaciones.append(
+            "Evita utilizar nuevas líneas de crédito mientras reduces tu nivel de endeudamiento."
         )
 
     return recomendaciones
@@ -224,9 +476,11 @@ def analisis_financiero(request: PerfilRequest):
     perfil = modelo_perfil_financiero.predict(fila_usuario)[0]
     probabilidad = modelo_perfil_financiero.predict_proba(fila_usuario).max()
 
-    recomendaciones = generar_recomendaciones(
-        perfil, resumen_gastos, request.ingreso_mensual
+    indicadores = generar_indicadores(
+        request.ingreso_mensual, resumen_gastos, request.nivel_endeudamiento
     )
+    alertas = generar_alertas(indicadores)
+    recomendaciones = generar_recomendaciones(perfil, indicadores, alertas)
 
     return PerfilResponse(
         perfil_financiero=perfil,
