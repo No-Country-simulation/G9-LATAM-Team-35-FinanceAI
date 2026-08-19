@@ -4,7 +4,9 @@ import com.team35.backend.dto.AnalisisFinancieroRequest;
 import com.team35.backend.dto.AnalisisFinancieroResponse;
 import com.team35.backend.dto.ClasificacionTransaccionResponse;
 import com.team35.backend.dto.TransaccionInputDTO;
+import com.team35.backend.entity.Usuario;
 import com.team35.backend.service.AnalisisFinancieroService;
+import com.team35.backend.service.AuthService;
 import com.team35.backend.service.ClasificadorTransaccionesService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,21 +20,35 @@ public class AnalisisFinancieroController {
 
     private final AnalisisFinancieroService analisisFinancieroService;
     private final ClasificadorTransaccionesService clasificadorTransaccionesService;
+    private final AuthService authService;
 
     public AnalisisFinancieroController(AnalisisFinancieroService analisisFinancieroService,
-                                         ClasificadorTransaccionesService clasificadorTransaccionesService) {
+                                         ClasificadorTransaccionesService clasificadorTransaccionesService,
+                                         AuthService authService) {
         this.analisisFinancieroService = analisisFinancieroService;
         this.clasificadorTransaccionesService = clasificadorTransaccionesService;
+        this.authService = authService;
     }
 
-    @Operation(summary = "Analiza la salud financiera del usuario a partir de 1 a N transacciones")
-    @PostMapping("/analisis-financiero")
+    @Operation(summary = "Analiza la salud financiera del usuario a partir de 1 a N transacciones. "
+            + "Funciona sin cuenta (no se guarda nada); si hay un usuario autenticado, se guarda el historial.")
+    @PostMapping("/api/analisis-financiero")
     public ResponseEntity<AnalisisFinancieroResponse> analizar(@Valid @RequestBody AnalisisFinancieroRequest request) {
-        return ResponseEntity.ok(analisisFinancieroService.analizar(request));
+
+        AnalisisFinancieroResponse response = analisisFinancieroService.analizar(request);
+
+        if (authService.isAuthenticated()) {
+            Usuario usuario = authService.getUsuarioAutenticado();
+            // TODO: persistir en "analisis" + "recomendaciones" para el usuario autenticado.
+            // Todavía pendiente: falta wirear AnalisisRepository/RecomendacionRepository aquí,
+            // y normalizar el texto de perfil que regrese Python al enum PerfilTipo antes de guardar.
+        }
+
+        return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Endpoint interno que clasifica una transacción individual en una categoría financiera llamando al modelo de ML")
-    @PostMapping("/clasificar-transaccion")
+    @Operation(summary = "Clasifica una transacción individual en una categoría financiera")
+    @PostMapping("/api/clasificar-transaccion")
     public ResponseEntity<ClasificacionTransaccionResponse> clasificar(@Valid @RequestBody TransaccionInputDTO transaccion) {
         return ResponseEntity.ok(clasificadorTransaccionesService.clasificar(transaccion));
     }

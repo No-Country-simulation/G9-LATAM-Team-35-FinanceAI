@@ -2,65 +2,45 @@ package com.team35.backend.service;
 
 import com.team35.backend.dto.AnalisisFinancieroRequest;
 import com.team35.backend.dto.AnalisisFinancieroResponse;
-import com.team35.backend.dto.TransaccionInputDTO;
-import com.team35.backend.util.PerfilTextoMapper;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
+/**
+ * Ya NO calcula nada por su cuenta. prediction_wrapper.py (Data) expone su
+ * propio POST /analisis-financiero que clasifica + calcula perfil + genera
+ * recomendaciones en una sola llamada — este service solo reenvía la
+ * petición tal cual y regresa la respuesta de Python sin transformarla.
+ * <p>
+ * IMPORTANTE: NO se traduce ni se cambia el texto/formato del perfil
+ * (EN_OBSERVACION vs "En observación" vs "en observación") — se pasa
+ * exactamente lo que Python responda. Si el formato real de Python no
+ * coincide con lo documentado en Notion, es algo a resolver con Data,
+ * no algo que este service deba adivinar o corregir silenciosamente.
+ */
 @Service
 public class AnalisisFinancieroService {
 
-    private final ClasificadorTransaccionesService clasificadorService;
-    private final PerfilFinancieroService perfilService;
-    private final RecomendacionService recomendacionService;
+    private final RestTemplate restTemplate;
 
-    public AnalisisFinancieroService(ClasificadorTransaccionesService clasificadorService,
-                                      PerfilFinancieroService perfilService,
-                                      RecomendacionService recomendacionService) {
-        this.clasificadorService = clasificadorService;
-        this.perfilService = perfilService;
-        this.recomendacionService = recomendacionService;
+    @Value("${python.api.url}")
+    private String pythonApiUrl;
+
+    public AnalisisFinancieroService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
     }
 
     public AnalisisFinancieroResponse analizar(AnalisisFinancieroRequest request) {
+        String url = pythonApiUrl + "/analisis-financiero";
 
-        // 1. Clasificar cada transacción y sumar por categoría.
-        // Las keys del resumen van en minúsculas para coincidir con el contrato
-        // acordado con Data Science (ej. "alimentacion", no "ALIMENTACION").
-        Map<String, Double> resumenGastos = new LinkedHashMap<>();
-        double totalGastos = 0.0;
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
 
-        for (TransaccionInputDTO transaccion : request.getTransacciones()) {
-            String categoria = clasificadorService.clasificar(transaccion).getCategoria_gasto();
-            resumenGastos.merge(categoria.toLowerCase(), transaccion.getValor(), Double::sum);
-            totalGastos += transaccion.getValor();
-        }
+        HttpEntity<AnalisisFinancieroRequest> entity = new HttpEntity<>(request, headers);
 
-        // 2. Evaluar perfil financiero (funciona igual para 1 o N transacciones)
-        PerfilFinancieroService.ResultadoPerfil resultadoPerfil = perfilService.evaluar(
-                request.getIngresoMensual(),
-                request.getNivelEndeudamiento(),
-                request.getFrecuenciaAhorro(),
-                totalGastos
-        );
-
-        // 3. Generar recomendaciones
-        List<String> recomendaciones = recomendacionService.generar(
-                resultadoPerfil.perfil,
-                request.getFrecuenciaAhorro(),
-                resumenGastos
-        );
-
-        // 4. Traducir el enum interno (EN_OBSERVACION) al texto legible que
-        // espera el contrato de la API ("En observación")
-        return new AnalisisFinancieroResponse(
-                PerfilTextoMapper.aTexto(resultadoPerfil.perfil),
-                resultadoPerfil.probabilidad,
-                resumenGastos,
-                recomendaciones
-        );
+        return restTemplate.postForObject(url, entity, AnalisisFinancieroResponse.class);
     }
 }

@@ -1,25 +1,22 @@
 package com.team35.backend.dto;
 
-/**
- * DTO que representa exactamente la respuesta enviada por
- * el servicio de Ciencia de Datos.
- *
- * Backend simplemente recibe este objeto y lo devuelve al frontend.
- */
 public class ClasificacionTransaccionResponse {
 
     private String descripcion;
     private double valor;
-    private String categoria_gasto;
 
+    // OJO: Python devuelve "categoria_gasto" en el JSON, no "categoria".
+    // Con snake_case activo, Jackson mapea este campo Java a esa key exacta,
+    // así que el nombre del campo Java debe coincidir en snake_case invertido.
+    private String categoriaGasto;
 
     public ClasificacionTransaccionResponse() {
     }
 
-    public ClasificacionTransaccionResponse(String descripcion, double valor, String categoria_gasto) {
+    public ClasificacionTransaccionResponse(String descripcion, double valor, String categoriaGasto) {
         this.descripcion = descripcion;
         this.valor = valor;
-        this.categoria_gasto = categoria_gasto;
+        this.categoriaGasto = categoriaGasto;
     }
 
     public String getDescripcion() {
@@ -38,12 +35,11 @@ public class ClasificacionTransaccionResponse {
         this.valor = valor;
     }
 
-    public String getCategoria_gasto() {
-        return categoria_gasto;
+    public String getCategoriaGasto() {
+        return categoriaGasto;
     }
 
-    public void setCategoria_gasto(String categoria_gasto) {
-        this.categoria_gasto = categoria_gasto;
+    public void setCategoriaGasto(String categoriaGasto) {
+        this.categoriaGasto = categoriaGasto;
     }
-
 }

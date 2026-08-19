@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/usuarios")
-@Tag(name = "Configuración", description = "Perfil del usuario y preferencias (moneda) para la página de Configuración")
+@Tag(name = "Configuración", description = "Perfil del usuario autenticado y preferencias (moneda) para la página de Configuración")
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
@@ -35,8 +35,7 @@ public class UsuarioController {
 
     @Operation(summary = "Actualiza nombre y/o moneda del usuario autenticado")
     @PutMapping("/me")
-    public ResponseEntity<UsuarioPerfilResponse> actualizarPerfil(
-            @Valid @RequestBody ActualizarUsuarioRequest request) {
+    public ResponseEntity<UsuarioPerfilResponse> actualizarPerfil(@Valid @RequestBody ActualizarUsuarioRequest request) {
         Long usuarioId = authService.getUsuarioIdAutenticado();
         return ResponseEntity.ok(usuarioService.actualizarPerfil(usuarioId, request));
     }

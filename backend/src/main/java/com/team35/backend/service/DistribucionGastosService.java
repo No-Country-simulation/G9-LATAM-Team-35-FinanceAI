@@ -1,5 +1,7 @@
 package com.team35.backend.service;
 
+import com.team35.backend.dto.DistribucionCategoriaDTO;
+import com.team35.backend.dto.DistribucionGastosResponse;
 import com.team35.backend.entity.Transaccion;
 import com.team35.backend.enums.TipoTransaccion;
 import com.team35.backend.repository.TransaccionRepository;
@@ -7,16 +9,19 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Trae la distribución de gastos por categoría de un usuario, para un mes dado,
  * usando SOLO datos que ya están clasificados en BD. No corre ningún modelo de IA
  * aquí — esa parte ya pasó cuando se clasificó/analizó la transacción.
  *
- * Pensado para que Lucero (frontend) arme la gráfica de distribución.
+ * Formato de respuesta acordado en Notion (Página 2, Opción A): lista de
+ * {categoria, total, porcentaje}, ordenada de mayor a menor gasto.
  */
 @Service
 public class DistribucionGastosService {
@@ -28,13 +33,13 @@ public class DistribucionGastosService {
     }
 
     /**
-     * @return mapa categoria(lowercase) -> total gastado en el mes, o null si no hay
-     * ninguna transacción clasificada ese mes (el frontend decide qué mensaje mostrar
-     * cuando recibe null — ver nota en Notion).
+     * @return null si no hay ninguna transacción clasificada ese mes (el frontend
+     * decide qué mensaje mostrar cuando recibe null — ver nota en Notion).
      */
-    public Map<String, Double> obtenerDistribucion(Long usuarioId, YearMonth mes) {
-        LocalDate desde = mes.atDay(1);
-        LocalDate hasta = mes.atEndOfMonth();
+    public DistribucionGastosResponse obtenerDistribucion(Long usuarioId, int mes, int anio) {
+        YearMonth periodo = YearMonth.of(anio, mes);
+        LocalDate desde = periodo.atDay(1);
+        LocalDate hasta = periodo.atEndOfMonth();
 
         List<Transaccion> gastos = transaccionRepository
                 .findByUsuarioIdAndTipoAndCategoriaIsNotNullAndFechaBetween(
@@ -44,11 +49,23 @@ public class DistribucionGastosService {
             return null;
         }
 
-        Map<String, Double> distribucion = new LinkedHashMap<>();
+        Map<String, Double> totalesPorCategoria = new LinkedHashMap<>();
         for (Transaccion transaccion : gastos) {
-            String categoria = transaccion.getCategoria().getNombre().toLowerCase();
-            distribucion.merge(categoria, transaccion.getValor().doubleValue(), Double::sum);
+            String categoria = transaccion.getCategoria().getNombre(); // ya viene en mayúsculas (ALIMENTACION, etc.)
+            totalesPorCategoria.merge(categoria, transaccion.getValor().doubleValue(), Double::sum);
         }
-        return distribucion;
+
+        double totalGeneral = totalesPorCategoria.values().stream().mapToDouble(Double::doubleValue).sum();
+
+        List<DistribucionCategoriaDTO> distribucion = totalesPorCategoria.entrySet().stream()
+                .map(e -> new DistribucionCategoriaDTO(
+                        e.getKey(),
+                        e.getValue(),
+                        totalGeneral > 0 ? (e.getValue() / totalGeneral) * 100 : 0
+                ))
+                .sorted((a, b) -> Double.compare(b.getTotal(), a.getTotal())) // mayor a menor
+                .collect(Collectors.toList());
+
+        return new DistribucionGastosResponse(distribucion);
     }
 }
