@@ -185,6 +185,8 @@ data-science/
 
 ## Instalación y Entorno Local
 
+**Se recomienda usar Python 3.11.9.** Es la última versión de la rama 3.11 con instalador oficial para Windows. En Linux/Mac no hay esta limitación, cualquier 3.11.x funciona.
+
 1. **Crear y activar entorno virtual:**
 
 ```bash
