@@ -51,4 +51,19 @@ public class DistribucionGastosService {
         }
         return distribucion;
     }
+
+    /**
+     * Sobrecarga conveniente para recibir el período como String "YYYY-MM".
+     * Devuelve un mapa vacío si no hay datos (en vez de null) para facilitar
+     * el uso en AlertaService.
+     */
+    public Map<String, Double> obtenerPorPeriodo(Long usuarioId, String mesAnio) {
+        try {
+            YearMonth ym = YearMonth.parse(mesAnio);
+            Map<String, Double> result = obtenerDistribucion(usuarioId, ym);
+            return result != null ? result : new LinkedHashMap<>();
+        } catch (Exception e) {
+            return new LinkedHashMap<>();
+        }
+    }
 }

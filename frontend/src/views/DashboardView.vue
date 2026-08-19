@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
 import Sidebar from '../components/Sidebar.vue'
+import NotificationDropdown from '../components/NotificationDropdown.vue'
 import {
   PhMagnifyingGlass,
   PhBell,
@@ -44,6 +45,10 @@ const fecha = ref(new Date().toISOString().split('T')[0])
 const totalIngreso = ref(0.00)
 const totalGasto = ref(0.00)
 const ingresoMensualMensaje = ref('')
+
+const ultimoPerfil = ref('Sin análisis')
+const ultimoPerfilMensaje = ref('No se ha registrado análisis para este período.')
+const tieneAnalisisPeriodo = ref(false)
 
 const transaccionesList = ref([])
 const doughnutLegendList = ref([])
@@ -124,6 +129,45 @@ const cargarDatosMes = async () => {
 
   // 4. Actualizar gráfico de barras para los 6 meses
   renderBarChart(transaccionesList.value)
+
+  // 5. Cargar análisis financiero específico para el mes seleccionado
+  try {
+    const resHistorial = await analisisService.obtenerHistorial()
+    const listaHistorial = Array.isArray(resHistorial) ? resHistorial : (resHistorial.data || [])
+    
+    if (listaHistorial && listaHistorial.length > 0) {
+      // Buscar análisis del mes seleccionado
+      const analisisMes = listaHistorial.find(a => {
+        const f = a.fecha_analisis || a.fechaAnalisis || ''
+        return f.startsWith(selectedMonth.value)
+      })
+
+      // Usar el análisis del mes seleccionado o el último registrado
+      const analisisUtilizar = analisisMes || listaHistorial[0]
+
+      if (analisisUtilizar) {
+        tieneAnalisisPeriodo.value = true
+        const perfilRaw = (analisisUtilizar.perfil || '').toString().toUpperCase()
+        ultimoPerfil.value = perfilRaw.includes('SALUDABLE') ? 'Saludable' : (perfilRaw.includes('OBSERVACION') ? 'En Observación' : 'En Riesgo')
+        
+        const nivelDeuda = analisisUtilizar.nivel_endeudamiento !== undefined ? analisisUtilizar.nivel_endeudamiento : (analisisUtilizar.nivelEndeudamiento || 0)
+        
+        if (perfilRaw.includes('SALUDABLE')) {
+          ultimoPerfilMensaje.value = `Endeudamiento controlado (${nivelDeuda}%). ¡Buen manejo!`
+        } else if (perfilRaw.includes('OBSERVACION')) {
+          ultimoPerfilMensaje.value = `Atención a tus deudas (${nivelDeuda}%). Revisa recomendaciones.`
+        } else {
+          ultimoPerfilMensaje.value = `Alto nivel de endeudamiento (${nivelDeuda}%). Requiere optimización.`
+        }
+      }
+    } else {
+      tieneAnalisisPeriodo.value = false
+      ultimoPerfil.value = 'Sin análisis'
+      ultimoPerfilMensaje.value = 'Aún no has analizado tus finanzas de este período.'
+    }
+  } catch (err) {
+    console.warn('Could not fetch analysis history for dashboard profile:', err)
+  }
 }
 
 const renderDoughnutChart = (labels, values, colors) => {
@@ -328,9 +372,7 @@ onMounted(async () => {
             <button @click="showModal = true" class="bg-[var(--color-fintech-primary)] text-white px-4 py-2 rounded-full font-bold text-sm flex items-center gap-2 shadow hover:bg-[var(--color-fintech-primary-hover)] transition-colors cursor-pointer">
               <PhPlus weight="bold" /> Nueva Transacción
             </button>
-            <button class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-gray-600 shadow-sm border border-gray-200 hover:text-[var(--color-fintech-dark)] transition-colors">
-              <PhBell :size="20" />
-            </button>
+            <NotificationDropdown :mes="selectedMonth" />
           </div>
         </header>
 
@@ -362,13 +404,21 @@ onMounted(async () => {
           </div>
 
           <!-- Metrica 3 (Profile) -->
-          <div class="bg-[var(--color-fintech-dark)] rounded-[24px] p-6 shadow-lg text-center flex flex-col items-center justify-center relative overflow-hidden">
-            <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center text-white mb-3">
-              <PhShieldCheck :size="28" weight="fill" />
+          <div class="bg-[var(--color-fintech-dark)] rounded-[24px] p-6 shadow-lg text-center flex flex-col items-center justify-between relative overflow-hidden">
+            <div class="flex flex-col items-center">
+              <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center text-white mb-2">
+                <PhShieldCheck :size="26" weight="fill" />
+              </div>
+              <p class="text-[10px] font-bold text-gray-300 tracking-widest uppercase mb-1">Perfil Financiero ({{ selectedMonth }})</p>
+              <h2 class="text-2xl font-bold text-white mb-1">{{ ultimoPerfil }}</h2>
+              <p class="text-xs text-emerald-200 line-clamp-2 px-2">{{ ultimoPerfilMensaje }}</p>
             </div>
-            <p class="text-[10px] font-bold text-gray-300 tracking-widest uppercase mb-1">Perfil Financiero</p>
-            <h2 class="text-2xl font-bold text-white mb-2">Saludable</h2>
-            <p class="text-xs text-emerald-200">Estás ahorrando el 62% de tus ingresos este mes. ¡Excelente trabajo!</p>
+            <div class="mt-3 pt-2 border-t border-white/10 w-full">
+              <router-link to="/analisis" class="text-[11px] font-bold text-[#19d282] hover:underline flex items-center justify-center gap-1">
+                <span>{{ tieneAnalisisPeriodo ? 'Ver Diagnóstico Completo' : 'Realizar análisis de este mes' }}</span>
+                <PhArrowRight :size="12" />
+              </router-link>
+            </div>
           </div>
         </div>
 

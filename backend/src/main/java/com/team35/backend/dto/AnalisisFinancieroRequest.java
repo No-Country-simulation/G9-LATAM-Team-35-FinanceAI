@@ -1,26 +1,28 @@
 package com.team35.backend.dto;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 
 import java.util.List;
 
 /**
- * Contrato acordado con Data Science (Marco/Cintia): siempre una lista de
- * transacciones, desde 1 hasta N. Mismo formato para el caso "individual"
- * y el caso "estado de cuenta completo".
+ * Contrato de análisis financiero. Acepta tanto camelCase como snake_case.
  */
 public class AnalisisFinancieroRequest {
 
     @Positive(message = "El ingreso mensual debe ser mayor que cero")
+    @JsonAlias({"ingresoMensual", "ingreso_mensual"})
     private double ingresoMensual;
 
     @Min(value = 0, message = "El nivel de endeudamiento no puede ser negativo")
     @Max(value = 100, message = "El nivel de endeudamiento no puede ser mayor a 100")
+    @JsonAlias({"nivelEndeudamiento", "nivel_endeudamiento"})
     private double nivelEndeudamiento;
 
     @NotBlank(message = "La frecuencia de ahorro es obligatoria")
     @Pattern(regexp = "(?i)Baja|Media|Alta", message = "frecuencia_ahorro debe ser Baja, Media o Alta")
+    @JsonAlias({"frecuenciaAhorro", "frecuencia_ahorro"})
     private String frecuenciaAhorro;
 
     @NotEmpty(message = "Debe incluir al menos una transacción")

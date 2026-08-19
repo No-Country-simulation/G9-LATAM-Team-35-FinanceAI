@@ -53,8 +53,7 @@ public class AnalisisService {
                 analisis.getIngresoMensual(),
                 analisis.getNivelEndeudamiento(),
                 analisis.getFrecuenciaAhorro(),
-                analisis.getFechaAnalisis(),
-                ""
+                analisis.getFechaAnalisis()
         );
     }
 

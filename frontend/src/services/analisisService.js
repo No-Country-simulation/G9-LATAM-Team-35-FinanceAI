@@ -19,11 +19,11 @@ export const analisisService = {
    * de AnalisisFinancieroController, pensado para que el backend llame al modelo ML.
    */
   clasificarTransaccion(descripcion, monto) {
+    const valorNum = (Number(monto) > 0) ? Number(monto) : 1.0
     return request('/api/transacciones/clasificar-transaccion', {
       method: 'POST',
-      body: JSON.stringify([{ descripcion, valor: monto }]),
+      body: JSON.stringify([{ descripcion, valor: valorNum, monto: valorNum }]),
     }).then(res => {
-
       // El backend devuelve una lista; tomamos el primer (y único) resultado
       if (Array.isArray(res) && res.length > 0) return res[0]
       return res
@@ -54,6 +54,25 @@ export const analisisService = {
     return request(`/api/analisis/buscar?query=${encodeURIComponent(query)}`)
   },
 
+  /**
+   * GET /api/analisis/frecuencia-ahorro
+   * Obtiene la frecuencia de ahorro calculada automáticamente (o indica si requiere encuesta).
+   */
+  obtenerFrecuenciaAhorro() {
+    return request('/api/analisis/frecuencia-ahorro')
+  },
+
+  /**
+   * POST /api/analisis/frecuencia-ahorro-encuesta
+   * Envía las 5 respuestas de la encuesta para calcular la frecuencia de ahorro.
+   */
+  enviarEncuestaFrecuenciaAhorro(payload) {
+    return request('/api/analisis/frecuencia-ahorro-encuesta', {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    })
+  },
+
   calcularEndeudamiento(ingresoMensual, cuotasMensuales) {
     return request('/api/analisis/nivel-endeudamiento', {
       method: 'POST',
@@ -73,5 +92,14 @@ export const analisisService = {
         mensaje: data.mensaje || 'Cálculo completado'
       }
     })
+  },
+
+  /**
+   * GET /api/analisis/alertas?mes={YYYY-MM}
+   * Genera alertas financieras automáticas (liquidez, ahorro, endeudamiento, gastos elevados).
+   */
+  obtenerAlertas(mes) {
+    const query = mes ? `?mes=${encodeURIComponent(mes)}` : ''
+    return request(`/api/analisis/alertas${query}`)
   }
 }

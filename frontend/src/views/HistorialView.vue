@@ -39,6 +39,28 @@ const mapPerfilToUi = (item) => {
     probClass = 'text-red-500'
   }
 
+  // Extraer valores con soporte dual snake_case y camelCase
+  const rawFecha = item.fecha_analisis || item.fechaAnalisis
+  const rawIngreso = item.ingreso_mensual !== undefined ? item.ingreso_mensual : item.ingresoMensual
+  const rawEndeudamiento = item.nivel_endeudamiento !== undefined ? item.nivel_endeudamiento : item.nivelEndeudamiento
+  const rawFrecuencia = item.frecuencia_ahorro || item.frecuenciaAhorro
+
+  let fechaFormateada = ''
+  let fechaHora = ''
+  if (rawFecha) {
+    const d = new Date(rawFecha)
+    if (!isNaN(d.getTime())) {
+      const mesStr = d.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' })
+      fechaFormateada = mesStr.charAt(0).toUpperCase() + mesStr.slice(1)
+      fechaHora = d.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+    }
+  }
+
+  const titulo = item.nombre || (fechaFormateada ? `${fechaFormateada} - ${estadoText}` : 'Análisis Financiero')
+  const subtitulo = rawIngreso !== null && rawIngreso !== undefined
+    ? `Ingreso: $${Number(rawIngreso).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} | Endeudamiento: ${Number(rawEndeudamiento || 0)}% | Ahorro: ${rawFrecuencia || 'N/A'}`
+    : 'Evaluación financiera registrada'
+
   // Probabilidad: si viene como decimal (0.94) o porcentaje (94)
   let probVal = item.probabilidad
   if (typeof probVal === 'number') {
@@ -49,10 +71,10 @@ const mapPerfilToUi = (item) => {
 
   return {
     id: item.id,
-    titulo: item.nombre || `Análisis ${item.fechaAnalisis ? new Date(item.fechaAnalisis).toLocaleDateString() : ''}`,
-    resultado: item.ingresoMensual 
-      ? `Ingreso evaluado: $${item.ingresoMensual} | Endeudamiento: ${item.nivelEndeudamiento || 0}%` 
-      : 'Evaluación financiera registrada',
+    titulo,
+    subtitulo,
+    fechaHora,
+    resultado: subtitulo,
     estado: estadoText,
     probabilidad: probVal,
     icon,
@@ -164,7 +186,12 @@ const irANuevoAnalisis = () => {
             <!-- Card Content -->
             <div class="bg-white rounded-[24px] p-6 shadow-sm border border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4 transition-shadow hover:shadow-md">
               <div>
-                <h3 class="text-base font-bold text-[#0f4c54]">{{ item.titulo }}</h3>
+                <div class="flex items-center gap-3">
+                  <h3 class="text-base font-bold text-[#0f4c54]">{{ item.titulo }}</h3>
+                  <span v-if="item.fechaHora" class="text-[11px] text-slate-400 font-semibold bg-slate-100 px-2.5 py-0.5 rounded-md">
+                    {{ item.fechaHora }}
+                  </span>
+                </div>
                 <p class="text-xs text-slate-500 mt-1 font-medium">{{ item.resultado }}</p>
               </div>
 

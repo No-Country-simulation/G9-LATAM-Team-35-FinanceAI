@@ -1,5 +1,6 @@
 package com.team35.backend.dto;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.team35.backend.enums.PerfilTipo;
 
 import java.math.BigDecimal;
@@ -11,10 +12,19 @@ public class AnalisisDetails {
     private Long id;
     private PerfilTipo perfil;
     private BigDecimal probabilidad;
+
+    @JsonAlias({"ingresoMensual", "ingreso_mensual"})
     private BigDecimal ingresoMensual;
+
+    @JsonAlias({"nivelEndeudamiento", "nivel_endeudamiento"})
     private BigDecimal nivelEndeudamiento;
+
+    @JsonAlias({"frecuenciaAhorro", "frecuencia_ahorro"})
     private String frecuenciaAhorro;
+
+    @JsonAlias({"fechaAnalisis", "fecha_analisis"})
     private LocalDateTime fechaAnalisis;
+
     private String nombre;
 
     public AnalisisDetails() {
@@ -36,6 +46,7 @@ public class AnalisisDetails {
         this.nivelEndeudamiento = nivelEndeudamiento;
         this.frecuenciaAhorro = frecuenciaAhorro;
         this.fechaAnalisis = fechaAnalisis;
+        this.nombre = generarNombre(fechaAnalisis, perfil != null ? perfil.name() : "SALUDABLE");
     }
 
     public AnalisisDetails(
@@ -55,7 +66,7 @@ public class AnalisisDetails {
         this.nivelEndeudamiento = nivelEndeudamiento;
         this.frecuenciaAhorro = frecuenciaAhorro;
         this.fechaAnalisis = fechaAnalisis;
-        this.nombre = generarNombre(fechaAnalisis, perfil.name());
+        this.nombre = (nombre != null && !nombre.isBlank()) ? nombre : generarNombre(fechaAnalisis, perfil != null ? perfil.name() : "SALUDABLE");
     }
 
     public Long getId() {
@@ -121,11 +132,13 @@ public class AnalisisDetails {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
     /**
      * Genera el nombre en formato: "Mes Año - PERFIL"
      * Ejemplo: "Agosto 2026 - SALUDABLE"
      */
     private String generarNombre(LocalDateTime fecha, String perfil) {
+        if (fecha == null) return "Análisis Financiero";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
         String mesAnio = fecha.format(formatter);
         // Capitalizar primera letra del mes (en español)
