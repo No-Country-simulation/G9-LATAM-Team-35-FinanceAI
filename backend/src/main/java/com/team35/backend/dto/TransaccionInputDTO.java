@@ -1,14 +1,16 @@
 package com.team35.backend.dto;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
 
 public class TransaccionInputDTO {
 
     @NotBlank(message = "La descripción de la transacción no puede estar vacía")
     private String descripcion;
 
-    @Positive(message = "El valor de la transacción debe ser mayor que cero")
+    @Min(value = 0, message = "El valor de la transacción no puede ser negativo")
+    @JsonAlias({"valor", "monto"})
     private double valor;
 
     public TransaccionInputDTO() {

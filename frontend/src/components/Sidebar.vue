@@ -85,7 +85,7 @@ const isActive = (path) => route.path === path
     <div class="p-6">
       <div class="flex items-center gap-3 mb-1 text-white">
         <PhWallet weight="fill" :size="28" class="text-[#19d282]" />
-        <h2 class="text-xl font-bold tracking-wide">FinTech Pro</h2>
+        <h2 class="text-xl font-bold tracking-wide">Finance AI</h2>
       </div>
       <p class="text-xs text-gray-300/70 pl-[40px]" v-if="isGuest">Cuenta Invitado</p>
       <p class="text-xs text-gray-300/70 pl-[40px]" v-else>Cuenta Usuario</p>

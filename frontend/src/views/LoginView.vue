@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { PhWallet, PhEnvelopeSimple, PhLockKey, PhUser } from '@phosphor-icons/vue'
 import { useRouter } from 'vue-router'
 import { authService } from '../services/authService'
+import ModalEncuestaAhorro from '../components/ModalEncuestaAhorro.vue'
 
 const props = defineProps({
   initialTab: {
@@ -24,6 +25,7 @@ const registerPasswordConfirm = ref('')
 
 const errorMessage = ref('')
 const loading = ref(false)
+const showOnboardingSurvey = ref(false)
 
 const proceedToGuest = () => {
   router.push('/evaluacion')
@@ -63,15 +65,28 @@ const handleRegister = async () => {
   try {
     if (registerEmail.value && registerPassword.value && registerNombre.value) {
       await authService.register(registerNombre.value, registerEmail.value, registerPassword.value)
+      // Auto login
+      const resLogin = await authService.login(registerEmail.value, registerPassword.value)
+      if (resLogin && resLogin.token) {
+        localStorage.setItem('token', resLogin.token)
+        if (resLogin.usuario) {
+          localStorage.setItem('user', JSON.stringify(resLogin.usuario))
+        }
+      }
     }
-    router.push('/dashboard')
+    // Desplegar encuesta de onboarding
+    showOnboardingSurvey.value = true
   } catch (err) {
     console.warn('API auth register error:', err)
     errorMessage.value = err.message || 'Error al registrarse'
-    router.push('/dashboard')
+    showOnboardingSurvey.value = true
   } finally {
     loading.value = false
   }
+}
+
+const finalizarOnboarding = (resultado) => {
+  router.push('/dashboard')
 }
 </script>
 
@@ -85,7 +100,7 @@ const handleRegister = async () => {
         <div class="bg-[var(--color-fintech-dark)] text-white p-3 rounded-2xl mb-4">
           <PhWallet weight="fill" :size="32" />
         </div>
-        <h1 class="text-2xl font-bold text-[var(--color-fintech-dark)]">FinTech Pro</h1>
+        <h1 class="text-2xl font-bold text-[var(--color-fintech-dark)]">Finance AI</h1>
       </div>
 
       <!-- Tabs -->
@@ -209,5 +224,12 @@ const handleRegister = async () => {
         Al continuar, aceptas nuestros <a href="#" class="underline">Términos de Servicio</a> y <a href="#" class="underline">Política de Privacidad</a>.
       </div>
     </div>
+
+    <!-- Modal Encuesta Onboarding -->
+    <ModalEncuestaAhorro
+      v-model:visible="showOnboardingSurvey"
+      :is-guest="false"
+      @completado="finalizarOnboarding"
+    />
   </div>
 </template>

@@ -140,7 +140,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { analisisService } from '../services/analisisService'
 import { PhX, PhArrowsClockwise, PhTrash, PhPlus, PhSpinner, PhCalculator, PhCheck } from '@phosphor-icons/vue'
 
@@ -166,6 +166,18 @@ const nivelEndeudamientoCalculado = ref(null)
 const mensajeEndeudamiento = ref('')
 const recomendacionEndeudamiento = ref('')
 
+// Auto cargar ingresos del mes seleccionado cuando se abre el modal
+watch(() => props.visible, (val) => {
+    if (val && props.ingresosUsuario && props.ingresosUsuario > 0) {
+        ingresoEndeudamiento.value = props.ingresosUsuario
+    }
+}, { immediate: true })
+
+watch(() => props.ingresosUsuario, (val) => {
+    if (val && val > 0 && ingresoEndeudamiento.value === 0) {
+        ingresoEndeudamiento.value = val
+    }
+})
 
 const totalDeudas = computed(() => {
     const total = deudasList.value.reduce((sum, d) => {
@@ -182,7 +194,7 @@ const close = () => {
 }
 
 const resetearEstado = () => {
-    ingresoEndeudamiento.value = 0
+    ingresoEndeudamiento.value = props.ingresosUsuario || 0
     deudasList.value = [{ monto: null }]
     nivelEndeudamientoCalculado.value = null
     mensajeEndeudamiento.value = ''
@@ -203,7 +215,7 @@ const obtenerIngresos = () => {
     if (props.ingresosUsuario && props.ingresosUsuario > 0) {
         ingresoEndeudamiento.value = props.ingresosUsuario
     } else {
-        alert('No hay ingresos registrados. Por favor ingresa manualmente.')
+        alert('No hay ingresos registrados para este período. Por favor ingresa el monto manualmente.')
     }
 }
 
