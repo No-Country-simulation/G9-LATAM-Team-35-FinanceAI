@@ -2,28 +2,18 @@ from fastapi import FastAPI, Request, Body
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 from pathlib import Path
-import sys
 import joblib, re, unicodedata
 import pandas as pd
 
+from oci_service import OCIService
+
 """
 Ancla las rutas a la ubicación de este archivo, 
-no al directorio desde donde se ejecuta el proceso
+no al directorio desde donde se ejecuta el proceso 
+(necesario porque Docker corre uvicorn)
 """
 BASE_DIR = Path(__file__).resolve().parent
 MODELS_DIR = BASE_DIR / ".." / "models"
-
-# Asegura que la carpeta src esté en sys.path para importar módulos locales
-if str(BASE_DIR) not in sys.path:
-    sys.path.insert(0, str(BASE_DIR))
-
-try:
-    from oci_service import OCIService
-except ImportError:
-    try:
-        from src.oci_service import OCIService
-    except ImportError:
-        OCIService = None
 
 
 app = FastAPI(title="FinanceAI - Microservicio de clasificación y perfil financiero")
