@@ -1,25 +1,39 @@
 package com.team35.backend.controller;
 
 import com.team35.backend.dto.AnalisisDetails;
+import com.team35.backend.dto.EndeudamientoRequest;
+import com.team35.backend.dto.EndeudamientoDetails;
 import com.team35.backend.service.AnalisisService;
 import com.team35.backend.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/analisis")
 @RequiredArgsConstructor
+@Validated
 public class AnalisisController {
 
     private final AnalisisService analisisService;
     private final AuthService authService;
+
+    @Operation(summary="Obtiene el nivel de endeudamiento calculado a partir de los datos enviados por el usuario que servirán para generar un análisis financiero")
+    @PostMapping("/nivel-endeudamiento")
+    public ResponseEntity<EndeudamientoDetails> calcularEndeudamiento(
+            @Valid @RequestBody EndeudamientoRequest request
+    ) {
+        // Agrega este log para ver qué está llegando
+        System.out.println("Ingreso: " + request.getIngresoMensual());
+        System.out.println("Cuotas: " + request.getCuotasMensuales());
+        EndeudamientoDetails response = analisisService.calcularEndeudamiento(request);
+        return ResponseEntity.ok(response);
+    }
 
     @Operation(
             summary = "Obtiene el historial de análisis financieros del usuario autenticado"

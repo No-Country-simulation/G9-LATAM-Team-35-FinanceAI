@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-
+import com.team35.backend.util.StringUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -69,7 +69,12 @@ public class ClasificadorTransaccionesService {
             ClasificacionTransaccionResponse[] respuestas = response.getBody();
 
             if (respuestas != null) {
-                return Arrays.asList(respuestas);
+                return Arrays.stream(respuestas)
+                        .peek(respuesta -> respuesta.setCategoria_gasto(
+                                StringUtils.normalizar(respuesta.getCategoria_gasto())
+                        ))
+                        .toList();
+                //return Arrays.asList(respuestas);
             }
 
             return List.of();

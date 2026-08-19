@@ -23,6 +23,7 @@ export const analisisService = {
       method: 'POST',
       body: JSON.stringify([{ descripcion, valor: monto }]),
     }).then(res => {
+
       // El backend devuelve una lista; tomamos el primer (y único) resultado
       if (Array.isArray(res) && res.length > 0) return res[0]
       return res
@@ -52,4 +53,25 @@ export const analisisService = {
   buscarAnalisis(query) {
     return request(`/api/analisis/buscar?query=${encodeURIComponent(query)}`)
   },
+
+  calcularEndeudamiento(ingresoMensual, cuotasMensuales) {
+    return request('/api/analisis/nivel-endeudamiento', {
+      method: 'POST',
+      body: JSON.stringify({
+        ingresoMensual: Number(ingresoMensual),
+        cuotasMensuales: cuotasMensuales.map(c => Number(c)),
+      }),
+    }).then(response => {
+      
+      // Si la respuesta tiene 'data', extraerla
+      const data = response.data || response
+      
+      return {
+        nivelEndeudamiento: Number(data.nivelEndeudamiento || data.nivel_endeudamiento || 0),
+        totalDeudas: Number(data.totalDeudas || data.total_deudas || 0),
+        ingresoMensual: Number(data.ingresoMensual || data.ingreso_mensual || 0),
+        mensaje: data.mensaje || 'Cálculo completado'
+      }
+    })
+  }
 }

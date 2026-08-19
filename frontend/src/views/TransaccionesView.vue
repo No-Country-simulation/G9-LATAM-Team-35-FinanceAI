@@ -125,9 +125,10 @@ const autoClasificar = async () => {
   classifying.value = true
   try {
     const res = await analisisService.clasificarTransaccion(formDescripcion.value, parseFloat(formValor.value) || 0)
-    // La respuesta de ClasificacionTransaccionResponse tiene el campo categoria_gasto
+
     if (res && (res.categoria_gasto || res.categoria || res.categoria_sugerida)) {
-      formCategoria.value = (res.categoria_gasto || res.categoria || res.categoria_sugerida).toUpperCase()
+      const categoriaRecibida = res.categoria_gasto ||res.categoria || res.categoria_sugerida
+    formCategoria.value = categoriaRecibida.toUpperCase()
     } else {
       // Fallback inteligente local si el backend no responde
       const descLower = formDescripcion.value.toLowerCase()
@@ -162,7 +163,7 @@ const guardarTransaccion = async () => {
     descripcion: formDescripcion.value,
     valor: valorNum,
     tipo: formTipo.value,
-    categoriaNombre: formCategoria.value !== 'Sin definir' ? formCategoria.value : null,
+    categoriaNombre:formCategoria.value && formCategoria.value !== 'Sin definir' ? formCategoria.value: null,
     fecha: formFecha.value
   }
 
@@ -254,7 +255,7 @@ onMounted(async () => {
         <!-- Header -->
         <header class="flex justify-between items-center mb-6">
           <div class="flex items-center gap-3">
-             <h1 class="text-3xl font-bold text-[#0f4c54]">Transacciones</h1>
+            <h1 class="text-3xl font-bold text-[#0f4c54]">Transacciones</h1>
           </div>
           <div class="flex items-center gap-4">
             <button class="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-slate-600 shadow-sm border border-slate-200 hover:text-[#0f4c54] transition-colors">
@@ -272,7 +273,7 @@ onMounted(async () => {
           
           <!-- Búsqueda Izquierda -->
           <div class="w-full md:w-[35%]">
-             <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">BÚSQUEDA</label>
+            <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">BÚSQUEDA</label>
             <div class="relative">
               <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
                 <PhMagnifyingGlass :size="18" />

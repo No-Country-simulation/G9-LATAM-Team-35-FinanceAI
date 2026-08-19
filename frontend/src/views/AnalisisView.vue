@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import Sidebar from '../components/Sidebar.vue'
+import ModalEndeudamiento from '../components/ModalEndeudamiento.vue'
 import {
   PhMagnifyingGlass,
   PhBell,
@@ -22,7 +23,12 @@ const loading = ref(false)
 const showResults = ref(true)
 
 const ingresoMensual = ref(8450)
-const nivelEndeudamiento = ref(32)
+
+const nivelEndeudamiento = ref(50) // Valor por defecto
+const mostrarModalEndeudamiento = ref(false)
+const ingresosUsuario = ref(5000) // Este vendría de tu store/API
+
+
 const frecuenciaAhorro = ref('Media')
 
 const showIngresoModal = ref(false)
@@ -88,6 +94,15 @@ const realizarAnalisis = async () => {
     loading.value = false
     showResults.value = true
   }
+}
+
+const abrirModalEndeudamiento = () => {
+  mostrarModalEndeudamiento.value = true
+}
+
+const aplicarResultadoEndeudamiento = (resultado) => {
+  nivelEndeudamiento.value = resultado.nivelEndeudamiento
+  console.log('Resultado aplicado:', resultado)
 }
 </script>
 
@@ -162,20 +177,32 @@ const realizarAnalisis = async () => {
                   <PhCreditCard :size="16" class="text-[#0f4c54]" />
                   <span>NIVEL DE ENDEUDAMIENTO</span>
                 </div>
-                <span class="text-[10px] text-slate-400 font-normal">Ajustable</span>
+                <button 
+                  @click="abrirModalEndeudamiento" 
+                  class="text-[10px] text-[#19d282] font-normal hover:underline"
+                >
+                  <PhPencil :size="14" class="inline" />
+                  Calcular
+                </button>
               </div>
               <div class="flex items-baseline gap-1">
-                <input v-model.number="nivelEndeudamiento" type="number" min="0" max="100" class="w-20 text-4xl font-bold text-[#0f4c54] bg-transparent outline-none border-b border-transparent hover:border-slate-300 focus:border-[#19d282]" />
-                <span class="text-2xl font-bold text-[#0f4c54]">%</span>
+                <span class="text-4xl font-bold text-[#0f4c54]">{{ nivelEndeudamiento }}%</span>
               </div>
             </div>
             <div class="mt-4 space-y-2">
-              <input type="range" v-model.number="nivelEndeudamiento" min="0" max="100" class="w-full accent-[#19d282] cursor-pointer" />
+              <input 
+                type="range" 
+                v-model.number="nivelEndeudamiento" 
+                min="0" 
+                max="100" 
+                class="w-full accent-[#19d282] cursor-pointer" 
+              />
               <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
                 <div class="h-full bg-[#19d282] rounded-full transition-all" :style="{ width: `${nivelEndeudamiento}%` }"></div>
               </div>
             </div>
           </div>
+        
 
           <!-- Card 3: Frecuencia de Ahorro -->
           <div class="bg-white rounded-[24px] p-6 shadow-sm border border-slate-100">
@@ -301,6 +328,12 @@ const realizarAnalisis = async () => {
       </div>
     </main>
 
+    <!-- Modal de Endeudamiento -->
+    <ModalEndeudamiento
+    v-model:visible="mostrarModalEndeudamiento"
+    :ingresos-usuario="ingresosUsuario"
+    @aplicar="aplicarResultadoEndeudamiento"
+    />
     <!-- Modal Ingresar Ingreso Manual -->
     <div v-if="showIngresoModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 z-50">
       <div class="bg-white rounded-[24px] w-full max-w-sm p-6 shadow-2xl relative border border-slate-100 space-y-4">

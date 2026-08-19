@@ -45,5 +45,4 @@ public class ClasificacionTransaccionResponse {
     public void setCategoria_gasto(String categoria_gasto) {
         this.categoria_gasto = categoria_gasto;
     }
-
 }
