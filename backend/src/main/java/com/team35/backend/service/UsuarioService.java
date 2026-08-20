@@ -1,13 +1,17 @@
 package com.team35.backend.service;
 
 import com.team35.backend.dto.ActualizarUsuarioRequest;
+import com.team35.backend.dto.CambiarContrasenaRequest;
 import com.team35.backend.dto.MonedaDisponibleDTO;
 import com.team35.backend.dto.UsuarioPerfilResponse;
 import com.team35.backend.entity.Usuario;
 import com.team35.backend.enums.Moneda;
 import com.team35.backend.repository.UsuarioRepository;
 import com.team35.backend.util.MonedaTextoMapper;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,10 +20,14 @@ import java.util.List;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UsuarioService(UsuarioRepository usuarioRepository) {
+
+    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
     }
+
 
     public UsuarioPerfilResponse obtenerPerfil(Long usuarioId) {
         Usuario usuario = buscarUsuario(usuarioId);
@@ -65,6 +73,27 @@ public class UsuarioService {
                 usuario.getMoneda().name(),
                 MonedaTextoMapper.aTexto(usuario.getMoneda())
         );
+    }
+
+    @Transactional
+    public void cambiarContrasena(Long usuarioId, CambiarContrasenaRequest request) {
+        // Validar que la nueva contraseña y la confirmación coincidan
+        if (!request.getContrasenaNueva().equals(request.getConfirmarContrasena())) {
+            throw new RuntimeException("Las contraseñas no coinciden");
+        }
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        // Verificar que la contraseña actual sea correcta
+        if (!passwordEncoder.matches(request.getContrasenaActual(), usuario.getPasswordHash())) {
+            throw new RuntimeException("Contraseña actual incorrecta");
+        }
+        // Verificar que la nueva contraseña no sea igual a la actual
+        if (passwordEncoder.matches(request.getContrasenaNueva(), usuario.getPasswordHash())) {
+            throw new RuntimeException("La nueva contraseña debe ser diferente a la actual");
+        }
+        // Actualizar la contraseña
+        usuario.setPasswordHash(passwordEncoder.encode(request.getContrasenaNueva()));
+        usuarioRepository.save(usuario);
     }
 
     // Excepciones simples, específicas de este service; el GlobalExceptionHandler

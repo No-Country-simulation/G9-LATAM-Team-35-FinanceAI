@@ -19,6 +19,7 @@ export const transaccionesService = {
     })
   },
   editarTransaccion(id, datos) {
+    console.log('Payload a enviar:', datos)  
     return request(`/api/transacciones/${id}`, {
       method: 'PUT',
       body: JSON.stringify(datos),

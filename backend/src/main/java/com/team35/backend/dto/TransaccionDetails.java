@@ -13,7 +13,7 @@ public class TransaccionDetails {
     private BigDecimal valor;
     // Tipo de movimiento: INGRESO o GASTO
     private TipoTransaccion tipo;
-    private String categoria;
+    private String categoriaNombre;
     //Fecha en la que ocurrió la transacción.
     private LocalDate fecha;
     //Fecha en la que se registró la transacción en el sistema
@@ -27,7 +27,7 @@ public class TransaccionDetails {
             String descripcion,
             BigDecimal valor,
             TipoTransaccion tipo,
-            String categoria,
+            String categoriaNombre,
             LocalDate fecha,
             LocalDateTime creadoEn
     ) {
@@ -35,7 +35,7 @@ public class TransaccionDetails {
         this.descripcion = descripcion;
         this.valor = valor;
         this.tipo = tipo;
-        this.categoria = categoria;
+        this.categoriaNombre = categoriaNombre;
         this.fecha = fecha;
         this.creadoEn = creadoEn;
     }
@@ -45,7 +45,7 @@ public class TransaccionDetails {
         this.descripcion = transaccionActualizada.getDescripcion();
         this.valor = transaccionActualizada.getValor();
         this.tipo = transaccionActualizada.getTipo();
-        this.categoria = transaccionActualizada.getCategoria() != null
+        this.categoriaNombre = transaccionActualizada.getCategoria() != null
                 ? transaccionActualizada.getCategoria().getNombre()
                 : null;
         this.fecha = transaccionActualizada.getFecha();
@@ -84,12 +84,12 @@ public class TransaccionDetails {
         this.tipo = tipo;
     }
 
-    public String getCategoria() {
-        return categoria;
+    public String getCategoriaNombre() {
+        return categoriaNombre;
     }
 
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
+    public void setCategoriaNombre(String categoriaNombre) {
+        this.categoriaNombre = categoriaNombre;
     }
 
     public LocalDate getFecha() {

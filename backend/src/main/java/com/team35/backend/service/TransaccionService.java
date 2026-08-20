@@ -229,7 +229,6 @@ public class TransaccionService {
 
             if (descripcionCambio && mismaCategoria) {
                 try {
-
                     TransaccionInputDTO input = new TransaccionInputDTO();
                     input.setDescripcion(descripcionNueva);
                     input.setValor(request.getValor().doubleValue());
@@ -282,7 +281,6 @@ public class TransaccionService {
 
             else if (descripcionCambio && !categoriaEnviada) {
                 try {
-
                     TransaccionInputDTO input = new TransaccionInputDTO();
                     input.setDescripcion(descripcionNueva);
                     input.setValor(request.getValor().doubleValue());
@@ -315,7 +313,6 @@ public class TransaccionService {
         }
 
         Transaccion transaccionActualizada = transaccionRepository.save(transaccion);
-
         return new TransaccionDetails(transaccionActualizada);
     }
 
@@ -373,7 +370,7 @@ public class TransaccionService {
 
         //La categoría puede ser NULL si todavía no ha sido clasificada.
         if (transaccion.getCategoria() != null) {
-            respuesta.setCategoria(
+            respuesta.setCategoriaNombre(
                     transaccion.getCategoria().getNombre()
             );
         }

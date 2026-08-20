@@ -63,6 +63,9 @@ public class TransaccionController {
                         .obtenerTransacciones(
                                 usuarioId
                         );
+        //imprimir lo que se va a devolver, pero con el formato json correcto de lista para que se pueda debuguear bien
+        System.out.println("Transacciones obtenidas: " + transacciones.toString() );
+
 
         return ResponseEntity.ok(
                 transacciones

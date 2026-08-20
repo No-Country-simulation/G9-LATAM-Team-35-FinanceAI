@@ -1,6 +1,7 @@
 package com.team35.backend.controller;
 
 import com.team35.backend.dto.ActualizarUsuarioRequest;
+import com.team35.backend.dto.CambiarContrasenaRequest;
 import com.team35.backend.dto.MonedaDisponibleDTO;
 import com.team35.backend.dto.UsuarioPerfilResponse;
 import com.team35.backend.service.AuthService;
@@ -11,7 +12,9 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -39,6 +42,18 @@ public class UsuarioController {
             @Valid @RequestBody ActualizarUsuarioRequest request) {
         Long usuarioId = authService.getUsuarioIdAutenticado();
         return ResponseEntity.ok(usuarioService.actualizarPerfil(usuarioId, request));
+    }
+
+    @Operation(summary = "Cambia la contraseña del usuario autenticado")
+    @PutMapping("/me/cambiar-contrasena")
+    public ResponseEntity<Map<String, String>> cambiarContrasena(
+            @Valid @RequestBody CambiarContrasenaRequest request) {
+        Long usuarioId = authService.getUsuarioIdAutenticado();
+        usuarioService.cambiarContrasena(usuarioId, request);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("mensaje", "Contraseña actualizada correctamente");
+        return ResponseEntity.ok(response);
     }
 
     @Operation(summary = "Lista las monedas disponibles para el selector de la página de Configuración")

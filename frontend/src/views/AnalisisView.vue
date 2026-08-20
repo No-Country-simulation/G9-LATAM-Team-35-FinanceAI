@@ -85,11 +85,11 @@ const cargarDatosPeriodo = async () => {
       if (dataIngreso && dataIngreso.ingreso_mensual > 0) {
         ingresoMensual.value = Number(dataIngreso.ingreso_mensual)
       } else if (ingresoMensual.value === 0) {
-        ingresoMensual.value = 5000 // Fallback amigable
+        ingresoMensual.value = 0 // Fallback amigable
       }
     } catch (e) {
       console.warn('No se pudo calcular ingreso mensual del backend:', e)
-      if (ingresoMensual.value === 0) ingresoMensual.value = 5000
+      if (ingresoMensual.value === 0) ingresoMensual.value = 0
     }
 
     // 2. Transacciones del mes

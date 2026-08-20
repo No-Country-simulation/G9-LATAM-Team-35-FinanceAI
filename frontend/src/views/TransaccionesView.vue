@@ -85,7 +85,7 @@ const recargarTransacciones = async () => {
       ? res.map(t => ({
           id: t.id,
           descripcion: t.descripcion,
-          categoria: t.categoria || 'OTROS',
+          categoria: t.categoria_nombre || 'OTROS',  /*AQUI  */
           valor: t.valor ?? 0,
           tipo: t.tipo || 'GASTO',
           fecha: t.fecha || 'Reciente'
@@ -163,9 +163,11 @@ const guardarTransaccion = async () => {
     descripcion: formDescripcion.value,
     valor: valorNum,
     tipo: formTipo.value,
-    categoriaNombre:formCategoria.value && formCategoria.value !== 'Sin definir' ? formCategoria.value: null,
+    categoria_nombre:formCategoria.value && formCategoria.value !== 'Sin definir' ? formCategoria.value: null, /*AQUI  */
     fecha: formFecha.value
   }
+
+ 
 
   try {
     if (isEditing.value && currentEditId.value) {

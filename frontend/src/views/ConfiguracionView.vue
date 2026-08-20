@@ -31,13 +31,24 @@ const errorMessage = ref('')
 const loading = ref(false)
 
 // Modal Cambiar Contraseña
-const showPasswordModal = ref(false)
+/*const showPasswordModal = ref(false)
 const passActual = ref('')
 const passNueva = ref('')
 const passConfirm = ref('')
 const passError = ref('')
 const passSuccess = ref('')
-const passLoading = ref(false)
+const passLoading = ref(false)*/
+
+const showPasswordModal = ref(false)
+const cambiandoPassword = ref(false)
+const passwordError = ref('')
+const passwordSuccess = ref('')
+
+const passwordData = ref({
+  contrasena_actual: '',
+  contrasena_nueva: '',
+  confirmar_contrasena: ''
+})
 
 onMounted(async () => {
   try {
@@ -84,8 +95,52 @@ const guardarDatos = async () => {
     loading.value = false
   }
 }
-
-const handleCambiarPassword = () => {
+const cambiarContrasena = async () => {
+  passwordError.value = ''
+  passwordSuccess.value = ''
+  
+  // Validaciones
+  if (!passwordData.value.contrasena_actual || !passwordData.value.contrasena_nueva || !passwordData.value.confirmar_contrasena) {
+    passwordError.value = 'Por favor completa todos los campos'
+    return
+  }
+  
+  if (passwordData.value.contrasena_nueva.length < 6) {
+    passwordError.value = 'La nueva contraseña debe tener al menos 6 caracteres'
+    return
+  }
+  
+  if (passwordData.value.contrasena_nueva !== passwordData.value.confirmar_contrasena) {
+    passwordError.value = 'Las contraseñas no coinciden'
+    return
+  }
+  
+  cambiandoPassword.value = true
+  try {
+    await usuarioService.cambiarContrasena(passwordData.value)
+    passwordSuccess.value = '¡Contraseña actualizada correctamente!'
+    
+    // Limpiar campos
+    passwordData.value = {
+      contrasena_actual: '',
+      contrasena_nueva: '',
+      confirmar_contrasena: ''
+    }
+    
+    // Cerrar modal después de 1.5 segundos
+    setTimeout(() => {
+      showPasswordModal.value = false
+      passwordSuccess.value = ''
+    }, 1500)
+    
+  } catch (err) {
+    console.error('Error al cambiar contraseña:', err)
+    passwordError.value = err.message || 'Error al actualizar la contraseña'
+  } finally {
+    cambiandoPassword.value = false
+  }
+}
+/*const handleCambiarPassword = () => {
   passError.value = ''
   passSuccess.value = ''
   if (!passActual.value || !passNueva.value || !passConfirm.value) {
@@ -113,7 +168,7 @@ const handleCambiarPassword = () => {
       passSuccess.value = ''
     }, 1800)
   }, 600)
-}
+} */
 </script>
 
 <template>
@@ -231,51 +286,63 @@ const handleCambiarPassword = () => {
     </main>
 
     <!-- Modal Cambiar Contraseña -->
-    <div v-if="showPasswordModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-      <div class="bg-white rounded-[24px] w-full max-w-md shadow-2xl overflow-hidden relative border border-slate-100">
-        
-        <div class="bg-[#0f4c54] text-white px-6 py-4 flex justify-between items-center">
-          <h3 class="text-base font-bold">Cambiar Contraseña</h3>
-          <button @click="showPasswordModal = false" class="text-white/80 hover:text-white cursor-pointer">
-            <PhX :size="20" />
-          </button>
-        </div>
 
-        <form @submit.prevent="handleCambiarPassword" class="p-6 space-y-4">
-          <div v-if="passError" class="p-3 rounded-xl bg-red-100 text-red-700 text-xs font-semibold">
-            {{ passError }}
-          </div>
-          <div v-if="passSuccess" class="p-3 rounded-xl bg-emerald-100 text-emerald-700 text-xs font-semibold">
-            {{ passSuccess }}
-          </div>
+          <div v-if="showPasswordModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+            <div class="bg-white rounded-[24px] w-full max-w-md shadow-2xl overflow-hidden relative border border-slate-100">
+              
+              <!-- Modal Header -->
+              <div class="bg-[#0f4c54] text-white px-6 py-4 flex justify-between items-center">
+                <h3 class="text-base font-bold">Cambiar Contraseña</h3>
+                <button @click="showPasswordModal = false" class="text-white/80 hover:text-white cursor-pointer">
+                  <PhX :size="20" />
+                </button>
+              </div>
 
-          <div>
-            <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">CONTRASEÑA ACTUAL</label>
-            <input v-model="passActual" type="password" placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#19d282]">
-          </div>
+              <!-- Modal Body -->
+              <form @submit.prevent="cambiarContrasena" class="p-6 space-y-4">
+                
+                <!-- Contraseña Actual -->
+                <div>
+                  <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">CONTRASEÑA ACTUAL</label>
+                  <input v-model="passwordData.contrasena_actual" type="password" placeholder="••••••••" required
+                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#19d282] focus:bg-white text-slate-700">
+                </div>
 
-          <div>
-            <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">NUEVA CONTRASEÑA</label>
-            <input v-model="passNueva" type="password" placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#19d282]">
-          </div>
+                <!-- Nueva Contraseña -->
+                <div>
+                  <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">NUEVA CONTRASEÑA</label>
+                  <input v-model="passwordData.contrasena_nueva" type="password" placeholder="••••••••" required
+                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#19d282] focus:bg-white text-slate-700">
+                </div>
 
-          <div>
-            <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">CONFIRMAR NUEVA CONTRASEÑA</label>
-            <input v-model="passConfirm" type="password" placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#19d282]">
-          </div>
+                <!-- Confirmar Nueva Contraseña -->
+                <div>
+                  <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">CONFIRMAR NUEVA CONTRASEÑA</label>
+                  <input v-model="passwordData.confirmar_contrasena" type="password" placeholder="••••••••" required
+                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#19d282] focus:bg-white text-slate-700">
+                </div>
 
-          <div class="flex justify-end gap-2 pt-3">
-            <button type="button" @click="showPasswordModal = false" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition-colors">
-              Cancelar
-            </button>
-            <button type="submit" :disabled="passLoading" class="bg-[#19d282] hover:bg-[#15b872] text-slate-900 font-bold px-5 py-2 rounded-xl text-xs flex items-center gap-1 shadow-xs cursor-pointer disabled:opacity-50">
-              <span>{{ passLoading ? 'Guardando...' : 'Actualizar Contraseña' }}</span>
-            </button>
-          </div>
-        </form>
+                <!-- Mensaje de error -->
+                <div v-if="passwordError" class="text-red-500 text-xs font-medium">
+                  {{ passwordError }}
+                </div>
+                <div v-if="passwordSuccess" class="text-emerald-600 text-xs font-medium">
+                  {{ passwordSuccess }}
+                </div>
 
-      </div>
-    </div>
+                <!-- Footer Buttons -->
+                <div class="flex gap-4 pt-4">
+                  <button type="button" @click="showPasswordModal = false" class="flex-1 border border-slate-300 text-slate-600 font-bold py-3 rounded-xl hover:bg-slate-50 transition-colors text-sm cursor-pointer">
+                    Cancelar
+                  </button>
+                  <button type="submit" :disabled="cambiandoPassword" class="flex-1 bg-[#19d282] hover:bg-[#15b872] text-slate-900 font-bold py-3 rounded-xl shadow-md transition-colors text-sm cursor-pointer disabled:opacity-50">
+                    {{ cambiandoPassword ? 'Actualizando...' : 'Actualizar Contraseña' }}
+                  </button>
+                </div>
+
+              </form>
+            </div>
+          </div>
 
   </div>
 </template>

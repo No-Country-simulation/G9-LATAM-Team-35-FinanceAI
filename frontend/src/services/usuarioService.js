@@ -36,4 +36,11 @@ export const usuarioService = {
   listarMonedas() {
     return request('/api/usuarios/monedas-disponibles')
   },
+
+  cambiarContrasena(data){
+    return request('/api/usuarios/me/cambiar-contrasena', {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    })
+  },
 }
