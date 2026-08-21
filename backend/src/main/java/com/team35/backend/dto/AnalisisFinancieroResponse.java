@@ -1,5 +1,7 @@
 package com.team35.backend.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 import java.util.Map;
 
@@ -10,8 +12,10 @@ import java.util.Map;
  */
 public class AnalisisFinancieroResponse {
 
+    @JsonProperty("perfil_financiero")
     private String perfilFinanciero;
     private double probabilidad;
+    @JsonProperty("resumen_gastos")
     private Map<String, Double> resumenGastos;
     private List<String> recomendaciones;
 

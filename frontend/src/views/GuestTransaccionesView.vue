@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import Sidebar from '../components/Sidebar.vue'
+import { analisisService } from '../services/analisisService'
 import {
   PhWarning,
   PhPlus,
@@ -25,32 +26,67 @@ const fecha = ref(new Date().toISOString().split('T')[0])
 
 const transacciones = ref([
   { id: 1, descripcion: 'Alquiler', categoria: 'VIVIENDA', monto: 1200, tipo: 'GASTO', fecha: '2026-07-01' },
-  { id: 2, descripcion: 'Suscripción Netflix', categoria: 'ENTRETENIMIENTO', monto: 15, tipo: 'GASTO', fecha: '2026-07-05' },
-  { id: 3, descripcion: 'Supermercado', categoria: 'ALIMENTACIÓN', monto: 320, tipo: 'GASTO', fecha: '2026-07-10' },
+  { id: 2, descripcion: 'Suscripción Netflix', categoria: 'OCIO Y SERVICIOS', monto: 15, tipo: 'GASTO', fecha: '2026-07-05' },
+  { id: 3, descripcion: 'Supermercado', categoria: 'ALIMENTACION', monto: 320, tipo: 'GASTO', fecha: '2026-07-10' },
 ])
 
 const totalIngresos = computed(() => transacciones.value.filter(t => t.tipo === 'INGRESO').reduce((s, t) => s + t.monto, 0))
 const totalGastos = computed(() => transacciones.value.filter(t => t.tipo === 'GASTO').reduce((s, t) => s + t.monto, 0))
 
 // Clasificación local sin backend
-const autoClasificarLocal = () => {
-  if (!descripcion.value) return
-  classifying.value = true
-  setTimeout(() => {
-    const d = descripcion.value.toLowerCase()
-    if (d.includes('netflix') || d.includes('spotify') || d.includes('cine') || d.includes('juego')) categoria.value = 'ENTRETENIMIENTO'
-    else if (d.includes('salario') || d.includes('sueldo') || d.includes('pago') || d.includes('honorario')) categoria.value = 'INGRESOS'
-    else if (d.includes('super') || d.includes('comida') || d.includes('restaurante') || d.includes('mercado')) categoria.value = 'ALIMENTACIÓN'
-    else if (d.includes('uber') || d.includes('taxi') || d.includes('gasolina') || d.includes('transporte') || d.includes('bus')) categoria.value = 'TRANSPORTE'
-    else if (d.includes('alquiler') || d.includes('luz') || d.includes('agua') || d.includes('gas') || d.includes('internet')) categoria.value = 'VIVIENDA'
-    else if (d.includes('médico') || d.includes('farmacia') || d.includes('salud') || d.includes('doctor')) categoria.value = 'SALUD'
-    else categoria.value = 'OTROS'
-    classifying.value = false
-  }, 600)
+const clasificarLocal = (texto) => {
+  if (!texto) return 'OTROS'
+  
+  const d = texto.toLowerCase()
+  if (d.includes('netflix') || d.includes('spotify') || d.includes('cine') || d.includes('juego')) return 'OCIO Y SERVICIOS'
+  else if (d.includes('salario') || d.includes('sueldo') || d.includes('pago') || d.includes('honorario')) return 'INGRESOS'
+  else if (d.includes('super') || d.includes('comida') || d.includes('restaurante') || d.includes('mercado')) return 'ALIMENTACION'
+  else if (d.includes('uber') || d.includes('taxi') || d.includes('gasolina') || d.includes('transporte') || d.includes('bus')) return 'TRANSPORTE'
+  else if (d.includes('alquiler') || d.includes('luz') || d.includes('agua') || d.includes('gas') || d.includes('internet')) return 'VIVIENDA'
+  else if (d.includes('médico') || d.includes('farmacia') || d.includes('salud') || d.includes('doctor')) return 'SALUD'
+  else return 'OTROS'
 }
 
-const handleAgregarTransaccion = () => {
+const clasificarTransaccion = async (texto, montoValor) => {
+  if (!texto) return 'OTROS'
+  
+  try {
+    const res = await analisisService.clasificarTransaccion(texto, parseFloat(montoValor) || 0)
+    
+    if (res && (res.categoria || res.categoria_gasto)) {
+      return (res.categoria || res.categoria_gasto).toUpperCase()
+    }
+    return clasificarLocal(texto)
+  } catch (err) {
+    console.warn('Error en clasificación API, usando fallback local:', err.message)
+    return clasificarLocal(texto)
+  }
+}
+
+const autoClasificar = async () => {
+  if (!descripcion.value) return
+  classifying.value = true
+  try {
+    const resultado = await clasificarTransaccion(descripcion.value, monto.value)
+    categoria.value = resultado
+  } catch (err) {
+    console.error('Error al clasificar:', err)
+    categoria.value = 'OTROS'
+  } finally {
+    classifying.value = false
+  }
+}
+
+const handleAgregarTransaccion = async () => {
   if (!monto.value || !descripcion.value) return
+  
+  // Si la categoría está en "Sin definir", clasificar automáticamente
+  if (categoria.value === 'Sin definir') {
+    const resultado = await clasificarTransaccion(descripcion.value, monto.value)
+    categoria.value = resultado
+  }
+  
+  // Agregar transacción
   transacciones.value.unshift({
     id: Date.now(),
     descripcion: descripcion.value,
@@ -59,12 +95,16 @@ const handleAgregarTransaccion = () => {
     tipo: tipoTransaccion.value,
     fecha: fecha.value
   })
+  
+  // Resetear formulario
   showModal.value = false
   descripcion.value = ''
   monto.value = ''
   categoria.value = 'Sin definir'
   tipoTransaccion.value = 'GASTO'
+  fecha.value = new Date().toISOString().split('T')[0]
 }
+
 
 const eliminar = (id) => {
   transacciones.value = transacciones.value.filter(t => t.id !== id)
@@ -72,9 +112,9 @@ const eliminar = (id) => {
 
 const categoriaColor = (cat) => {
   const map = {
-    'ENTRETENIMIENTO': 'bg-purple-100 text-purple-700',
-    'INGRESOS': 'bg-emerald-100 text-emerald-700',
-    'ALIMENTACIÓN': 'bg-orange-100 text-orange-700',
+    'OCIO Y SERVICIOS': 'bg-purple-100 text-purple-700',
+    'EDUCACION': 'bg-emerald-100 text-emerald-700',
+    'ALIMENTACION': 'bg-orange-100 text-orange-700',
     'TRANSPORTE': 'bg-blue-100 text-blue-700',
     'VIVIENDA': 'bg-gray-100 text-gray-700',
     'SALUD': 'bg-red-100 text-red-700',
@@ -191,7 +231,7 @@ const categoriaColor = (cat) => {
             <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">DESCRIPCIÓN</label>
             <div class="flex gap-2">
               <input v-model="descripcion" type="text" placeholder="Ej: Compra en Amazon" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#19d282] focus:bg-white text-slate-700">
-              <button type="button" @click="autoClasificarLocal" :disabled="classifying" class="bg-slate-100 hover:bg-slate-200 text-[#0f4c54] font-bold text-xs px-3 py-2 rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer border border-slate-200 shrink-0">
+              <button type="button" @click="autoClasificar" :disabled="classifying" class="bg-slate-100 hover:bg-slate-200 text-[#0f4c54] font-bold text-xs px-3 py-2 rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer border border-slate-200 shrink-0">
                 <PhSparkle :size="14" class="text-[#19d282]" />
                 <span>{{ classifying ? 'Clasificando...' : 'Clasificar' }}</span>
               </button>

@@ -2,136 +2,121 @@ package com.team35.backend.service;
 
 import com.team35.backend.dto.AnalisisFinancieroRequest;
 import com.team35.backend.dto.AnalisisFinancieroResponse;
-import com.team35.backend.dto.TransaccionInputDTO;
 import com.team35.backend.entity.Analisis;
 import com.team35.backend.entity.Recomendacion;
 import com.team35.backend.entity.Usuario;
 import com.team35.backend.enums.PerfilTipo;
 import com.team35.backend.repository.AnalisisRepository;
 import com.team35.backend.repository.UsuarioRepository;
-import com.team35.backend.util.PerfilTextoMapper;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
 public class AnalisisFinancieroService {
 
-    private final ClasificadorTransaccionesService clasificadorService;
-    private final PerfilFinancieroService perfilService;
-    private final RecomendacionService recomendacionService;
+    private final RestTemplate restTemplate;
     private final AnalisisRepository analisisRepository;
     private final UsuarioRepository usuarioRepository;
 
-    public AnalisisFinancieroService(ClasificadorTransaccionesService clasificadorService,
-                                     PerfilFinancieroService perfilService,
-                                     RecomendacionService recomendacionService,
-                                     AnalisisRepository analisisRepository,
-                                     UsuarioRepository usuarioRepository) {
-        this.clasificadorService = clasificadorService;
-        this.perfilService = perfilService;
-        this.recomendacionService = recomendacionService;
+    @Value("${python.api.url}")
+    private String pythonApiUrl;
+
+    public AnalisisFinancieroService(
+            RestTemplate restTemplate,
+            AnalisisRepository analisisRepository,
+            UsuarioRepository usuarioRepository) {
+        this.restTemplate = restTemplate;
         this.analisisRepository = analisisRepository;
         this.usuarioRepository = usuarioRepository;
     }
 
     /**
-     * Realiza el análisis financiero y, si se proporciona un usuarioId, persiste el resultado en BD.
-     *
-     * @param request   Datos del análisis (ingresos, endeudamiento, frecuencia, transacciones)
-     * @param usuarioId ID del usuario autenticado, o null si es invitado (no se guarda)
-     * @return Resultado del análisis con perfil, probabilidad, resumen y recomendaciones
+     * Analiza la salud financiera y persiste si usuarioId no es null.
      */
     @Transactional
     public AnalisisFinancieroResponse analizar(AnalisisFinancieroRequest request, Long usuarioId) {
+        // 1. Llamar a Python API
+        String url = pythonApiUrl + "/analisis-financiero";
 
-        // 1. Clasificar cada transacción y sumar por categoría.
-        // Las keys del resumen van en minúsculas para coincidir con el contrato
-        // acordado con Data Science (ej. "alimentacion", no "ALIMENTACION").
-        Map<String, Double> resumenGastos = new LinkedHashMap<>();
-        double totalGastos = 0.0;
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
 
-        for (TransaccionInputDTO transaccion : request.getTransacciones()) {
-            String categoria = clasificadorService.clasificar(transaccion).getCategoria_gasto();
-            resumenGastos.merge(categoria.toLowerCase(), transaccion.getValor(), Double::sum);
-            totalGastos += transaccion.getValor();
+        HttpEntity<AnalisisFinancieroRequest> entity = new HttpEntity<>(request, headers);
+
+        AnalisisFinancieroResponse response = restTemplate.postForObject(url, entity, AnalisisFinancieroResponse.class);
+
+        // 2. Persistir SOLO si usuarioId no es null
+        if (usuarioId != null && response != null) {
+            persistirAnalisis(request, response, usuarioId);
         }
 
-        // 2. Evaluar perfil financiero (con fallback al mock si FastAPI no está disponible)
-        PerfilFinancieroService.ResultadoPerfil resultadoPerfil = perfilService.evaluar(
-                request.getIngresoMensual(),
-                request.getNivelEndeudamiento(),
-                request.getFrecuenciaAhorro(),
-                totalGastos
-        );
-
-        // 3. Generar recomendaciones
-        List<String> recomendaciones = recomendacionService.generar(
-                resultadoPerfil.perfil,
-                request.getFrecuenciaAhorro(),
-                resumenGastos
-        );
-
-        // 4. Persistir el análisis en BD (solo para usuarios autenticados)
-        if (usuarioId != null) {
-            persistirAnalisis(request, resultadoPerfil, recomendaciones, usuarioId);
-        }
-
-        // 5. Traducir el enum interno (EN_OBSERVACION) al texto legible que
-        // espera el contrato de la API ("En observación")
-        return new AnalisisFinancieroResponse(
-                PerfilTextoMapper.aTexto(resultadoPerfil.perfil),
-                resultadoPerfil.probabilidad,
-                resumenGastos,
-                recomendaciones
-        );
+        return response;
     }
 
     /**
-     * Sobrecarga para compatibilidad: análisis sin persistencia (invitados).
+     * Sobrecarga para invitados (sin persistencia).
      */
     public AnalisisFinancieroResponse analizar(AnalisisFinancieroRequest request) {
         return analizar(request, null);
     }
 
     // ─────────────────────────────────────────────────────────────
-    //  Persistencia interna
+    //  Persistencia
     // ─────────────────────────────────────────────────────────────
 
     private void persistirAnalisis(AnalisisFinancieroRequest request,
-                                   PerfilFinancieroService.ResultadoPerfil resultadoPerfil,
-                                   List<String> textoRecomendaciones,
+                                   AnalisisFinancieroResponse response,
                                    Long usuarioId) {
+
         Optional<Usuario> usuarioOpt = usuarioRepository.findById(usuarioId);
         if (usuarioOpt.isEmpty()) {
-            // El usuario no existe en BD — no persistir silenciosamente
             return;
         }
 
+        // Convertir perfil de texto a ENUM (Si Python devuelve "En observación", "Saludable", etc.)
+        PerfilTipo perfilEnum = convertirTextoAPerfil(response.getPerfilFinanciero());
+
         Analisis analisis = Analisis.builder()
                 .usuario(usuarioOpt.get())
-                .perfil(resultadoPerfil.perfil)
-                .probabilidad(BigDecimal.valueOf(resultadoPerfil.probabilidad))
+                .perfil(perfilEnum)
+                .probabilidad(BigDecimal.valueOf(response.getProbabilidad()))
                 .ingresoMensual(BigDecimal.valueOf(request.getIngresoMensual()))
                 .nivelEndeudamiento(BigDecimal.valueOf(request.getNivelEndeudamiento()))
                 .frecuenciaAhorro(request.getFrecuenciaAhorro())
                 .fechaAnalisis(LocalDateTime.now())
                 .build();
 
-        // Agregar las recomendaciones al análisis
-        for (String texto : textoRecomendaciones) {
-            Recomendacion rec = Recomendacion.builder()
-                    .texto(texto)
-                    .build();
-            analisis.agregarRecomendacion(rec);
+        // Agregar recomendaciones
+        if (response.getRecomendaciones() != null) {
+            for (String texto : response.getRecomendaciones()) {
+                Recomendacion rec = Recomendacion.builder()
+                        .texto(texto)
+                        .build();
+                analisis.agregarRecomendacion(rec);
+            }
         }
 
         analisisRepository.save(analisis);
+    }
+
+
+    private PerfilTipo convertirTextoAPerfil(String texto) {
+        if (texto == null) return PerfilTipo.EN_OBSERVACION;
+
+        String lower = texto.toLowerCase();
+        if (lower.contains("saludable")) return PerfilTipo.SALUDABLE;
+        if (lower.contains("riesgo")) return PerfilTipo.EN_RIESGO;
+        if (lower.contains("observacion") || lower.contains("observación")) return PerfilTipo.EN_OBSERVACION;
+
+        return PerfilTipo.EN_OBSERVACION;
     }
 }

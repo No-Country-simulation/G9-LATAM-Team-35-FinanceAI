@@ -336,7 +336,6 @@ public class TransaccionService {
         LocalDate fechaFin = fechaInicio.withDayOfMonth(
                 fechaInicio.lengthOfMonth()
         );
-
         BigDecimal ingresoMensual =
                 transaccionRepository.calcularTotalPorTipoYPeriodo(
                         usuarioId,

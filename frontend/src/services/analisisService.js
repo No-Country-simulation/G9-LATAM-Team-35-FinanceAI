@@ -3,7 +3,7 @@ import { request } from './api'
 export const analisisService = {
   analizarFinanzas(payload) {
     // POST /analisis-financiero (AnalisisFinancieroController)
-    return request('/analisis-financiero', {
+    return request('/api/analisis-financiero', {
       method: 'POST',
       body: JSON.stringify(payload),
     })

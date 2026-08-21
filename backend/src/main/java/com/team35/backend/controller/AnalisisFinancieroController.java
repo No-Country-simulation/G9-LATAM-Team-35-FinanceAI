@@ -4,6 +4,7 @@ import com.team35.backend.dto.AnalisisFinancieroRequest;
 import com.team35.backend.dto.AnalisisFinancieroResponse;
 import com.team35.backend.dto.ClasificacionTransaccionResponse;
 import com.team35.backend.dto.TransaccionInputDTO;
+import com.team35.backend.entity.Usuario;
 import com.team35.backend.service.AnalisisFinancieroService;
 import com.team35.backend.service.AuthService;
 import com.team35.backend.service.ClasificadorTransaccionesService;
@@ -11,8 +12,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -31,32 +30,32 @@ public class AnalisisFinancieroController {
         this.authService = authService;
     }
 
-    /**
-     * Analiza la salud financiera. Funciona con o sin JWT:
-     * - Con JWT → guarda el análisis en BD y lo asocia al usuario.
-     * - Sin JWT (invitado) → devuelve el resultado sin guardar nada.
-     */
-    @Operation(summary = "Analiza la salud financiera del usuario a partir de 1 a N transacciones")
-    @PostMapping("/analisis-financiero")
+    @Operation(summary = "Analiza la salud financiera del usuario a partir de 1 a N transacciones. "
+            + "Funciona sin cuenta (no se guarda nada); si hay un usuario autenticado, se guarda el historial.")
+    @PostMapping("/api/analisis-financiero")
     public ResponseEntity<AnalisisFinancieroResponse> analizar(@Valid @RequestBody AnalisisFinancieroRequest request) {
 
-        // JWT opcional: intentar obtener el usuarioId si hay un token válido
         Long usuarioId = null;
+
+        // ✅ Intentar obtener usuario autenticado, pero sin fallar si es anonymous
         try {
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            if (auth != null && auth.isAuthenticated()
-                    && !"anonymousUser".equals(auth.getPrincipal())) {
-                usuarioId = authService.getUsuarioIdAutenticado();
+            Usuario usuario = authService.getUsuarioAutenticado();
+            if (usuario != null && !"anonymousUser".equalsIgnoreCase(usuario.getEmail())) {
+                usuarioId = usuario.getId();
             }
         } catch (Exception e) {
-            // No hay usuario autenticado — modo invitado, continuar sin persistir
+            // Si es anonymousUser, ignoramos y seguimos
+            if (!e.getMessage().contains("anonymousUser")) {
+                System.err.println("Error al obtener usuario: " + e.getMessage());
+            }
         }
 
-        return ResponseEntity.ok(analisisFinancieroService.analizar(request, usuarioId));
+        AnalisisFinancieroResponse response = analisisFinancieroService.analizar(request, usuarioId);
+        return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Endpoint interno que clasifica una transacción individual en una categoría financiera llamando al modelo de ML")
-    @PostMapping("/clasificar-transaccion")
+    @Operation(summary = "Clasifica una transacción individual en una categoría financiera")
+    @PostMapping("/api/clasificar-transaccion")
     public ResponseEntity<ClasificacionTransaccionResponse> clasificar(@Valid @RequestBody TransaccionInputDTO transaccion) {
         return ResponseEntity.ok(clasificadorTransaccionesService.clasificar(transaccion));
     }

@@ -394,6 +394,24 @@ const listaDistribucion = computed(() => {
     }
   })
 })
+
+const mensajeIngreso = computed(() => {
+  // Verificar si hay transacciones de ingreso en el mes seleccionado
+  const hayIngresos = transaccionesUsuario.value.some(t => 
+    t.tipo === 'INGRESO' || t.tipo === 'ingreso'
+  )
+  const mesLabel = mesesDisponibles.value.find(m => m.val === mesSeleccionado.value)?.label || mesSeleccionado.value
+  
+  if (hayIngresos && ingresoMensual.value > 0) {
+    return `Calculado de tus transacciones registradas de ${mesLabel}`
+  }
+
+  if (!hayIngresos && ingresoMensual.value > 0) {
+    return `Calculado del último análisis registrado de ${mesLabel}`
+  }
+  return `No hay ingresos registrados para ${mesLabel}`
+})
+
 </script>
 
 <template>
@@ -460,12 +478,18 @@ const listaDistribucion = computed(() => {
               <h2 class="text-3xl font-bold text-[#0f4c54]">${{ Number(ingresoMensual).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}</h2>
             </div>
             <div class="mt-4 pt-3 border-t border-slate-50">
+              <!-- Mensaje dinámico -->
               <p class="text-[11px] text-slate-400">
-                Calculado de tus transacciones registradas de {{ mesesDisponibles.find(m => m.val === mesSeleccionado)?.label || mesSeleccionado }}
+                {{ mensajeIngreso }}
               </p>
-              <button @click="abrirIngresoModal" class="text-[11px] font-bold text-[#0f4c54] hover:underline mt-0.5 block text-left cursor-pointer">
+              
+              <!-- Botón de ajuste (solo si hay ingreso) -->
+              <button 
+                @click="abrirIngresoModal" 
+                class="text-[11px] font-bold text-[#0f4c54] hover:underline mt-0.5 block text-left cursor-pointer">
                 ¿Ajustar monto? Ingresar manualmente
               </button>
+              
             </div>
           </div>
 

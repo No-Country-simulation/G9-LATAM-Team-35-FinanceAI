@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import Sidebar from '../components/Sidebar.vue'
 import {
   PhWarning,
@@ -38,9 +38,9 @@ const modalCategoria = ref('Sin definir')
 const modalFecha = ref(new Date().toISOString().split('T')[0])
 
 const gastosList = ref([
-  { id: 1, nombre: 'Alquiler', categoria: 'Vivienda', monto: 1200 },
-  { id: 2, nombre: 'Suscripciones', categoria: 'Entretenimiento', monto: 45 },
-  { id: 3, nombre: 'Supermercado', categoria: 'Alimentación', monto: 320 }
+  { id: 1, nombre: 'Alquiler', categoria: 'VIVIENDA', monto: 1200 },
+  { id: 2, nombre: 'Suscripciones', categoria: 'OCIO Y SERVICIOS', monto: 45 },
+  { id: 3, nombre: 'Supermercado', categoria: 'ALIMENTACION', monto: 320 }
 ])
 
 const resultadoPerfil = ref('SALUDABLE')
@@ -55,21 +55,21 @@ const autoClasificarModal = async () => {
   classifying.value = true
   try {
     const res = await analisisService.clasificarTransaccion(modalDescripcion.value, parseFloat(modalMonto.value) || 0)
-    if (res && (res.categoria || res.categoria_sugerida)) {
-      modalCategoria.value = (res.categoria || res.categoria_sugerida).toUpperCase()
+    if (res && (res.categoria || res.categoria_gasto)) {
+      modalCategoria.value = (res.categoria || res.categoria_gasto).toUpperCase()
     } else {
       const d = modalDescripcion.value.toLowerCase()
-      if (d.includes('netflix') || d.includes('spotify') || d.includes('cine')) modalCategoria.value = 'ENTRETENIMIENTO'
+      if (d.includes('netflix') || d.includes('spotify') || d.includes('cine')) modalCategoria.value = 'OCIO Y SERVICIOS'
       else if (d.includes('salario') || d.includes('sueldo')) modalCategoria.value = 'INGRESOS'
-      else if (d.includes('super') || d.includes('comida') || d.includes('mercado')) modalCategoria.value = 'ALIMENTACIÓN'
+      else if (d.includes('super') || d.includes('comida') || d.includes('mercado')) modalCategoria.value = 'ALIMENTACION'
       else if (d.includes('uber') || d.includes('taxi') || d.includes('gasolina')) modalCategoria.value = 'TRANSPORTE'
       else modalCategoria.value = 'OTROS'
     }
   } catch (err) {
     const d = modalDescripcion.value.toLowerCase()
-    if (d.includes('netflix') || d.includes('spotify')) modalCategoria.value = 'ENTRETENIMIENTO'
+    if (d.includes('netflix') || d.includes('spotify')) modalCategoria.value = 'OCIO Y SERVICIOS'
     else if (d.includes('salario') || d.includes('sueldo')) modalCategoria.value = 'INGRESOS'
-    else if (d.includes('super') || d.includes('comida')) modalCategoria.value = 'ALIMENTACIÓN'
+    else if (d.includes('super') || d.includes('comida')) modalCategoria.value = 'ALIMENTACION'
     else modalCategoria.value = 'OTROS'
   } finally {
     classifying.value = false
@@ -87,8 +87,8 @@ const agregarGasto = async () => {
   nuevoNombreGasto.value = ''
   nuevoMontoGasto.value = ''
   
-  // Realiza el análisis inmediatamente
-  await realizarAnalisis()
+  // Realiza el análisis inmediatamente await realizarAnalisis()
+ 
 }
 
 const handleAgregarDesdeModal = async () => {
@@ -105,15 +105,15 @@ const handleAgregarDesdeModal = async () => {
   modalCategoria.value = 'Sin definir'
   modalTipo.value = 'GASTO'
 
-  // Realiza el análisis automáticamente
-  await realizarAnalisis()
+  // Realiza el análisis automáticamente await realizarAnalisis()
+  
 }
 
 const eliminarGasto = async (id) => {
   gastosList.value = gastosList.value.filter(g => g.id !== id)
-  if (showResults.value) {
+  /*if (showResults.value) {
     await realizarAnalisis()
-  }
+  }*/
 }
 
 const realizarAnalisis = async () => {
@@ -121,12 +121,12 @@ const realizarAnalisis = async () => {
   showResults.value = true
 
   const payload = {
-    ingresoMensual: parseFloat(ingresoMensual.value) || 3500,
-    nivelEndeudamiento: parseFloat(nivelEndeudamiento.value) || 0,
-    frecuenciaAhorro: frecuenciaAhorro.value,
+    ingreso_mensual: parseFloat(ingresoMensual.value) || 3500,
+    nivel_endeudamiento: parseFloat(nivelEndeudamiento.value) || 0,
+    frecuencia_ahorro: frecuenciaAhorro.value,
     transacciones: gastosList.value.map(g => ({
       descripcion: g.nombre,
-      monto: parseFloat(g.monto) || 0
+      valor: parseFloat(g.monto) || 0
     }))
   }
 
@@ -139,8 +139,8 @@ const realizarAnalisis = async () => {
       if (res.recomendaciones && res.recomendaciones.length > 0) {
         recomendacionesList.value = res.recomendaciones
       }
-      if (res.resumenGastos) {
-        resumenGastosMap.value = res.resumenGastos
+      if (res.resumenGastos || res.resumen_gastos) {
+        resumenGastosMap.value = res.resumenGastos || res.resumen_gastos
       }
     }
   } catch (err) {
@@ -149,6 +149,40 @@ const realizarAnalisis = async () => {
     loading.value = false
   }
 }
+
+// Computed para el valor máximo de las barras
+const categoriasGastos = computed(() => {
+  const entries = Object.entries(resumenGastosMap.value)
+  if (entries.length === 0) return []
+  
+  // Obtener valores
+  const valores = entries.map(([_, valor]) => valor)
+  const minValor = Math.min(...valores)
+  const maxValor = Math.max(...valores)
+  
+  // Si solo hay un valor o todos iguales, usar altura fija
+  if (minValor === maxValor) {
+    return entries.map(([categoria, valor]) => ({
+      categoria,
+      valor,
+      altura: 50 // Altura fija al 50%
+    }))
+  }
+  
+  const logMin = Math.log(minValor)
+  const logMax = Math.log(maxValor)
+  const rangoLog = logMax - logMin
+  
+  return entries.map(([categoria, valor]) => {
+    const logValor = Math.log(valor)
+    const altura = 20 + ((logValor - logMin) / rangoLog) * 75
+    return {
+      categoria,
+      valor,
+      altura: Math.min(95, Math.max(20, altura)) // Limitar entre 20-95%
+    }
+  })
+})
 </script>
 
 <template>
@@ -293,18 +327,30 @@ const realizarAnalisis = async () => {
 
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div class="lg:col-span-2 bg-gray-200/50 rounded-[24px] p-6 h-64 flex items-end justify-around pb-12 relative overflow-hidden border border-gray-200">
-              <span class="absolute top-6 left-6 text-sm font-bold text-gray-400">Resumen de gastos por categoría</span>
-              <!-- Mock bars -->
-              <div class="w-16 h-3/4 bg-gray-300 rounded-t-lg"></div>
-              <div class="w-16 h-1/4 bg-gray-300 rounded-t-lg"></div>
-              <div class="w-16 h-1/2 bg-gray-300 rounded-t-lg"></div>
-              <div class="w-16 h-1/3 bg-gray-300 rounded-t-lg"></div>
+              <span class="absolute top-4 left-6 text-sm font-bold text-gray-400 z-10 bg-gray-200/80 px-3 py-1 rounded-lg">
+                Resumen de gastos por categoría
+              </span>
               
-              <div class="absolute bottom-4 w-full flex justify-around text-xs font-bold text-gray-400 uppercase left-0">
-                <span>Fijos</span>
-                <span>Ocio</span>
-                <span>Deuda</span>
-                <span>Otros</span>
+              <!-- Las barras con padding superior -->
+              <div v-if="categoriasGastos.length > 0" 
+                  class="w-full h-full flex items-end justify-around pt-10">
+                <div v-for="(item, index) in categoriasGastos" 
+                    :key="index"
+                    class="flex flex-col items-center gap-2 w-16 h-full justify-end">
+                  <div class="w-12 rounded-t-lg transition-all duration-700 ease-in-out"
+                      :style="{
+                        height: item.altura + '%',
+                        backgroundColor: `hsl(${index * 60 + 200}, 70%, 50%)`
+                      }">
+                  </div>
+                  <span class="text-xs font-bold text-gray-400 uppercase truncate w-full text-center">
+                    {{ item.categoria }}
+                  </span>
+                </div>
+              </div>
+              
+              <div v-else class="w-full h-full flex items-center justify-center">
+                <p class="text-gray-400 text-sm">No hay datos de gastos para mostrar</p>
               </div>
             </div>
 

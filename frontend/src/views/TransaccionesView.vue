@@ -222,11 +222,11 @@ const eliminarTransaccion = async (id) => {
 
 const getCategoryBadgeClass = (categoria) => {
   switch (categoria.toUpperCase()) {
-    case 'ENTRETENIMIENTO':
+    case 'OCIO Y SERVICIOS':
       return 'bg-teal-700 text-white'
     case 'INGRESOS':
       return 'bg-emerald-200 text-emerald-800'
-    case 'ALIMENTACIÓN':
+    case 'ALIMENTACION':
       return 'bg-teal-600 text-white'
     case 'TRANSPORTE':
       return 'bg-slate-300 text-slate-700'
@@ -297,7 +297,7 @@ onMounted(async () => {
               <select v-model="filterTipo" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-700 outline-none focus:border-[#19d282] cursor-pointer appearance-none">
                 <option value="TODOS">Todos los tipos</option>
                 <option value="INGRESO">Ingresos (+)</option>
-                <option value="GASTO">Egresos (-)</option>
+                <option value="GASTO">Gastos (-)</option>
               </select>
             </div>
             <!-- Categoría -->
@@ -305,12 +305,13 @@ onMounted(async () => {
               <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">FILTRAR POR CATEGORÍA</label>
               <select v-model="filterCategoria" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-700 outline-none focus:border-[#19d282] cursor-pointer appearance-none">
                 <option value="TODAS">Todas las categorías</option>
-                <option value="ALIMENTACIÓN">Alimentación</option>
+                <option value="ALIMENTACION">Alimentación</option>
                 <option value="VIVIENDA">Vivienda</option>
                 <option value="TRANSPORTE">Transporte</option>
-                <option value="ENTRETENIMIENTO">Entretenimiento</option>
-                <option value="INGRESOS">Ingresos y Salarios</option>
-                <option value="OTROS">Otros Gastos</option>
+                <option value="OCIO Y SERVICIOS">Ocio y Servicios</option>
+                <option value="SALUD">Salud</option>
+                <option value="EDUCACION">Educación</option>
+                <option value="OTROS">Otros</option>
               </select>
             </div>
           </div>
