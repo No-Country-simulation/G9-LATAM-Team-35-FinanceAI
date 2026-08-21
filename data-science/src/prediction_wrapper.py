@@ -33,19 +33,20 @@ async def manejador_global(request: Request, exc: Exception):
 
 
 # Comentar si no se usara con alguna key para validar el OCI
-# oci_service = OCIService(bucket_name="bucket")
+oci_service = OCIService(bucket_name="finance-ai-bucket")
 
 """Modelos en local"""
-modelo_perfil_financiero = joblib.load(MODELS_DIR / "modelo_perfil_financiero.joblib")
-modelo_clasificador_gastos = joblib.load(MODELS_DIR / "clasificador_gastos.joblib")
+#modelo_perfil_financiero = joblib.load(MODELS_DIR / "modelo_perfil_financiero.joblib")
+#modelo_clasificador_gastos = joblib.load(MODELS_DIR / "clasificador_gastos.joblib")
 
 """Modelo OCI en RAM"""
-# modelo_perfil_financiero = oci_service.cargar_modelo_joblib(
-#     "modelo_perfil_financiero.joblib"
-# )
-# modelo_clasificador_gastos = oci_service.cargar_modelo_joblib(
-#     "clasificador_gastos.joblib"
-# )
+modelo_perfil_financiero = oci_service.cargar_modelo_joblib(
+    "modelo_perfil_financiero.joblib"
+)
+modelo_clasificador_gastos = oci_service.cargar_modelo_joblib(
+    "clasificador_gastos.joblib"
+)
+print("✅ Modelos cargados desde OCI correctamente")
 
 """Modelo OCI en cache (carpeta temp)"""
 # modelo_perfil_financiero = oci_service.cargar_modelo_con_cache(
