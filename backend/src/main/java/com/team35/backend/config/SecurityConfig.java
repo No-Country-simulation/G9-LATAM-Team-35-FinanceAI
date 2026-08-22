@@ -63,31 +63,51 @@ public class SecurityConfig {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-
         CorsConfiguration configuration = new CorsConfiguration();
-
+        // Agregar más orígenes permitidos
         configuration.setAllowedOrigins(
-                List.of("http://localhost:5173")
+                List.of(
+                        "http://localhost:5173",      // Frontend dev
+                        "http://localhost:5174",      // Frontend dev alternativo
+                        "http://localhost:80",        // Frontend producción
+                        "http://localhost",            // Frontend producción
+                        "http://frontend",             // Docker
+                        "http://frontend:80"           // Docker con puerto
+                )
         );
 
         configuration.setAllowedMethods(
-                List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
         );
-
         configuration.setAllowedHeaders(
-                List.of("Authorization", "Content-Type")
+                List.of(
+                        "Authorization",
+                        "Content-Type",
+                        "X-Requested-With",
+                        "Accept",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                )
         );
 
+        // Headers expuestos (para que el frontend pueda leerlos)
+        configuration.setExposedHeaders(
+                List.of(
+                        "Authorization",
+                        "Content-Type"
+                )
+        );
+        // Permitir credenciales
         configuration.setAllowCredentials(true);
+        // Tiempo de cache para preflight (3600 segundos = 1 hora)
+        configuration.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source =
                 new UrlBasedCorsConfigurationSource();
-
         source.registerCorsConfiguration("/**", configuration);
-
         return source;
     }
-
     // Usar el GlobalExceptionHandler para errores de autenticación (401)
     @Bean
     public AuthenticationEntryPoint authenticationEntryPoint() {

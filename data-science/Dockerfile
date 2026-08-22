@@ -6,10 +6,14 @@ COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+COPY src/ ./src/
+COPY models/ ./models/
 
 WORKDIR /app/src
 
 EXPOSE 8000
+
+# Establecer PYTHONPATH
+ENV PYTHONPATH=/app
 
 CMD ["uvicorn", "prediction_wrapper:app", "--host", "0.0.0.0", "--port", "8000"]
