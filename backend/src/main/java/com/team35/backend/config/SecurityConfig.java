@@ -67,12 +67,14 @@ public class SecurityConfig {
         // Agregar más orígenes permitidos
         configuration.setAllowedOrigins(
                 List.of(
-                        "http://localhost:5173",      // Frontend dev
-                        "http://localhost:5174",      // Frontend dev alternativo
-                        "http://localhost:80",        // Frontend producción
-                        "http://localhost",            // Frontend producción
-                        "http://frontend",             // Docker
-                        "http://frontend:80"           // Docker con puerto
+                        // Desarrollo local
+                "http://localhost:5173",
+                "http://localhost:5174",
+                // Docker
+                "http://frontend",
+                "http://frontend:80",
+                // Producción - Render
+                "https://g9-latam-team-35-financeai-2.onrender.com"
                 )
         );
 
