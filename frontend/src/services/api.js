@@ -1,5 +1,5 @@
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080'
-
+const BASE_URL = 'https://g9-latam-team-35-financeai-1.onrender.com'
+//const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080'
 export async function request(endpoint, options = {}) {
   const token = localStorage.getItem('token')
   const headers = {
