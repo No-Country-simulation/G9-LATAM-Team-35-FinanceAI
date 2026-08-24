@@ -50,63 +50,116 @@ const recomendacionesList = ref([
 ])
 const resumenGastosMap = ref({})
 
+// ==========================================
+// FUNCIÓN GENERAL DE CLASIFICACIÓN
+// ==========================================
+const clasificarTransaccion = async (descripcion, monto) => {
+  if (!descripcion || descripcion.trim() === '') {
+    return 'OTROS'
+  }
+
+  try {
+    const res = await analisisService.clasificarTransaccion(descripcion, parseFloat(monto) || 0)
+    if (res && (res.categoria || res.categoria_gasto)) {
+      return (res.categoria || res.categoria_gasto).toUpperCase()
+    }
+    return clasificarLocal(descripcion)
+  } catch (err) {
+    console.warn('Error clasificando transacción, usando fallback local:', err)
+    return clasificarLocal(descripcion)
+  }
+}
+
+// ==========================================
+// FALLBACK LOCAL
+// ==========================================
+const clasificarLocal = (descripcion) => {
+  const d = descripcion.toLowerCase()
+  
+  const categoriasMap = [
+    { keywords: ['netflix', 'spotify', 'cine', 'disney', 'hbo', 'prime', 'youtube'], categoria: 'OCIO Y SERVICIOS' },
+    { keywords: ['salario', 'sueldo', 'nomina', 'pago', 'transferencia', 'ingreso'], categoria: 'INGRESOS' },
+    { keywords: ['super', 'comida', 'mercado', 'despensa', 'abarrotes', 'restaurante'], categoria: 'ALIMENTACION' },
+    { keywords: ['uber', 'taxi', 'gasolina', 'combustible', 'metro', 'bus'], categoria: 'TRANSPORTE' },
+    { keywords: ['renta', 'alquiler', 'hipoteca', 'agua', 'luz', 'gas', 'internet'], categoria: 'VIVIENDA' },
+    { keywords: ['doctor', 'medico', 'farmacia', 'medicina', 'hospital', 'seguro'], categoria: 'SALUD' },
+    { keywords: ['escuela', 'universidad', 'colegio', 'libro', 'curso', 'taller'], categoria: 'EDUCACION' }
+  ]
+
+  for (const item of categoriasMap) {
+    if (item.keywords.some(keyword => d.includes(keyword))) {
+      return item.categoria
+    }
+  }
+  
+  return 'OTROS'
+}
+
+// ==========================================
+// AUTO CLASIFICAR DESDE MODAL
+// ==========================================
 const autoClasificarModal = async () => {
   if (!modalDescripcion.value) return
   classifying.value = true
   try {
-    const res = await analisisService.clasificarTransaccion(modalDescripcion.value, parseFloat(modalMonto.value) || 0)
-    if (res && (res.categoria || res.categoria_gasto)) {
-      modalCategoria.value = (res.categoria || res.categoria_gasto).toUpperCase()
-    } else {
-      const d = modalDescripcion.value.toLowerCase()
-      if (d.includes('netflix') || d.includes('spotify') || d.includes('cine')) modalCategoria.value = 'OCIO Y SERVICIOS'
-      else if (d.includes('salario') || d.includes('sueldo')) modalCategoria.value = 'INGRESOS'
-      else if (d.includes('super') || d.includes('comida') || d.includes('mercado')) modalCategoria.value = 'ALIMENTACION'
-      else if (d.includes('uber') || d.includes('taxi') || d.includes('gasolina')) modalCategoria.value = 'TRANSPORTE'
-      else modalCategoria.value = 'OTROS'
-    }
+    modalCategoria.value = await clasificarTransaccion(modalDescripcion.value, modalMonto.value)
   } catch (err) {
-    const d = modalDescripcion.value.toLowerCase()
-    if (d.includes('netflix') || d.includes('spotify')) modalCategoria.value = 'OCIO Y SERVICIOS'
-    else if (d.includes('salario') || d.includes('sueldo')) modalCategoria.value = 'INGRESOS'
-    else if (d.includes('super') || d.includes('comida')) modalCategoria.value = 'ALIMENTACION'
-    else modalCategoria.value = 'OTROS'
+    modalCategoria.value = 'OTROS'
   } finally {
     classifying.value = false
   }
 }
 
+// ==========================================
+// AGREGAR GASTO (DESDE FORMULARIO RÁPIDO)
+// ==========================================
 const agregarGasto = async () => {
   if (!nuevoNombreGasto.value || !nuevoMontoGasto.value) return
+
+  // Clasificar la transacción
+  const categoria = await clasificarTransaccion(nuevoNombreGasto.value, nuevoMontoGasto.value)
+
   gastosList.value.push({
     id: Date.now(),
     nombre: nuevoNombreGasto.value,
-    categoria: 'General',
+    categoria: categoria,
     monto: parseFloat(nuevoMontoGasto.value) || 0
   })
+
   nuevoNombreGasto.value = ''
   nuevoMontoGasto.value = ''
   
-  // Realiza el análisis inmediatamente await realizarAnalisis()
- 
+  // ⏳ Análisis automático (comentado)
+  // await realizarAnalisis()
 }
 
+// ==========================================
+// AGREGAR GASTO DESDE MODAL
+// ==========================================
 const handleAgregarDesdeModal = async () => {
   if (!modalMonto.value || !modalDescripcion.value) return
+
+  // Si la categoría está sin definir, clasificar automáticamente
+  let categoria = modalCategoria.value
+  if (categoria === 'Sin definir' || categoria === '') {
+    categoria = await clasificarTransaccion(modalDescripcion.value, modalMonto.value)
+  }
+
   gastosList.value.push({
     id: Date.now(),
     nombre: modalDescripcion.value,
-    categoria: modalCategoria.value,
+    categoria: categoria,
     monto: parseFloat(modalMonto.value) || 0
   })
+
   showModal.value = false
   modalDescripcion.value = ''
   modalMonto.value = ''
   modalCategoria.value = 'Sin definir'
   modalTipo.value = 'GASTO'
 
-  // Realiza el análisis automáticamente await realizarAnalisis()
-  
+  // ⏳ Análisis automático (comentado)
+  // await realizarAnalisis()
 }
 
 const eliminarGasto = async (id) => {

@@ -1,5 +1,11 @@
-const BASE_URL = 'https://g9-latam-team-35-financeai-1.onrender.com'
-//const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080'
+//const BASE_URL = 'https://g9-latam-team-35-financeai-1.onrender.com'
+// Antes de definir BASE_URL
+//console.log(" Variables de entorno disponibles:", import.meta.env);
+//console.log(" VITE_API_URL:", import.meta.env.VITE_API_URL);
+
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+console.log(" BASE_URL final:", BASE_URL);
+
 export async function request(endpoint, options = {}) {
   const token = localStorage.getItem('token')
   const headers = {

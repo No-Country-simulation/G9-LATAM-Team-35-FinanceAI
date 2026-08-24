@@ -58,7 +58,7 @@ const mapPerfilToUi = (item) => {
 
   const titulo = item.nombre || (fechaFormateada ? `${fechaFormateada} - ${estadoText}` : 'Análisis Financiero')
   const subtitulo = rawIngreso !== null && rawIngreso !== undefined
-    ? `Ingreso: $${Number(rawIngreso).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} | Endeudamiento: ${Number(rawEndeudamiento || 0)}% | Ahorro: ${rawFrecuencia || 'N/A'}`
+    ? `Ingreso: $${Number(rawIngreso).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} | Endeudamiento: ${Number(rawEndeudamiento || 0)}% | Ahorro: ${rawFrecuencia || 'N/A'}`
     : 'Evaluación financiera registrada'
 
   // Probabilidad: si viene como decimal (0.94) o porcentaje (94)
