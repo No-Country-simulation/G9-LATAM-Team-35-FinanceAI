@@ -285,6 +285,3 @@ Funcionalidades evaluadas y dejadas fuera del alcance del MVP actual, como posib
  # 📜 Licencia
  
 Proyecto académico desarrollado en el marco del Hackathon Oracle Next Education (ONE). 
-# 📜 Licencia
- 
-Proyecto académico desarrollado en el marco del Hackathon Oracle Next Education (ONE). Sin fines comerciales.
