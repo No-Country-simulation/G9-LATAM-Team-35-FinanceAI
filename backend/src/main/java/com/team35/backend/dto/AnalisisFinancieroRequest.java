@@ -13,6 +13,7 @@ import java.util.List;
 public class AnalisisFinancieroRequest {
 
     @Positive(message = "El ingreso mensual debe ser mayor que cero")
+    @NotNull(message = "El ingreso mensual es obligatorio")
     @JsonProperty("ingreso_mensual")
     private double ingresoMensual;
 

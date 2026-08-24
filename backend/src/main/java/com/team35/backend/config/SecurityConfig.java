@@ -45,8 +45,8 @@ public class SecurityConfig {
                                 "/api/transacciones/clasificar-transaccion",
                                 "/api/analisis/frecuencia-ahorro-encuesta",
                                 "/api/analisis-financiero", "/api/clasificar-transaccion").permitAll()
-                        .requestMatchers(HttpMethod.GET,
-                                "/","/health").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/","/health").permitAll()
+                        .requestMatchers(HttpMethod.HEAD, "/","/health").permitAll()
                         .requestMatchers("/swagger-ui/**", "/swagger-ui.html" , "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated()
                 )

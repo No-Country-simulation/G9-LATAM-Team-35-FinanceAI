@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import com.team35.backend.service.DataWakeUpService;
 
 @RestController
-@Tag(name = "FinanceAI", description = "Endpoints de análisis financiero y clasificación de transacciones")
+@Tag(name = "FinanceAI", description = "Endpoints de análisis financiero y clasificación de transacciones que se conectan con el servicio de Ciencia de Datos")
 public class AnalisisFinancieroController {
 
     private final AnalisisFinancieroService analisisFinancieroService;
@@ -69,6 +69,7 @@ public class AnalisisFinancieroController {
         return ResponseEntity.ok("FinanceAI API activa");
     }
 
+    @Operation(summary = "Despierta el microservicio de Ciencia de Datos (FastAPI) para que esté listo para recibir solicitudes en caso de usar una plataforma de hosting que ponga a dormir la app por inactividad")
     @GetMapping("/")
     public ResponseEntity<String> wakeUp() {
         dataWakeUpService.despertarData();
