@@ -4,7 +4,8 @@ from pydantic import BaseModel, Field
 from pathlib import Path
 import joblib, re, unicodedata
 import pandas as pd
-
+from fastapi.middleware.cors import CORSMiddleware
+import os
 from oci_service import OCIService
 
 """
@@ -17,7 +18,19 @@ MODELS_DIR = BASE_DIR / ".." / "models"
 
 
 app = FastAPI(title="FinanceAI - Microservicio de clasificación y perfil financiero")
+backend_url = os.getenv("BACKEND_URL", "http://localhost:8080")
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:8080",      # Backend local
+        "http://localhost:8000",      # FastAPI local (para pruebas)
+        backend_url,                  # Backend en producción
+    ],
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "OPTIONS"],
+    allow_headers=["*"],
+)
 
 @app.exception_handler(Exception)
 async def manejador_global(request: Request, exc: Exception):
@@ -81,6 +94,25 @@ class ClasificacionResponse(BaseModel):
     valor: float
     categoria_gasto: str
 
+@app.get("/")
+def root():
+    return {
+        "service": "FinanceAI - Microservicio de clasificación",
+        "status": "online",
+        "endpoints": {
+            "/health": "Estado del servicio",
+            "/clasificar-transaccion": "Clasificar una o más transacciones",
+            "/analisis-financiero": "Análisis completo de perfil financiero"
+        },
+        "docs": "/docs"
+    }
+
+@app.get("/health")
+def health_check():
+    return {
+        "status": "ok",
+        "cors_origins": os.getenv("BACKEND_URL")
+    }
 
 @app.post("/clasificar-transaccion", response_model=list[ClasificacionResponse])
 def clasificar_transaccion(transacciones: list[Transaccion] = Body(..., min_length=1)):
