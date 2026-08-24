@@ -14,6 +14,10 @@ COPY package*.json ./
 # Instalar dependencias
 RUN npm install --network-timeout=100000
 
+#variable disponible durante el build de vite
+ARG VITE_API_URL
+ENV VITE_API_URL=$VITE_API_URL
+
 # Copiar código fuente
 COPY . .
 
