@@ -63,7 +63,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Value("${FRONTEND_URL:http://localhost:5174}")
+    @Value("${frontend.url}")
     private String frontendUrl;
 
     @Bean
@@ -81,7 +81,7 @@ public class SecurityConfig {
                         frontendUrl
                 )
         );
-
+        System.out.println(">>>FRONTEND URL: " + frontendUrl);
         configuration.setAllowedMethods(
                 List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
         );
