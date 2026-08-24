@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.team35.backend.service.DataWakeUpService;
 
 @RestController
 @Tag(name = "FinanceAI", description = "Endpoints de análisis financiero y clasificación de transacciones")
@@ -21,13 +22,15 @@ public class AnalisisFinancieroController {
     private final AnalisisFinancieroService analisisFinancieroService;
     private final ClasificadorTransaccionesService clasificadorTransaccionesService;
     private final AuthService authService;
+    private final DataWakeUpService dataWakeUpService;
 
     public AnalisisFinancieroController(AnalisisFinancieroService analisisFinancieroService,
                                         ClasificadorTransaccionesService clasificadorTransaccionesService,
-                                        AuthService authService) {
+                                        AuthService authService, DataWakeUpService dataWakeUpService) {
         this.analisisFinancieroService = analisisFinancieroService;
         this.clasificadorTransaccionesService = clasificadorTransaccionesService;
         this.authService = authService;
+        this.dataWakeUpService = dataWakeUpService;
     }
 
     @Operation(summary = "Analiza la salud financiera del usuario a partir de 1 a N transacciones. "
@@ -37,7 +40,7 @@ public class AnalisisFinancieroController {
 
         Long usuarioId = null;
 
-        // ✅ Intentar obtener usuario autenticado, pero sin fallar si es anonymous
+        // Intentar obtener usuario autenticado, pero sin fallar si es anonymous
         try {
             Usuario usuario = authService.getUsuarioAutenticado();
             if (usuario != null && !"anonymousUser".equalsIgnoreCase(usuario.getEmail())) {
@@ -64,5 +67,11 @@ public class AnalisisFinancieroController {
     @GetMapping("/health")
     public ResponseEntity<String> health() {
         return ResponseEntity.ok("FinanceAI API activa");
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<String> wakeUp() {
+        dataWakeUpService.despertarData();
+        return ResponseEntity.ok("Backend activo");
     }
 }

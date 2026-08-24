@@ -3,6 +3,7 @@ package com.team35.backend.config;
 import com.team35.backend.exception.GlobalExceptionHandler;
 import com.team35.backend.service.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -43,8 +44,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST,
                                 "/api/transacciones/clasificar-transaccion",
                                 "/api/analisis/frecuencia-ahorro-encuesta",
-                                "/api/analisis-financiero")
-                        .permitAll()
+                                "/api/analisis-financiero", "/api/clasificar-transaccion").permitAll()
+                        .requestMatchers(HttpMethod.GET,
+                                "/","/health").permitAll()
                         .requestMatchers("/swagger-ui/**", "/swagger-ui.html" , "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated()
                 )
@@ -61,6 +63,9 @@ public class SecurityConfig {
         return http.build();
     }
 
+    @Value("${FRONTEND_URL:http://localhost:5174}")
+    private String frontendUrl;
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -69,12 +74,11 @@ public class SecurityConfig {
                 List.of(
                         // Desarrollo local
                 "http://localhost:5173",
-                "http://localhost:5174",
                 // Docker
                 "http://frontend",
                 "http://frontend:80",
                 // Producción - Render
-                "https://g9-latam-team-35-financeai-2.onrender.com"
+                        frontendUrl
                 )
         );
 
