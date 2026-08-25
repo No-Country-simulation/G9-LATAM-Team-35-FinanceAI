@@ -18,6 +18,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 
 @Service
@@ -69,10 +71,6 @@ public class AnalisisFinancieroService {
         return analizar(request, null);
     }
 
-    // ─────────────────────────────────────────────────────────────
-    //  Persistencia
-    // ─────────────────────────────────────────────────────────────
-
     private void persistirAnalisis(AnalisisFinancieroRequest request,
                                    AnalisisFinancieroResponse response,
                                    Long usuarioId) {
@@ -92,7 +90,7 @@ public class AnalisisFinancieroService {
                 .ingresoMensual(BigDecimal.valueOf(request.getIngresoMensual()))
                 .nivelEndeudamiento(BigDecimal.valueOf(request.getNivelEndeudamiento()))
                 .frecuenciaAhorro(request.getFrecuenciaAhorro())
-                .fechaAnalisis(LocalDateTime.now())
+                .fechaAnalisis(ZonedDateTime.now(ZoneId.of("America/Mexico_City")).toLocalDateTime())
                 .build();
 
         // Agregar recomendaciones
