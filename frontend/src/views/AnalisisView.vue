@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
+import { useRouter } from 'vue-router'
 import Sidebar from '../components/Sidebar.vue'
 import ModalEndeudamiento from '../components/ModalEndeudamiento.vue'
 import ModalEncuestaAhorro from '../components/ModalEncuestaAhorro.vue'
@@ -30,13 +31,16 @@ import { distribucionService } from '../services/distribucionService'
 const loading = ref(false)
 const loadingDatos = ref(false)
 const showResults = ref(false)
+const mostrarError = ref(false)
+const mostrarSinTransacciones = ref(false)
+const router = useRouter()
 
 // Fecha / Período
 const mesSeleccionado = ref(new Date().toISOString().slice(0, 7)) // ej '2026-08'
 
 // Ingresos & Deudas (null = no registrado previamente)
 const ingresoMensual = ref(0)
-const nivelEndeudamiento = ref(null) 
+const nivelEndeudamiento = ref(10) 
 const mostrarModalEndeudamiento = ref(false)
 const showIngresoModal = ref(false)
 const tempIngreso = ref(0)
@@ -97,10 +101,10 @@ const cargarDatosPeriodo = async () => {
       const todas = await transaccionesService.obtenerTransacciones()
       const lista = Array.isArray(todas) ? todas : (todas.data || [])
       
-      // Filtrar por el mes seleccionado y que sean GASTO
+      // Filtrar por el mes seleccionado y que sean de tipo GASTO
       const filtradas = lista.filter(t => {
         if (!t.fecha) return false
-        return t.fecha.startsWith(mesSeleccionado.value)
+        return t.fecha.startsWith(mesSeleccionado.value) && t.tipo === 'GASTO'
       })
 
       transaccionesUsuario.value = filtradas
@@ -179,6 +183,7 @@ const cargarDatosPeriodo = async () => {
             const p = (analisisMes.perfil || '').toString().toUpperCase()
             perfilResultado.value = p.includes('SALUDABLE') ? 'Saludable' : (p.includes('OBSERVACION') ? 'En Observación' : 'En Riesgo')
             probabilidadResultado.value = Number(analisisMes.probabilidad || 0.85)
+
             showResults.value = true
           }
         }
@@ -239,14 +244,46 @@ const aplicarResultadoEncuesta = (resultado) => {
   }
 }
 
-// Ejecución del Análisis Real
-const realizarAnalisis = async () => {
-  // Si la frecuencia o nivel de endeudamiento no están definidos, guiamos al usuario
-  if (frecuenciaAhorro.value === null) {
-    mostrarModalEncuesta.value = true
-    return
+const datosCompletos = computed(() => {
+  const ingresoValido = ingresoMensual.value > 0
+  const frecuenciaValida = frecuenciaAhorro.value !== null
+  const endeudamientoValido = nivelEndeudamiento.value !== null && nivelEndeudamiento.value !== undefined
+
+  return ingresoValido && frecuenciaValida && endeudamientoValido
+})
+
+const tieneTransacciones = computed(() => {
+  return transaccionesUsuario.value && transaccionesUsuario.value.length > 0
+})
+
+const validarDatos = () => {
+  mostrarError.value = false
+  mostrarSinTransacciones.value = false
+
+  //  Validar datos del perfil
+  if (!datosCompletos.value) {
+    mostrarError.value = true
+    return false
   }
 
+  // Validar transacciones
+  if (!tieneTransacciones.value) {
+    mostrarSinTransacciones.value = true
+    return false
+  }
+
+  return true
+}
+
+const realizarAnalisis = async () => {
+  // Validar antes de ejecutar
+  if (!validarDatos()) {
+    return
+  }
+  if (transaccionesUsuario.value.length === 0) {
+    mostrarSinTransacciones.value = true
+    return
+  }
   loading.value = true
   try {
     // Preparar lista de transacciones
@@ -260,7 +297,7 @@ const realizarAnalisis = async () => {
         valor: Number(t.valor || t.monto || 0)
       }))
     } else {
-      // Si el usuario no tiene gastos registrados aún en este mes, usar muestra representativa
+      // Usar datos de prueba
       txPayload = [
         { descripcion: 'Vivienda y Servicios', monto: (ingresoMensual.value * 0.35), valor: (ingresoMensual.value * 0.35) },
         { descripcion: 'Alimentación', monto: (ingresoMensual.value * 0.25), valor: (ingresoMensual.value * 0.25) },
@@ -268,6 +305,7 @@ const realizarAnalisis = async () => {
       ]
     }
 
+    // Preparar payload
     const payload = {
       ingresoMensual: parseFloat(ingresoMensual.value) || 1,
       ingreso_mensual: parseFloat(ingresoMensual.value) || 1,
@@ -285,7 +323,7 @@ const realizarAnalisis = async () => {
     const res = await analisisService.analizarFinanzas(payload)
     const data = res.data || res
 
-    if (data) {
+     if (data) {
       perfilResultado.value = data.perfil_financiero || data.perfilFinanciero || 'Saludable'
       probabilidadResultado.value = Number(data.probabilidad || 0.85)
       resumenGastos.value = data.resumen_gastos || data.resumenGastos || {}
@@ -358,6 +396,29 @@ const realizarAnalisis = async () => {
   }
 }
 
+const irATransacciones = () => {
+  router.push('/transacciones')
+}
+
+const usarDatosPrueba = () => {
+  //  Ocultar el mensaje de advertencia
+  mostrarSinTransacciones.value = false
+  
+  //  Definir los datos de prueba
+  const datosPrueba = [
+    { id: Date.now() + 1, descripcion: 'Vivienda y Servicios', valor: 3500, tipo: 'GASTO', fecha: new Date().toISOString().split('T')[0] },
+    { id: Date.now() + 2, descripcion: 'Alimentación', valor: 2500, tipo: 'GASTO', fecha: new Date().toISOString().split('T')[0] },
+    { id: Date.now() + 3, descripcion: 'Transporte', valor: 1000, tipo: 'GASTO', fecha: new Date().toISOString().split('T')[0] },
+    { id: Date.now() + 4, descripcion: 'Salud médica', valor: 500, tipo: 'GASTO', fecha: new Date().toISOString().split('T')[0] }
+  ]
+
+  transaccionesUsuario.value = datosPrueba
+  
+  toast?.success('Datos de prueba cargados correctamente')
+  
+
+}
+
 const totalGastosPeriodo = computed(() => {
   const values = Object.values(resumenGastos.value)
   if (values.length === 0) return 0
@@ -373,7 +434,7 @@ const listaDistribucion = computed(() => {
       { nombre: 'Vivienda y Servicios', monto: ingresoMensual.value * 0.35, porcentaje: 41, pctIngreso: '35.0', color: 'bg-[#0f4c54]' },
       { nombre: 'Alimentación', monto: ingresoMensual.value * 0.25, porcentaje: 29, pctIngreso: '25.0', color: 'bg-[#19d282]' },
       { nombre: 'Transporte', monto: ingresoMensual.value * 0.15, porcentaje: 18, pctIngreso: '15.0', color: 'bg-teal-600' },
-      { nombre: 'Ocio y Entretenimiento', monto: ingresoMensual.value * 0.10, porcentaje: 12, pctIngreso: '10.0', color: 'bg-emerald-400' }
+      { nombre: 'Salud', monto: ingresoMensual.value * 0.10, porcentaje: 12, pctIngreso: '10.0', color: 'bg-emerald-400' }
     ]
   }
 
@@ -637,16 +698,102 @@ const mensajeIngreso = computed(() => {
 
         </div>
 
+        <div v-if="mostrarError" class="bg-red-50 border border-red-200 rounded-xl p-4 mt-4">
+          <div class="flex items-start gap-3">
+            <PhWarning :size="20" class="text-red-500 flex-shrink-0 mt-0.5" />
+            <div>
+              <h4 class="text-sm font-bold text-red-800">Datos incompletos</h4>
+              <ul class="text-sm text-red-700 mt-1 space-y-1">
+                <li v-if="ingresoMensual <= 0 || !ingresoMensual">
+                  • El <span class="font-bold">ingreso mensual</span> debe ser mayor a 0
+                </li>
+                <li v-if="frecuenciaAhorro === null">
+                  • Debes seleccionar tu <span class="font-bold">frecuencia de ahorro</span>
+                </li>
+                <li v-if="nivelEndeudamiento === null || nivelEndeudamiento === undefined">
+                  • Debes ingresar tu <span class="font-bold">nivel de endeudamiento</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div v-if="mostrarSinTransacciones" class="bg-amber-50 border border-amber-200 rounded-xl p-4 mt-4">
+          <div class="flex items-start gap-3">
+            <PhWarning :size="20" class="text-amber-500 flex-shrink-0 mt-0.5" />
+            <div class="flex-1">
+              <h4 class="text-sm font-bold text-amber-800">No tienes transacciones registradas</h4>
+              <p class="text-sm text-amber-700 mt-1">
+                Para un análisis más preciso, registra tus gastos primero.
+              </p>
+              <div class="flex flex-wrap gap-3 mt-3">
+                <!-- Botón para redirigir a transacciones -->
+                <button 
+                  @click="irATransacciones" 
+                  class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs px-4 py-2 rounded-lg transition-colors cursor-pointer"
+                >
+                  Ir a transacciones
+                </button>
+                <!-- Botón para usar datos de prueba -->
+                <button 
+                  @click="usarDatosPrueba" 
+                  class="border border-amber-300 text-amber-700 hover:bg-amber-50 font-bold text-xs px-4 py-2 rounded-lg transition-colors cursor-pointer"
+                >
+                  Usar datos de prueba
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabla de transacciones -->
+        <div v-if="transaccionesUsuario.length > 0" class="mt-4"><!-- Añadir a lado del titulo un mini boton para añadir transacciones-->
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-base font-bold text-[#0f4c54]">Transacciones del período</h3>
+            <button 
+              @click="irATransacciones" 
+              class="bg-[#19d282] hover:bg-[#15b872] text-shadow font-bold text-xs px-3 py-1.5 rounded-lg transition-colors cursor-pointer flex items-center gap-1"
+            >
+              <PhPlus :size="14" weight="bold" />
+              <span>Agregar transacción</span>
+            </button>
+          </div>
+          <div class="bg-slate-50 rounded-xl border border-slate-200 overflow-hidden">
+            <table class="w-full text-sm">
+              <thead class="bg-slate-100">
+                <tr>
+                  <th class="px-4 py-2 text-left text-xs font-bold text-slate-500 uppercase">Descripción</th>
+                  <th class="px-4 py-2 text-right text-xs font-bold text-slate-500 uppercase">Valor</th>
+                  <th class="px-4 py-2 text-left text-xs font-bold text-slate-500 uppercase">Tipo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="t in transaccionesUsuario" :key="t.id" class="border-t border-slate-100">
+                  <td class="px-4 py-2 text-slate-700">{{ t.descripcion }}</td>
+                  <td class="px-4 py-2 text-right font-semibold text-slate-700">${{ t.valor.toFixed(2) }}</td>
+                  <td class="px-4 py-2">
+                    <span :class="t.tipo === 'GASTO' ? 'text-red-500 bg-red-50' : 'text-emerald-500 bg-emerald-50'" 
+                          class="px-2 py-0.5 rounded-full text-[10px] font-bold">
+                      {{ t.tipo }}
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+
         <!-- Center Analyze Button -->
         <div class="flex flex-col items-center justify-center mb-10 gap-2">
           <button 
-            @click="realizarAnalisis" 
-            :disabled="loading" 
-            class="bg-[#19d282] hover:bg-[#15b872] text-slate-900 font-bold px-9 py-4 rounded-full text-base flex items-center gap-3 shadow-lg shadow-emerald-500/25 transition-all transform active:scale-95 cursor-pointer disabled:opacity-50"
+              @click="realizarAnalisis" 
+              :disabled="loading || !datosCompletos" 
+              class="bg-[#19d282] hover:bg-[#15b872] text-slate-900 font-bold px-9 py-4 rounded-full text-base flex items-center gap-3 shadow-lg shadow-emerald-500/25 transition-all transform active:scale-95 cursor-pointer disabled:opacity-50"
           >
-            <PhMagnifyingGlassPlus weight="bold" :size="22" />
+              <PhMagnifyingGlassPlus weight="bold" :size="22" />
             <span>{{ loading ? 'Evaluando con Inteligencia Artificial...' : 'Analizar mis finanzas' }}</span>
-          </button>
+            </button>
           <span class="text-[11px] text-slate-400">
             Analiza tus hábitos, calcula tu perfil de riesgo y genera recomendaciones instantáneas
           </span>

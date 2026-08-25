@@ -44,6 +44,9 @@ const mapPerfilToUi = (item) => {
   const rawIngreso = item.ingreso_mensual !== undefined ? item.ingreso_mensual : item.ingresoMensual
   const rawEndeudamiento = item.nivel_endeudamiento !== undefined ? item.nivel_endeudamiento : item.nivelEndeudamiento
   const rawFrecuencia = item.frecuencia_ahorro || item.frecuenciaAhorro
+  
+  // Extraer recomendaciones
+  const rawRecomendaciones = item.recomendaciones || []
 
   let fechaFormateada = ''
   let fechaHora = ''
@@ -69,6 +72,11 @@ const mapPerfilToUi = (item) => {
     probVal = 'N/A'
   }
 
+  //  Formatear recomendaciones
+  const recomendaciones = rawRecomendaciones.length > 0 
+    ? rawRecomendaciones 
+    : ['Sin recomendaciones disponibles para este análisis']
+
   return {
     id: item.id,
     titulo,
@@ -80,7 +88,9 @@ const mapPerfilToUi = (item) => {
     icon,
     colorClass,
     badgeClass,
-    probClass
+    probClass,
+    recomendaciones: rawRecomendaciones.length > 0 ? rawRecomendaciones : ['Sin recomendaciones disponibles'],
+    mostrarRecomendaciones: false
   }
 }
 
@@ -184,28 +194,58 @@ const irANuevoAnalisis = () => {
             </div>
 
             <!-- Card Content -->
-            <div class="bg-white rounded-[24px] p-6 shadow-sm border border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4 transition-shadow hover:shadow-md">
-              <div>
-                <div class="flex items-center gap-3">
-                  <h3 class="text-base font-bold text-[#0f4c54]">{{ item.titulo }}</h3>
-                  <span v-if="item.fechaHora" class="text-[11px] text-slate-400 font-semibold bg-slate-100 px-2.5 py-0.5 rounded-md">
-                    {{ item.fechaHora }}
-                  </span>
+            <div class="bg-white rounded-[24px] p-6 shadow-sm border border-slate-100 transition-shadow hover:shadow-md">
+              <!-- Encabezado -->
+              <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                  <div class="flex items-center gap-3">
+                    <h3 class="text-base font-bold text-[#0f4c54]">{{ item.titulo }}</h3>
+                    <span v-if="item.fechaHora" class="text-[11px] text-slate-400 font-semibold bg-slate-100 px-2.5 py-0.5 rounded-md">
+                      {{ item.fechaHora }}
+                    </span>
+                  </div>
+                  <p class="text-xs text-slate-500 mt-1 font-medium">{{ item.resultado }}</p>
                 </div>
-                <p class="text-xs text-slate-500 mt-1 font-medium">{{ item.resultado }}</p>
+
+                <div class="flex items-center gap-6">
+                  <span :class="['px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase', item.badgeClass]">
+                    {{ item.estado }}
+                  </span>
+                  
+                  <div class="flex flex-col items-end">
+                    <div :class="['flex items-center gap-1 font-bold text-sm', item.probClass]">
+                      <span>{{ item.probabilidad }}</span>
+                      <PhCaretDown :size="14" />
+                    </div>
+                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">PROBABILIDAD</span>
+                  </div>
+                </div>
               </div>
 
-              <div class="flex items-center gap-6">
-                <span :class="['px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase', item.badgeClass]">
-                  {{ item.estado }}
-                </span>
-                
-                <div class="flex flex-col items-end">
-                  <div :class="['flex items-center gap-1 font-bold text-sm', item.probClass]">
-                    <span>{{ item.probabilidad }}</span>
-                    <PhCaretDown :size="14" />
+              <!--  RECOMENDACIONES (expandibles) -->
+              <div class="mt-4 pt-4 border-t border-slate-100">
+                <!-- Botón para expandir/colapsar -->
+                <button 
+                  @click="item.mostrarRecomendaciones = !item.mostrarRecomendaciones"
+                  class="flex items-center gap-2 text-xs font-bold text-[#0f4c54] hover:text-[#19d282] transition-colors cursor-pointer"
+                >
+                  <PhLightbulb :size="16" class="text-amber-400" />
+                  <span>{{ item.mostrarRecomendaciones ? 'Ocultar' : 'Mostrar' }} recomendaciones</span>
+                  <PhCaretDown :size="14" :class="['transition-transform', item.mostrarRecomendaciones ? 'rotate-180' : '']" />
+                </button>
+
+                <!-- Lista de recomendaciones (expandible) -->
+                <div v-if="item.mostrarRecomendaciones" class="mt-3 space-y-2">
+                  <div v-for="(rec, idx) in item.recomendaciones" :key="idx"
+                      class="flex items-start gap-3 p-3 bg-amber-50/50 rounded-xl border border-amber-100">
+                    <span class="text-amber-500 text-sm flex-shrink-0 mt-0.5">✦</span>
+                    <span class="text-sm text-slate-700">{{ rec }}</span>
                   </div>
-                  <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">PROBABILIDAD ÉXITO</span>
+                  <!-- Si no hay recomendaciones -->
+                  <div v-if="!item.recomendaciones || item.recomendaciones.length === 0" 
+                      class="text-sm text-slate-400 italic p-2">
+                    Sin recomendaciones disponibles para este análisis
+                  </div>
                 </div>
               </div>
             </div>

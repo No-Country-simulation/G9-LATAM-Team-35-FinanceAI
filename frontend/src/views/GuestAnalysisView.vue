@@ -22,6 +22,8 @@ const showResults = ref(false)
 const loading = ref(false)
 const showModal = ref(false)
 const classifying = ref(false)
+const errorClasificacion = ref('')
+const errorBackend = ref('')
 
 const ingresoMensual = ref(3500)
 const frecuenciaAhorro = ref('Media')
@@ -50,30 +52,55 @@ const recomendacionesList = ref([
 ])
 const resumenGastosMap = ref({})
 
-// ==========================================
+const mostrarErrorClasificacion = (mensaje) => {
+  errorClasificacion.value = mensaje
+
+  setTimeout(() => {
+    errorClasificacion.value = ''
+  }, 4000)
+}
+
 // FUNCIÓN GENERAL DE CLASIFICACIÓN
-// ==========================================
 const clasificarTransaccion = async (descripcion, monto) => {
+  errorBackend.value = ''
+
+  // Validar campos (descripcion y monto son strings, no refs)
   if (!descripcion || descripcion.trim() === '') {
+    errorBackend.value = 'La descripción es obligatoria'
     return 'OTROS'
+  }
+
+  if (!monto || parseFloat(monto) <= 0) {
+    errorBackend.value = 'El monto es obligatorio y debe ser mayor a 0'
+    return 'OTROS'
+  }
+
+  // Si es INGRESO, no clasificar
+  if (modalTipo.value === 'INGRESO') {
+    mostrarErrorClasificacion('No se puede clasificar una transacción de tipo ingreso.')
+    modalCategoria.value = 'INGRESOS'
+    return 'INGRESOS'
   }
 
   try {
     const res = await analisisService.clasificarTransaccion(descripcion, parseFloat(monto) || 0)
     if (res && (res.categoria || res.categoria_gasto)) {
-      return (res.categoria || res.categoria_gasto).toUpperCase()
+      const categoria = (res.categoria || res.categoria_gasto).toUpperCase()
+      errorBackend.value = ''
+      return categoria
     }
     return clasificarLocal(descripcion)
   } catch (err) {
-    console.warn('Error clasificando transacción, usando fallback local:', err)
+    console.error('Error clasificando:', err)
+    errorBackend.value = err.response?.data?.mensaje || err.message || 'Error al clasificar'
     return clasificarLocal(descripcion)
   }
 }
 
-// ==========================================
-// FALLBACK LOCAL
-// ==========================================
+// FALLBACK LOCAL (solo recibe descripcion, no valida monto)
 const clasificarLocal = (descripcion) => {
+  if (!descripcion || descripcion.trim() === '') return 'OTROS'
+  
   const d = descripcion.toLowerCase()
   
   const categoriasMap = [
@@ -95,71 +122,124 @@ const clasificarLocal = (descripcion) => {
   return 'OTROS'
 }
 
-// ==========================================
-// AUTO CLASIFICAR DESDE MODAL
-// ==========================================
 const autoClasificarModal = async () => {
-  if (!modalDescripcion.value) return
+  errorBackend.value = ''
+
+  // Validar campos (son refs)
+  if (!modalDescripcion.value || modalDescripcion.value.trim() === '') {
+    errorBackend.value = 'La descripción es obligatoria'
+    modalCategoria.value = 'Sin definir'
+    return
+  }
+
+  if (!modalMonto.value || parseFloat(modalMonto.value) <= 0) {
+    errorBackend.value = 'El monto es obligatorio y debe ser mayor a 0'
+    modalCategoria.value = 'Sin definir'
+    return
+  }
+
+  if (modalTipo.value === 'INGRESO') {
+    mostrarErrorClasificacion('No se puede clasificar una transacción de tipo ingreso.')
+    modalCategoria.value = 'INGRESOS'
+    return
+  }
+
   classifying.value = true
   try {
-    modalCategoria.value = await clasificarTransaccion(modalDescripcion.value, modalMonto.value)
+    const categoria = await clasificarTransaccion(modalDescripcion.value, modalMonto.value)
+    modalCategoria.value = categoria || 'OTROS'
+    errorBackend.value = ''
   } catch (err) {
     modalCategoria.value = 'OTROS'
+    errorBackend.value = 'Error al clasificar la transacción'
   } finally {
     classifying.value = false
   }
 }
 
-// ==========================================
-// AGREGAR GASTO (DESDE FORMULARIO RÁPIDO)
-// ==========================================
+// AGREGAR GASTO
 const agregarGasto = async () => {
-  if (!nuevoNombreGasto.value || !nuevoMontoGasto.value) return
+  errorBackend.value = ''
 
-  // Clasificar la transacción
-  const categoria = await clasificarTransaccion(nuevoNombreGasto.value, nuevoMontoGasto.value)
-
-  gastosList.value.push({
-    id: Date.now(),
-    nombre: nuevoNombreGasto.value,
-    categoria: categoria,
-    monto: parseFloat(nuevoMontoGasto.value) || 0
-  })
-
-  nuevoNombreGasto.value = ''
-  nuevoMontoGasto.value = ''
-  
-  // ⏳ Análisis automático (comentado)
-  // await realizarAnalisis()
-}
-
-// ==========================================
-// AGREGAR GASTO DESDE MODAL
-// ==========================================
-const handleAgregarDesdeModal = async () => {
-  if (!modalMonto.value || !modalDescripcion.value) return
-
-  // Si la categoría está sin definir, clasificar automáticamente
-  let categoria = modalCategoria.value
-  if (categoria === 'Sin definir' || categoria === '') {
-    categoria = await clasificarTransaccion(modalDescripcion.value, modalMonto.value)
+  if (!nuevoNombreGasto.value || nuevoNombreGasto.value.trim() === '') {
+    errorBackend.value = 'La descripción es obligatoria'
+    return
   }
 
-  gastosList.value.push({
-    id: Date.now(),
-    nombre: modalDescripcion.value,
-    categoria: categoria,
-    monto: parseFloat(modalMonto.value) || 0
-  })
+  if (!nuevoMontoGasto.value || parseFloat(nuevoMontoGasto.value) <= 0) {
+    errorBackend.value = 'El monto es obligatorio y debe ser mayor a 0'
+    return
+  }
 
-  showModal.value = false
-  modalDescripcion.value = ''
-  modalMonto.value = ''
-  modalCategoria.value = 'Sin definir'
-  modalTipo.value = 'GASTO'
+  try {
+    let categoria = 'OTROS'
+    
+    // Solo clasificar si es GASTO
+    if (modalTipo.value === 'GASTO') {
+      categoria = await clasificarTransaccion(nuevoNombreGasto.value, nuevoMontoGasto.value)
+    } else {
+      categoria = 'INGRESOS'
+    }
 
-  // ⏳ Análisis automático (comentado)
-  // await realizarAnalisis()
+    gastosList.value.push({
+      id: Date.now(),
+      nombre: nuevoNombreGasto.value,
+      categoria: categoria,
+      monto: parseFloat(nuevoMontoGasto.value) || 0
+    })
+
+    nuevoNombreGasto.value = ''
+    nuevoMontoGasto.value = ''
+    errorBackend.value = ''
+
+  } catch (err) {
+    console.error('Error:', err)
+    errorBackend.value = err.message || 'Error al agregar gasto'
+  }
+}
+// AGREGAR GASTO DESDE MODAL
+const handleAgregarDesdeModal = async () => {
+  errorBackend.value = ''
+
+  if (!modalDescripcion.value || modalDescripcion.value.trim() === '') {
+    errorBackend.value = 'La descripción es obligatoria'
+    return
+  }
+
+  if (!modalMonto.value || parseFloat(modalMonto.value) <= 0) {
+    errorBackend.value = 'El monto es obligatorio y debe ser mayor a 0'
+    return
+  }
+
+  try {
+    let categoria = modalCategoria.value
+
+    // Si es INGRESO, forzar INGRESOS
+    if (modalTipo.value === 'INGRESO') {
+      categoria = 'INGRESOS'
+    } else if (categoria === 'Sin definir' || categoria === '') {
+      // Si es GASTO y no tiene categoría, clasificar
+      categoria = await clasificarTransaccion(modalDescripcion.value, modalMonto.value)
+    }
+
+    gastosList.value.push({
+      id: Date.now(),
+      nombre: modalDescripcion.value,
+      categoria: categoria,
+      monto: parseFloat(modalMonto.value) || 0
+    })
+
+    showModal.value = false
+    modalDescripcion.value = ''
+    modalMonto.value = ''
+    modalCategoria.value = 'Sin definir'
+    modalTipo.value = 'GASTO'
+    errorBackend.value = ''
+
+  } catch (err) {
+    console.error('Error:', err)
+    errorBackend.value = err.message || 'Error al agregar transacción'
+  }
 }
 
 const eliminarGasto = async (id) => {
@@ -172,7 +252,12 @@ const eliminarGasto = async (id) => {
 const realizarAnalisis = async () => {
   loading.value = true
   showResults.value = true
-
+  //si los gastos list estan vacios, no hacer la llamada a la API
+  if (!gastosList.value || gastosList.value.length === 0) {
+    loading.value = false
+    mostrarErrorClasificacion('No se puede realizar el análisis sin gastos registrados.')
+    return
+  }
   const payload = {
     ingreso_mensual: parseFloat(ingresoMensual.value) || 3500,
     nivel_endeudamiento: parseFloat(nivelEndeudamiento.value) || 0,
@@ -260,7 +345,7 @@ const categoriasGastos = computed(() => {
           </div>
           <div class="flex items-center gap-4">
             <button @click="showModal = true" class="bg-[var(--color-fintech-primary)] text-white px-4 py-2 rounded-full font-bold text-sm flex items-center gap-2 shadow hover:bg-[var(--color-fintech-primary-hover)] transition-colors cursor-pointer">
-              <PhPlus weight="bold" /> Nueva Transacción
+              <PhPlus weight="bold" /> Nueva Transacción (GASTO)
             </button>
             <button class="text-gray-400 hover:text-gray-600 transition-colors">
               <PhBell :size="24" />
@@ -331,6 +416,10 @@ const categoriasGastos = computed(() => {
                   <PhPlus :size="14" weight="bold" /> Modal
                 </button>
               </div>
+              <!--DIV Error de analisis financiero por que lista de gastos esta vacia-->
+              <div v-if="gastosList.length === 0" class="bg-red-50 border border-red-200 text-red-600 text-xs font-medium px-3 py-2 rounded-lg mb-4">
+                No hay gastos registrados. Agrega al menos un gasto para realizar el análisis financiero correctamente.
+              </div>
 
               <!-- Form rápido para añadir gasto -->
               <div class="flex gap-2 mb-4">
@@ -396,9 +485,12 @@ const categoriasGastos = computed(() => {
                         backgroundColor: `hsl(${index * 60 + 200}, 70%, 50%)`
                       }">
                   </div>
-                  <span class="text-xs font-bold text-gray-400 uppercase truncate w-full text-center">
-                    {{ item.categoria }}
-                  </span>
+                    <span class="text-xs font-bold text-gray-400 uppercase truncate w-full text-center">
+                      {{ item.categoria }}
+                    </span>
+                    <span class="text-xs font-bold text-gray-400 uppercase truncate w-full text-center">
+                      ${{ item.valor | currency }}
+                    </span>
                 </div>
               </div>
               
@@ -453,18 +545,51 @@ const categoriasGastos = computed(() => {
             <PhX :size="20" />
           </button>
         </div>
+        <div
+                v-if="errorClasificacion"
+                class="mt-2 bg-red-50 border border-red-200 text-red-600 text-xs font-medium px-3 py-2 rounded-lg"
+              >
+                {{ errorClasificacion }}
+              </div>
 
         <!-- Modal Body -->
         <form @submit.prevent="handleAgregarDesdeModal" class="p-6 space-y-5">
+
+          <!-- ⚠️ ERROR DEL BACKEND -->
+        <div v-if="errorBackend" class="bg-red-50 border border-red-200 rounded-xl p-4">
+          <div class="flex items-start gap-3">
+            <PhWarning :size="18" class="text-red-500 flex-shrink-0 mt-0.5" />
+            <div>
+              <p class="text-sm font-bold text-red-800">Error</p>
+              <p class="text-sm text-red-700">{{ errorBackend }}</p>
+            </div>
+          </div>
+        </div>
           
           <!-- Descripción -->
           <div>
             <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">DESCRIPCIÓN</label>
             <div class="flex gap-2">
               <input v-model="modalDescripcion" type="text" placeholder="Ej: Compra en Amazon" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#19d282] focus:bg-white text-slate-700">
-              <button type="button" @click="autoClasificarModal" :disabled="classifying" class="bg-slate-100 hover:bg-slate-200 text-[#0f4c54] font-bold text-xs px-3 py-2 rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer border border-slate-200 shrink-0">
+              <button
+                type="button"
+                @click="autoClasificarModal"
+                :disabled="classifying || modalTipo === 'INGRESO'"
+                :class="[
+                  'font-bold text-xs px-3 py-2 rounded-xl flex items-center gap-1.5 transition-colors border',
+                  modalTipo === 'INGRESO'
+                    ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed'
+                    : 'bg-slate-100 hover:bg-slate-200 text-[#0f4c54] border-slate-200 cursor-pointer'
+                ]"
+              >
                 <PhSparkle :size="14" class="text-[#19d282]" />
-                <span>{{ classifying ? 'Clasificando...' : 'CLASIFICAR' }}</span>
+                <span>
+                  {{
+                    modalTipo === 'INGRESO'
+                      ? 'NO APLICA PARA INGRESOS'
+                      : (classifying ? 'Clasificando...' : 'CLASIFICAR AUTOMÁTICAMENTE')
+                  }}
+                </span>
               </button>
             </div>
           </div>
@@ -478,13 +603,32 @@ const categoriasGastos = computed(() => {
             <div>
               <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">TIPO</label>
               <div class="flex bg-slate-100 rounded-xl p-1 border border-slate-200">
-                <button type="button" @click="modalTipo = 'INGRESO'" :class="['flex-1 py-1.5 text-xs font-bold rounded-lg transition-colors cursor-pointer flex items-center justify-center gap-1', modalTipo === 'INGRESO' ? 'bg-white text-emerald-600 shadow-xs' : 'text-slate-500']">
+                <!-- Botón INGRESO deshabilitado -->
+                <button 
+                  type="button" 
+                  disabled
+                  class="flex-1 py-1.5 text-xs font-bold rounded-lg transition-colors flex items-center justify-center gap-1 bg-slate-200 text-slate-400 cursor-not-allowed opacity-50"
+                >
                   <PhArrowUp :size="12" weight="bold" /> Ingreso
                 </button>
-                <button type="button" @click="modalTipo = 'GASTO'" :class="['flex-1 py-1.5 text-xs font-bold rounded-lg transition-colors cursor-pointer flex items-center justify-center gap-1', modalTipo === 'GASTO' ? 'bg-white text-red-500 shadow-xs' : 'text-slate-500']">
+            
+                <!-- Botón GASTO siempre activo -->
+                <button 
+                  type="button" 
+                  @click="modalTipo = 'GASTO'" 
+                  class="flex-1 py-1.5 text-xs font-bold rounded-lg transition-colors cursor-pointer flex items-center justify-center gap-1 bg-white text-red-500 shadow-xs"
+                >
                   <PhArrowDown :size="12" weight="bold" /> Gasto
                 </button>
               </div>
+              
+              <!-- Leyenda informativa -->
+              <p class="text-[12px] text-slate-400 mt-1.5 flex items-center gap-1">
+                Las transacciones de tipo  <span class="font-bold text-green-500">INGRESO</span>
+              </p>
+              <p class="text-[12px] text-slate-400 flex items-center gap-1">
+                están deshabilitadas en esta sección
+              </p>
             </div>
           </div>
 
