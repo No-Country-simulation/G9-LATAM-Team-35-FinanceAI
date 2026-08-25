@@ -31,6 +31,7 @@ let barChartInstance = null
 const showModal = ref(false)
 const loading = ref(false)
 const classifying = ref(false)
+const errorBackend = ref('')
 
 const selectedMonth = ref('2026-08')
 const userMoneda = ref('MXN')
@@ -54,7 +55,13 @@ const transaccionesList = ref([])
 const doughnutLegendList = ref([])
 
 const autoClasificar = async () => {
-  if (!descripcion.value) return
+  errorBackend.value = ''
+
+  // Validar campos obligatorios (opcional, pero recomendado)
+  if (!descripcion.value || !monto.value) {
+    errorBackend.value = 'La descripción y el monto son obligatorios'
+    return
+  }
   classifying.value = true
   try {
     const res = await analisisService.clasificarTransaccion(descripcion.value, parseFloat(monto.value) || 0)
@@ -62,17 +69,31 @@ const autoClasificar = async () => {
       categoria.value = (res.categoria_gasto || res.categoria || res.categoria_sugerida).toUpperCase()
     } else {
       const descLower = descripcion.value.toLowerCase()
-      if (descLower.includes('netflix') || descLower.includes('spotify') || descLower.includes('cine')) categoria.value = 'ENTRETENIMIENTO'
+      if (descLower.includes('netflix') || descLower.includes('spotify') || descLower.includes('cine')) categoria.value = 'OCIO Y SERVICIOS'
       else if (descLower.includes('salario') || descLower.includes('sueldo') || descLower.includes('pago')) categoria.value = 'INGRESOS'
-      else if (descLower.includes('super') || descLower.includes('comida') || descLower.includes('restaurante')) categoria.value = 'ALIMENTACIÓN'
+      else if (descLower.includes('super') || descLower.includes('comida') || descLower.includes('restaurante')) categoria.value = 'ALIMENTACION'
       else if (descLower.includes('uber') || descLower.includes('taxi') || descLower.includes('gasolina')) categoria.value = 'TRANSPORTE'
       else categoria.value = 'OTROS'
     }
+    errorBackend.value = ''
   } catch (err) {
+    console.error('Error guardando transacción:', err)
+
+    // El Backend devuelve el mensaje de error
+    if (err.response && err.response.data) {
+      // Si el Backend devuelve un objeto con mensaje
+      errorBackend.value = err.response.data.mensaje || err.response.data.message || 'Error al guardar la transacción'
+    } else if (err.message) {
+      errorBackend.value = err.message
+    } else {
+      errorBackend.value = 'Ocurrió un error inesperado'
+    }
+
+
     const descLower = descripcion.value.toLowerCase()
-    if (descLower.includes('netflix') || descLower.includes('spotify')) categoria.value = 'ENTRETENIMIENTO'
+    if (descLower.includes('netflix') || descLower.includes('spotify')) categoria.value = 'OCIO Y SERVICIOS'
     else if (descLower.includes('salario') || descLower.includes('sueldo')) categoria.value = 'INGRESOS'
-    else if (descLower.includes('super') || descLower.includes('comida')) categoria.value = 'ALIMENTACIÓN'
+    else if (descLower.includes('super') || descLower.includes('comida')) categoria.value = 'ALIMENTACION'
     else if (descLower.includes('uber') || descLower.includes('taxi')) categoria.value = 'TRANSPORTE'
     else categoria.value = 'OTROS'
   } finally {
@@ -273,7 +294,14 @@ watch(selectedMonth, () => {
 })
 
 const handleCrearTransaccion = async () => {
-  if (!monto.value || !descripcion.value) return
+  errorBackend.value = ''
+
+  // Validar campos obligatorios (opcional, pero recomendado)
+  if (!descripcion.value || !monto.value) {
+    errorBackend.value = 'La descripción y el monto son obligatorios'
+    return
+  }
+
   loading.value = true
   const numMonto = parseFloat(monto.value) || 0
 
@@ -284,6 +312,10 @@ const handleCrearTransaccion = async () => {
   }
 
   try {
+    //si el tipo de transaccion es ingreso, la categoria debe ser null
+    if (tipoTransaccion.value === 'INGRESO') {
+      categoria.value = null
+    }
     const payload = {
       valor: numMonto,
       descripcion: descripcion.value,
@@ -297,9 +329,20 @@ const handleCrearTransaccion = async () => {
       transaccionesList.value = listFresh
       renderBarChart(listFresh)
     }
+    errorBackend.value = ''
     await cargarDatosMes()
-  } catch (err) {
-    console.warn('API transaccion fallback active:', err.message)
+  } catch (err) { console.error('Error guardando transacción:', err)
+
+    // El Backend devuelve el mensaje de error
+    if (err.response && err.response.data) {
+      // Si el Backend devuelve un objeto con mensaje
+      errorBackend.value = err.response.data.mensaje || err.response.data.message || 'Error al guardar la transacción'
+    } else if (err.message) {
+      errorBackend.value = err.message
+    } else {
+      errorBackend.value = 'Ocurrió un error inesperado'
+    }
+
   } finally {
     loading.value = false
     showModal.value = false
@@ -486,7 +529,7 @@ onMounted(async () => {
 
             <div>
               <div class="flex justify-between items-end mb-2 text-sm font-bold">
-                <span class="text-[var(--color-fintech-dark)]">Ocio y Entretenimiento</span>
+                <span class="text-[var(--color-fintech-dark)]">Ocio y OCIO Y SERVICIOS</span>
                 <span class="text-gray-500">$120 / $400</span>
               </div>
               <div class="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
@@ -534,15 +577,42 @@ onMounted(async () => {
 
         <!-- Modal Body -->
         <form @submit.prevent="handleCrearTransaccion" class="p-6 space-y-5">
+
+          <!-- ⚠️ ERROR DEL BACKEND -->
+        <div v-if="errorBackend" class="bg-red-50 border border-red-200 rounded-xl p-4">
+          <div class="flex items-start gap-3">
+            <PhWarning :size="18" class="text-red-500 flex-shrink-0 mt-0.5" />
+            <div>
+              <p class="text-sm font-bold text-red-800">Error</p>
+              <p class="text-sm text-red-700">{{ errorBackend }}</p>
+            </div>
+          </div>
+        </div>
           
           <!-- Descripción -->
           <div>
             <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">DESCRIPCIÓN</label>
             <div class="flex gap-2">
               <input v-model="descripcion" type="text" placeholder="Ej: Compra en Amazon" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#19d282] focus:bg-white text-slate-700">
-              <button type="button" @click="autoClasificar" :disabled="classifying" class="bg-slate-100 hover:bg-slate-200 text-[#0f4c54] font-bold text-xs px-3 py-2 rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer border border-slate-200">
+              <button
+                type="button"
+                @click="autoClasificar"
+                :disabled="classifying || tipoTransaccion === 'INGRESO'"
+                :class="[
+                  'font-bold text-xs px-3 py-2 rounded-xl flex items-center gap-1.5 transition-colors border',
+                  tipoTransaccion === 'INGRESO'
+                    ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed'
+                    : 'bg-slate-100 hover:bg-slate-200 text-[#0f4c54] border-slate-200 cursor-pointer'
+                ]"
+              >
                 <PhSparkle :size="14" class="text-[#19d282]" />
-                <span>{{ classifying ? 'Clasificando...' : 'CLASIFICAR AUTOMÁTICAMENTE' }}</span>
+                <span>
+                  {{
+                    tipoTransaccion === 'INGRESO'
+                      ? 'NO APLICA PARA INGRESOS'
+                      : (classifying ? 'Clasificando...' : 'CLASIFICAR AUTOMÁTICAMENTE')
+                  }}
+                </span>
               </button>
             </div>
           </div>

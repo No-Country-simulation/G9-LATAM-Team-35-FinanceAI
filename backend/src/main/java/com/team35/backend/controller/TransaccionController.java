@@ -7,6 +7,7 @@ import com.team35.backend.repository.UsuarioRepository;
 import com.team35.backend.service.AuthService;
 import com.team35.backend.service.ClasificadorTransaccionesService;
 import com.team35.backend.service.TransaccionService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@Tag(name = "Transacciones", description = "Endpoints relacionados con la gestión de transacciones del usuario")
 @RequestMapping("/api/transacciones")
 @RequiredArgsConstructor
 public class TransaccionController {

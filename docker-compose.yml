@@ -1,0 +1,98 @@
+services:
+  # ===== BASE DE DATOS =====
+  postgres:
+    image: postgres:16
+    container_name: financeai-postgres
+    environment:
+      POSTGRES_DB: financeai
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+    volumes:
+      - financeai_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 20s
+      retries: 10
+      start_period: 40s
+    restart: unless-stopped
+    networks:
+      - financeai-network
+
+  # ===== BACKEND (Spring Boot) =====
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: financeai-backend
+    ports:
+      - "8080:8080"
+    environment:
+      # Base de datos
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/financeai
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=admin
+      # Flyway
+      - SPRING_FLYWAY_ENABLED=true
+      - SPRING_FLYWAY_LOCATIONS=classpath:db/migration
+      - SPRING_FLYWAY_BASELINE_ON_MIGRATE=true
+      - SPRING_FLYWAY_VALIDATE_ON_MIGRATE=false
+      - LOGGING_LEVEL_ORG_FLYWAYDB=DEBUG
+      # JPA
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=none
+      - SPRING_JPA_SHOW_SQL=true
+      # Data Science
+      - PYTHON_API_URL=http://data-service:8000
+      # JWT
+      - JWT_SECRET=EstaEsUnaClaveSecretaDePruebaParaElHackathon
+      - JWT_EXPIRATION=7200000
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - financeai-network
+
+
+  # ===== DATA SCIENCE =====
+  data-service:
+    build:
+      context: ./data-science
+      dockerfile: Dockerfile
+    container_name: financeai-data
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONPATH=/app
+      - OCI_TENANCY_OCID=${OCI_TENANCY_OCID}
+      - OCI_USER_OCID=${OCI_USER_OCID}
+      - OCI_FINGERPRINT=${OCI_FINGERPRINT}
+      - OCI_PRIVATE_KEY=${OCI_PRIVATE_KEY}
+      - OCI_REGION=${OCI_REGION}
+      - OCI_BUCKET_NAME=${OCI_BUCKET_NAME}
+    volumes:
+      - ./data-science/models:/app/models  # Montar modelos localmente
+    restart: unless-stopped
+    networks:
+      - financeai-network
+
+  # ===== FRONTEND (Vue.js) =====
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: financeai-frontend
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    networks:
+      - financeai-network
+
+volumes:
+  financeai_pgdata:
+
+networks:
+  financeai-network:
+    driver: bridge

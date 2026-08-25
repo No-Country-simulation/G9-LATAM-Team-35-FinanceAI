@@ -3,6 +3,7 @@ package com.team35.backend.config;
 import com.team35.backend.exception.GlobalExceptionHandler;
 import com.team35.backend.service.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -43,8 +44,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST,
                                 "/api/transacciones/clasificar-transaccion",
                                 "/api/analisis/frecuencia-ahorro-encuesta",
-                                "/api/analisis-financiero")
-                        .permitAll()
+                                "/api/analisis-financiero", "/api/clasificar-transaccion").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/","/health").permitAll()
+                        .requestMatchers(HttpMethod.HEAD, "/","/health").permitAll()
                         .requestMatchers("/swagger-ui/**", "/swagger-ui.html" , "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated()
                 )
@@ -61,33 +63,57 @@ public class SecurityConfig {
         return http.build();
     }
 
+    @Value("${frontend.url}")
+    private String frontendUrl;
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-
         CorsConfiguration configuration = new CorsConfiguration();
-
+        // Agregar más orígenes permitidos
         configuration.setAllowedOrigins(
-                List.of("http://localhost:5173")
+                List.of(
+                        // Desarrollo local
+                "http://localhost:5173",
+                // Docker
+                "http://frontend",
+                "http://frontend:80",
+                // Producción - Render
+                        frontendUrl
+                )
         );
-
+        System.out.println(">>>FRONTEND URL: " + frontendUrl);
         configuration.setAllowedMethods(
-                List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
         );
-
         configuration.setAllowedHeaders(
-                List.of("Authorization", "Content-Type")
+                List.of(
+                        "Authorization",
+                        "Content-Type",
+                        "X-Requested-With",
+                        "Accept",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                )
         );
 
+        // Headers expuestos (para que el frontend pueda leerlos)
+        configuration.setExposedHeaders(
+                List.of(
+                        "Authorization",
+                        "Content-Type"
+                )
+        );
+        // Permitir credenciales
         configuration.setAllowCredentials(true);
+        // Tiempo de cache para preflight (3600 segundos = 1 hora)
+        configuration.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source =
                 new UrlBasedCorsConfigurationSource();
-
         source.registerCorsConfiguration("/**", configuration);
-
         return source;
     }
-
     // Usar el GlobalExceptionHandler para errores de autenticación (401)
     @Bean
     public AuthenticationEntryPoint authenticationEntryPoint() {
@@ -96,6 +122,7 @@ public class SecurityConfig {
             globalExceptionHandler.handleAuthenticationError(request, response, authException);
         };
     }
+
 
     @Bean
     public AccessDeniedHandler accessDeniedHandler() {

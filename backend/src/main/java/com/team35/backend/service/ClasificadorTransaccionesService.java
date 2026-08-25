@@ -38,7 +38,7 @@ public class ClasificadorTransaccionesService {
         return resultados.isEmpty() ? new ClasificacionTransaccionResponse(transaccion.getDescripcion(), transaccion.getValor(), "otros") : resultados.get(0);
     }
 
-    // Método que envía las transacciones al microservicio de data science y devuelve la clasificación.
+    // Metodo que envía las transacciones al microservicio de data science y devuelve la clasificación.
     public List<ClasificacionTransaccionResponse> clasificarMultiples(List<TransaccionInputDTO> transacciones) {
         try {
             // Construir la URL del endpoint de clasificación
@@ -48,8 +48,7 @@ public class ClasificadorTransaccionesService {
             headers.setContentType(MediaType.APPLICATION_JSON);
 
             HttpEntity<List<TransaccionInputDTO>> request = new HttpEntity<>(transacciones, headers);
-
-            // Esperar un array de respuestas
+              // Esperar un array de respuestas
             ResponseEntity<ClasificacionTransaccionResponse[]> response =
                     restTemplate.postForEntity(
                             url,

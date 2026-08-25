@@ -6,6 +6,8 @@ import com.team35.backend.enums.PerfilTipo;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Locale;
 
 public class AnalisisDetails {
 
@@ -27,6 +29,8 @@ public class AnalisisDetails {
 
     private String nombre;
 
+    private List<String> recomendaciones;
+
     public AnalisisDetails() {
     }
 
@@ -37,7 +41,8 @@ public class AnalisisDetails {
             BigDecimal ingresoMensual,
             BigDecimal nivelEndeudamiento,
             String frecuenciaAhorro,
-            LocalDateTime fechaAnalisis
+            LocalDateTime fechaAnalisis,
+            List<String> recomendaciones
     ) {
         this.id = id;
         this.perfil = perfil;
@@ -47,6 +52,7 @@ public class AnalisisDetails {
         this.frecuenciaAhorro = frecuenciaAhorro;
         this.fechaAnalisis = fechaAnalisis;
         this.nombre = generarNombre(fechaAnalisis, perfil != null ? perfil.name() : "SALUDABLE");
+        this.recomendaciones = recomendaciones;
     }
 
     public AnalisisDetails(
@@ -133,15 +139,24 @@ public class AnalisisDetails {
         this.nombre = nombre;
     }
 
+    public List<String> getRecomendaciones() {
+        return recomendaciones;
+    }
+
+    public void setRecomendaciones(List<String> recomendaciones) {
+        this.recomendaciones = recomendaciones;
+    }
     /**
      * Genera el nombre en formato: "Mes Año - PERFIL"
      * Ejemplo: "Agosto 2026 - SALUDABLE"
      */
     private String generarNombre(LocalDateTime fecha, String perfil) {
         if (fecha == null) return "Análisis Financiero";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
+        Locale locale = new Locale("es", "ES");
+        DateTimeFormatter formatter = DateTimeFormatter
+                .ofPattern("MMMM yyyy")
+                .withLocale(locale);
         String mesAnio = fecha.format(formatter);
-        // Capitalizar primera letra del mes (en español)
         mesAnio = mesAnio.substring(0, 1).toUpperCase() + mesAnio.substring(1);
         return mesAnio + " - " + perfil;
     }

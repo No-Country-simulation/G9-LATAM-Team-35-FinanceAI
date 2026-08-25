@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@Tag(name = "Usuarios", description = "Endpoints relacionados con el perfil del usuario y sus preferencias")
 @RequestMapping("/api/usuarios")
 @Tag(name = "Configuración", description = "Perfil del usuario y preferencias (moneda) para la página de Configuración")
 public class UsuarioController {

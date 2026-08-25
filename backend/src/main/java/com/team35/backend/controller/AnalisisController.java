@@ -9,6 +9,8 @@ import com.team35.backend.service.AnalisisService;
 import com.team35.backend.service.AuthService;
 import com.team35.backend.service.FrecuenciaAhorroService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@Tag(name = "Análisis financiero", description = "Endpoints relacionados con el análisis financiero del usuario")
 @RequestMapping("/api/analisis")
 @RequiredArgsConstructor
 @Validated
@@ -53,6 +56,8 @@ public class AnalisisController {
     @Operation(
             summary = "Obtiene el historial de análisis financieros del usuario autenticado"
     )
+
+    @SecurityRequirement(name = "bearer-jwt")
     @GetMapping("/historial")
     public ResponseEntity<List<AnalisisDetails>> obtenerHistorial() {
 
@@ -60,7 +65,6 @@ public class AnalisisController {
 
         List<AnalisisDetails> historial =
                 analisisService.obtenerHistorial(usuarioId);
-
         return ResponseEntity.ok(historial);
     }
 

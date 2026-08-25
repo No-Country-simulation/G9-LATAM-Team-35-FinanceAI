@@ -22,6 +22,7 @@ import { getCurrencySymbol } from '../utils/currency'
 
 const currencySymbol = ref('$')
 const userMoneda = ref('MXN')
+const errorBackend = ref('')
 
 const showModal = ref(false)
 const isEditing = ref(false)
@@ -121,19 +122,28 @@ const openEditModal = (t) => {
 }
 
 const autoClasificar = async () => {
-  if (!formDescripcion.value) return
+  errorBackend.value = ''
+
+  // Validar campos obligatorios (opcional, pero recomendado)
+  if (!formDescripcion.value || !formValor.value) {
+    errorBackend.value = 'La descripción y el monto son obligatorios'
+    return
+  }
   classifying.value = true
   try {
+
+
     const res = await analisisService.clasificarTransaccion(formDescripcion.value, parseFloat(formValor.value) || 0)
 
     if (res && (res.categoria_gasto || res.categoria || res.categoria_sugerida)) {
       const categoriaRecibida = res.categoria_gasto ||res.categoria || res.categoria_sugerida
     formCategoria.value = categoriaRecibida.toUpperCase()
     } else {
+      errorBackend.value = 'No se pudo determinar la categoría automáticamente. Compruebe sus datos o reintente'
       // Fallback inteligente local si el backend no responde
       const descLower = formDescripcion.value.toLowerCase()
-      if (descLower.includes('netflix') || descLower.includes('spotify') || descLower.includes('cine')) formCategoria.value = 'ENTRETENIMIENTO'
-      else if (descLower.includes('salario') || descLower.includes('sueldo') || descLower.includes('pago')) formCategoria.value = 'INGRESOS'
+      if (descLower.includes('netflix') || descLower.includes('spotify') || descLower.includes('cine')) formCategoria.value = 'OCIO Y SERVICIOS'
+      else if (descLower.includes('salario') || descLower.includes('sueldo') || descLower.includes('pago')) formCategoria.value = 'OTROS'
       else if (descLower.includes('super') || descLower.includes('comida') || descLower.includes('restaurante')) formCategoria.value = 'ALIMENTACIÓN'
       else if (descLower.includes('uber') || descLower.includes('taxi') || descLower.includes('gasolina')) formCategoria.value = 'TRANSPORTE'
       else formCategoria.value = 'OTROS'
@@ -141,8 +151,8 @@ const autoClasificar = async () => {
   } catch (err) {
     console.warn('Auto classification fallback:', err)
     const descLower = formDescripcion.value.toLowerCase()
-    if (descLower.includes('netflix') || descLower.includes('spotify')) formCategoria.value = 'ENTRETENIMIENTO'
-    else if (descLower.includes('salario') || descLower.includes('venta')) formCategoria.value = 'INGRESOS'
+    if (descLower.includes('netflix') || descLower.includes('spotify')) formCategoria.value = 'OCIO Y SERVICIOS'
+    else if (descLower.includes('salario') || descLower.includes('venta')) formCategoria.value = 'OTROS'
     else if (descLower.includes('super') || descLower.includes('mercado')) formCategoria.value = 'ALIMENTACIÓN'
     else if (descLower.includes('uber') || descLower.includes('taxi')) formCategoria.value = 'TRANSPORTE'
     else formCategoria.value = 'OTROS'
@@ -152,10 +162,19 @@ const autoClasificar = async () => {
 }
 
 const guardarTransaccion = async () => {
-  if (!formDescripcion.value || !formValor.value) return
+  errorBackend.value = ''
+
+  // Validar campos obligatorios (opcional, pero recomendado)
+  if (!formDescripcion.value || !formValor.value) {
+    errorBackend.value = 'La descripción y el monto son obligatorios'
+    return
+  }
   loading.value = true
   const valorNum = parseFloat(formValor.value) || 0
-
+  //si el tipo de transaccion es ingreso, la categoria debe ser null
+    if (formTipo.value === 'INGRESO') {
+      formCategoria.value = null
+    }
   // Campos exactos que espera TransaccionRegister en el backend:
   //   valor       → BigDecimal (@NotNull, @Positive)
   //   categoriaNombre → String (opcional)
@@ -171,16 +190,30 @@ const guardarTransaccion = async () => {
 
   try {
     if (isEditing.value && currentEditId.value) {
+      //si el tipo de transaccion es ingreso, la categoria debe ser null
+      if (formTipo.value === 'INGRESO') {
+        payload.categoria_nombre = null
+      }
       await transaccionesService.editarTransaccion(currentEditId.value, payload)
     } else {
       await transaccionesService.registrarTransaccion(payload)
     }
+    errorBackend.value = ''
     // Recarga desde el backend para mantener sincronía real con la BD
     await recargarTransacciones()
   } catch (err) {
-    console.warn('[guardarTransaccion] Error en API:', err.message)
-    // Fallback visual solo si el backend no responde: muestra el cambio localmente
-    // (se perderá al recargar la página, ya que no llegó a guardarse en BD)
+     console.error('Error guardando transacción:', err)
+
+    // El Backend devuelve el mensaje de error
+    if (err.response && err.response.data) {
+      // Si el Backend devuelve un objeto con mensaje
+      errorBackend.value = err.response.data.mensaje || err.response.data.message || 'Error al guardar la transacción'
+    } else if (err.message) {
+      errorBackend.value = err.message
+    } else {
+      errorBackend.value = 'Ocurrió un error inesperado'
+    }
+
     if (isEditing.value && currentEditId.value) {
       const index = transacciones.value.findIndex(t => t.id === currentEditId.value)
       if (index !== -1) {
@@ -224,7 +257,7 @@ const getCategoryBadgeClass = (categoria) => {
   switch (categoria.toUpperCase()) {
     case 'OCIO Y SERVICIOS':
       return 'bg-teal-700 text-white'
-    case 'INGRESOS':
+    case 'OTROS':
       return 'bg-emerald-200 text-emerald-800'
     case 'ALIMENTACION':
       return 'bg-teal-600 text-white'
@@ -296,7 +329,7 @@ onMounted(async () => {
               <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">TIPO DE MOVIMIENTO</label>
               <select v-model="filterTipo" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-700 outline-none focus:border-[#19d282] cursor-pointer appearance-none">
                 <option value="TODOS">Todos los tipos</option>
-                <option value="INGRESO">Ingresos (+)</option>
+                <option value="INGRESO">OTROS (+)</option>
                 <option value="GASTO">Gastos (-)</option>
               </select>
             </div>
@@ -415,15 +448,40 @@ onMounted(async () => {
 
         <!-- Modal Body -->
         <form @submit.prevent="guardarTransaccion" class="p-6 space-y-5">
-          
+          <!-- ⚠️ ERROR DEL BACKEND -->
+        <div v-if="errorBackend" class="bg-red-50 border border-red-200 rounded-xl p-4">
+          <div class="flex items-start gap-3">
+            <PhWarning :size="18" class="text-red-500 flex-shrink-0 mt-0.5" />
+            <div>
+              <p class="text-sm font-bold text-red-800">Error</p>
+              <p class="text-sm text-red-700">{{ errorBackend }}</p>
+            </div>
+          </div>
+        </div>
           <!-- Descripción -->
           <div>
             <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">DESCRIPCIÓN</label>
             <div class="flex gap-2">
               <input v-model="formDescripcion" type="text" placeholder="Ej: Compra en Amazon" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#19d282] focus:bg-white text-slate-700">
-              <button type="button" @click="autoClasificar" :disabled="classifying" class="bg-slate-100 hover:bg-slate-200 text-[#0f4c54] font-bold text-xs px-3 py-2 rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer border border-slate-200">
+              <button
+                type="button"
+                @click="autoClasificar"
+                :disabled="classifying || formTipo === 'INGRESO'"
+                :class="[
+                  'font-bold text-xs px-3 py-2 rounded-xl flex items-center gap-1.5 transition-colors border',
+                  formTipo === 'INGRESO'
+                    ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed'
+                    : 'bg-slate-100 hover:bg-slate-200 text-[#0f4c54] border-slate-200 cursor-pointer'
+                ]"
+              >
                 <PhSparkle :size="14" class="text-[#19d282]" />
-                <span>{{ classifying ? 'Clasificando...' : 'CLASIFICAR AUTOMÁTICAMENTE' }}</span>
+                <span>
+                  {{
+                    formTipo === 'INGRESO'
+                      ? 'NO APLICA PARA INGRESOS'
+                      : (classifying ? 'Clasificando...' : 'CLASIFICAR AUTOMÁTICAMENTE')
+                  }}
+                </span>
               </button>
             </div>
           </div>

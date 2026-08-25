@@ -53,7 +53,7 @@ const consejosIA = ref([
         <header class="flex justify-between items-center mb-8">
           <div>
             <h1 class="text-3xl font-bold text-[var(--color-fintech-dark)]">Análisis Inteligente</h1>
-            <p class="text-gray-500 mt-1 text-sm">Diagnóstico predictivo de salud financiera (Modo Invitado)</p>
+            <p class="text-gray-500 mt-1 text-sm">Diagnóstico predictivo de salud financiera (Modo Invitado) PARA ACCEDER A LAS FUNCIONES REGISTRARSE</p>
           </div>
           <div class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5">
             <PhSparkle :size="16" class="text-emerald-600" />

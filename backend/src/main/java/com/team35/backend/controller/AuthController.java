@@ -5,6 +5,7 @@ import com.team35.backend.dto.UsuarioDetails;
 import com.team35.backend.dto.UsuarioLogin;
 import com.team35.backend.dto.UsuarioRegister;
 import com.team35.backend.service.AuthService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import io.swagger.v3.oas.annotations.Operation;
  * relacionados con autenticación y usuarios.
  */
 @RestController
+@Tag(name = "Autenticación y usuarios", description = "Endpoints relacionados con autenticación y registro de usuarios")
 @RequestMapping("/api/auth")
 public class AuthController {
 
@@ -39,6 +41,7 @@ public class AuthController {
     }
 
     //inicia sesión
+    @Operation(summary = "Inicia sesión y devuelve un token JWT junto con la información del usuario")
     @PostMapping("/login")
     public ResponseEntity<LoginDetails> login(
             @Valid @RequestBody UsuarioLogin datos

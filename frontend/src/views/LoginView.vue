@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { PhWallet, PhEnvelopeSimple, PhLockKey, PhUser } from '@phosphor-icons/vue'
 import { useRouter } from 'vue-router'
 import { authService } from '../services/authService'
@@ -24,6 +24,7 @@ const registerPassword = ref('')
 const registerPasswordConfirm = ref('')
 
 const errorMessage = ref('')
+const successMessage = ref('')
 const loading = ref(false)
 const showOnboardingSurvey = ref(false)
 
@@ -31,8 +32,25 @@ const proceedToGuest = () => {
   router.push('/evaluacion')
 }
 
+const despertarBackend = async () => {
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/`, {
+      method: 'GET'
+    })
+
+    console.log('Backend disponible:', response.status)
+  } catch (error) {
+    console.warn('Backend todavía no disponible:', error)
+  }
+}
+
+onMounted(() => {
+  despertarBackend()
+})
+
 const handleLogin = async () => {
   errorMessage.value = ''
+  successMessage.value = ''
   loading.value = true
   try {
     if (loginEmail.value && loginPassword.value) {
@@ -44,12 +62,15 @@ const handleLogin = async () => {
         }
       }
     }
-    router.push('/dashboard')
+    successMessage.value = '¡Inicio de sesión exitoso! Serás redirigido al dashboard en breve.'
+    setTimeout(() => {
+      router.push('/dashboard')
+    }, 4000)
   } catch (err) {
     console.warn('API auth login error:', err)
     errorMessage.value = err.message || 'Error al iniciar sesión'
     // Permite al usuario continuar en desarrollo
-    router.push('/dashboard')
+    //router.push('/dashboard')
   } finally {
     loading.value = false
   }
@@ -57,6 +78,7 @@ const handleLogin = async () => {
 
 const handleRegister = async () => {
   errorMessage.value = ''
+  successMessage.value = ''
   if (registerPassword.value && registerPasswordConfirm.value && registerPassword.value !== registerPasswordConfirm.value) {
     errorMessage.value = 'Las contraseñas no coinciden'
     return
@@ -72,14 +94,20 @@ const handleRegister = async () => {
         if (resLogin.usuario) {
           localStorage.setItem('user', JSON.stringify(resLogin.usuario))
         }
+        successMessage.value = '¡Registro exitoso! Serás redirigido al dashboard en breve.'
+        //esperar 3 segundos antes de redirigir
+        setTimeout(() => {
+          router.push('/dashboard')
+        }, 4000)
+        
       }
     }
     // Desplegar encuesta de onboarding
-    showOnboardingSurvey.value = true
+    //showOnboardingSurvey.value = true
   } catch (err) {
     console.warn('API auth register error:', err)
     errorMessage.value = err.message || 'Error al registrarse'
-    showOnboardingSurvey.value = true
+    //showOnboardingSurvey.value = true
   } finally {
     loading.value = false
   }
@@ -106,7 +134,7 @@ const finalizarOnboarding = (resultado) => {
       <!-- Tabs -->
       <div class="flex border-b border-gray-300 mb-6">
         <button 
-          @click="activeTab = 'login'; errorMessage = ''"
+          @click="activeTab = 'login'; errorMessage = '' ; successMessage = ''"
           :class="[
             'flex-1 pb-3 text-sm font-semibold border-b-2 transition-colors cursor-pointer',
             activeTab === 'login' 
@@ -117,7 +145,7 @@ const finalizarOnboarding = (resultado) => {
           Iniciar sesión
         </button>
         <button 
-          @click="activeTab = 'register'; errorMessage = ''"
+          @click="activeTab = 'register'; errorMessage = '' ; successMessage = ''"
           :class="[
             'flex-1 pb-3 text-sm font-semibold border-b-2 transition-colors cursor-pointer',
             activeTab === 'register' 
@@ -133,7 +161,10 @@ const finalizarOnboarding = (resultado) => {
       <div v-if="errorMessage" class="mb-4 p-3 rounded-xl bg-red-100 border border-red-200 text-red-700 text-xs font-semibold">
         {{ errorMessage }}
       </div>
-
+      <!-- Alert success message -->
+      <div v-if="successMessage" class="mb-4 p-3 rounded-xl bg-green-100 border border-green-200 text-green-700 text-xs font-semibold">
+        {{ successMessage }}
+      </div>
       <!-- Form: Login -->
       <form v-if="activeTab === 'login'" @submit.prevent="handleLogin" class="space-y-6">
         <div>
@@ -166,6 +197,12 @@ const finalizarOnboarding = (resultado) => {
 
       <!-- Form: Register -->
       <form v-else @submit.prevent="handleRegister" class="space-y-5">
+        <div v-if="successMessage" class="mb-4 p-3 rounded-xl bg-green-100 border border-green-200 text-green-700 text-xs font-semibold">
+          {{ successMessage }}
+        </div>
+        <div v-if="errorMessage" class="mb-4 p-3 rounded-xl bg-red-100 border border-red-200 text-red-700 text-xs font-semibold">
+          {{ errorMessage }}
+        </div>
         <div>
           <label class="block text-xs font-bold text-gray-500 tracking-wider mb-2">NOMBRE COMPLETO</label>
           <div class="relative">

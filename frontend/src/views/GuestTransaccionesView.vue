@@ -23,6 +23,7 @@ const descripcion = ref('')
 const monto = ref('')
 const categoria = ref('Sin definir')
 const fecha = ref(new Date().toISOString().split('T')[0])
+const errorBackend = ref('')
 
 const transacciones = ref([
   { id: 1, descripcion: 'Alquiler', categoria: 'VIVIENDA', monto: 1200, tipo: 'GASTO', fecha: '2026-07-01' },
@@ -48,6 +49,13 @@ const clasificarLocal = (texto) => {
 }
 
 const clasificarTransaccion = async (texto, montoValor) => {
+  errorBackend.value = ''
+
+  // Validar campos obligatorios (opcional, pero recomendado)
+  if (!descripcion.value || !monto.value) {
+    errorBackend.value = 'La descripción y el monto son obligatorios'
+    return
+  }
   if (!texto) return 'OTROS'
   
   try {
@@ -58,19 +66,50 @@ const clasificarTransaccion = async (texto, montoValor) => {
     }
     return clasificarLocal(texto)
   } catch (err) {
-    console.warn('Error en clasificación API, usando fallback local:', err.message)
+    console.error('Error guardando transacción:', err)
+
+    // El Backend devuelve el mensaje de error
+    if (err.response && err.response.data) {
+      // Si el Backend devuelve un objeto con mensaje
+      errorBackend.value = err.response.data.mensaje || err.response.data.message || 'Error al guardar la transacción'
+    } else if (err.message) {
+      errorBackend.value = err.message
+    } else {
+      errorBackend.value = 'Ocurrió un error inesperado'
+    }
     return clasificarLocal(texto)
   }
 }
 
 const autoClasificar = async () => {
+  errorBackend.value = ''
+
+  // Validar campos obligatorios (opcional, pero recomendado)
+  if (!descripcion.value || !monto.value) {
+    errorBackend.value = 'La descripción y el monto son obligatorios'
+    return
+  }
+//si es de tipo INGRESO, no clasificar
+  if (tipoTransaccion.value === 'INGRESO') {
+    categoria.value = 'OTROS'
+    return
+  }
   if (!descripcion.value) return
   classifying.value = true
   try {
     const resultado = await clasificarTransaccion(descripcion.value, monto.value)
     categoria.value = resultado
   } catch (err) {
-    console.error('Error al clasificar:', err)
+    console.error('Error guardando transacción:', err)
+    // El Backend devuelve el mensaje de error
+    if (err.response && err.response.data) {
+      // Si el Backend devuelve un objeto con mensaje
+      errorBackend.value = err.response.data.mensaje || err.response.data.message || 'Error al guardar la transacción'
+    } else if (err.message) {
+      errorBackend.value = err.message
+    } else {
+      errorBackend.value = 'Ocurrió un error inesperado'
+    }
     categoria.value = 'OTROS'
   } finally {
     classifying.value = false
@@ -78,13 +117,40 @@ const autoClasificar = async () => {
 }
 
 const handleAgregarTransaccion = async () => {
-  if (!monto.value || !descripcion.value) return
+  errorBackend.value = ''
+
+  // Validar campos obligatorios (opcional, pero recomendado)
+  if (!descripcion.value || !monto.value) {
+    errorBackend.value = 'La descripción y el monto son obligatorios'
+    return
+  }
   
-  // Si la categoría está en "Sin definir", clasificar automáticamente
+  //comprobar que sea de tipo GASTO sino asignar OTROS por defecto
+  if (tipoTransaccion.value === 'INGRESO') {
+    categoria.value = 'OTROS'
+  } else if (tipoTransaccion.value === 'GASTO' && categoria.value === 'Sin definir') {
+    categoria.value = 'OTROS'
+  }
+  try{
+// Si la categoría está en "Sin definir", clasificar automáticamente 
   if (categoria.value === 'Sin definir') {
     const resultado = await clasificarTransaccion(descripcion.value, monto.value)
     categoria.value = resultado
   }
+  
+  }catch(err){
+    console.error('Error guardando transacción:', err)
+    // El Backend devuelve el mensaje de error
+    if (err.response && err.response.data) {
+      // Si el Backend devuelve un objeto con mensaje
+      errorBackend.value = err.response.data.mensaje || err.response.data.message || 'Error al guardar la transacción'
+    } else if (err.message) {
+      errorBackend.value = err.message
+    } else {
+      errorBackend.value = 'Ocurrió un error inesperado'
+    }
+  }
+
   
   // Agregar transacción
   transacciones.value.unshift({
@@ -226,14 +292,41 @@ const categoriaColor = (cat) => {
         <!-- Modal Body -->
         <form @submit.prevent="handleAgregarTransaccion" class="p-6 space-y-5">
 
+          <!-- ⚠️ ERROR DEL BACKEND -->
+        <div v-if="errorBackend" class="bg-red-50 border border-red-200 rounded-xl p-4">
+          <div class="flex items-start gap-3">
+            <PhWarning :size="18" class="text-red-500 flex-shrink-0 mt-0.5" />
+            <div>
+              <p class="text-sm font-bold text-red-800">Error</p>
+              <p class="text-sm text-red-700">{{ errorBackend }}</p>
+            </div>
+          </div>
+        </div>
+
           <!-- Descripción -->
           <div>
             <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">DESCRIPCIÓN</label>
             <div class="flex gap-2">
               <input v-model="descripcion" type="text" placeholder="Ej: Compra en Amazon" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#19d282] focus:bg-white text-slate-700">
-              <button type="button" @click="autoClasificar" :disabled="classifying" class="bg-slate-100 hover:bg-slate-200 text-[#0f4c54] font-bold text-xs px-3 py-2 rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer border border-slate-200 shrink-0">
+              <button
+                type="button"
+                @click="autoClasificar"
+                :disabled="classifying || tipoTransaccion === 'INGRESO'"
+                :class="[
+                  'font-bold text-xs px-3 py-2 rounded-xl flex items-center gap-1.5 transition-colors border',
+                  tipoTransaccion === 'INGRESO'
+                    ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed'
+                    : 'bg-slate-100 hover:bg-slate-200 text-[#0f4c54] border-slate-200 cursor-pointer'
+                ]"
+              >
                 <PhSparkle :size="14" class="text-[#19d282]" />
-                <span>{{ classifying ? 'Clasificando...' : 'Clasificar' }}</span>
+                <span>
+                  {{
+                    tipoTransaccion === 'INGRESO'
+                      ? 'NO APLICA PARA INGRESOS'
+                      : (classifying ? 'Clasificando...' : 'CLASIFICAR AUTOMÁTICAMENTE')
+                  }}
+                </span>
               </button>
             </div>
           </div>
