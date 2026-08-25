@@ -4,6 +4,8 @@ import com.team35.backend.dto.AnalisisDetails;
 import com.team35.backend.dto.EndeudamientoRequest;
 import com.team35.backend.dto.EndeudamientoDetails;
 import com.team35.backend.entity.Analisis;
+import com.team35.backend.entity.Recomendacion;
+import com.team35.backend.enums.PerfilTipo;
 import com.team35.backend.repository.AnalisisRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,22 +22,14 @@ public class AnalisisService {
     private final AnalisisRepository analisisRepository;
 
     public List<AnalisisDetails> obtenerHistorial(Long usuarioId) {
-
         List<Analisis> analisis =
-                analisisRepository.findByUsuarioIdOrderByFechaAnalisisDesc(usuarioId);
+                analisisRepository.findByUsuarioIdWithRecomendaciones(usuarioId);
 
+        // Convertir a DTOs usando el Mapper
         return analisis.stream()
-                .map(a -> new AnalisisDetails(
-                        a.getId(),
-                        a.getPerfil(),
-                        a.getProbabilidad(),
-                        a.getIngresoMensual(),
-                        a.getNivelEndeudamiento(),
-                        a.getFrecuenciaAhorro(),
-                        a.getFechaAnalisis()
-                ))
-                .toList();
-    }
+                .map(this::toBusquedaDTO)
+                .collect(Collectors.toList());
+            }
 
     public List<AnalisisDetails> buscarAnalisis(Long usuarioId, String query) {
         return analisisRepository.buscarPorNombreGenerado(usuarioId, query)
@@ -46,6 +40,13 @@ public class AnalisisService {
 
     // En AnalisisService
     private AnalisisDetails toBusquedaDTO(Analisis analisis) {
+        if (analisis == null) return null;
+        List<String> recomendacionesTextos = analisis.getRecomendaciones() != null
+                ? analisis.getRecomendaciones().stream()
+                .map(Recomendacion::getTexto)
+                .collect(Collectors.toList())
+                : List.of();
+
         return new AnalisisDetails(
                 analisis.getId(),
                 analisis.getPerfil(),
@@ -53,7 +54,8 @@ public class AnalisisService {
                 analisis.getIngresoMensual(),
                 analisis.getNivelEndeudamiento(),
                 analisis.getFrecuenciaAhorro(),
-                analisis.getFechaAnalisis()
+                analisis.getFechaAnalisis(),
+                recomendacionesTextos
         );
     }
 

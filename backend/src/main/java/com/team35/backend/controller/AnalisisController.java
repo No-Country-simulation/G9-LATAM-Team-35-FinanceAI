@@ -9,6 +9,7 @@ import com.team35.backend.service.AnalisisService;
 import com.team35.backend.service.AuthService;
 import com.team35.backend.service.FrecuenciaAhorroService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -55,6 +56,8 @@ public class AnalisisController {
     @Operation(
             summary = "Obtiene el historial de análisis financieros del usuario autenticado"
     )
+
+    @SecurityRequirement(name = "bearer-jwt")
     @GetMapping("/historial")
     public ResponseEntity<List<AnalisisDetails>> obtenerHistorial() {
 
@@ -62,7 +65,6 @@ public class AnalisisController {
 
         List<AnalisisDetails> historial =
                 analisisService.obtenerHistorial(usuarioId);
-
         return ResponseEntity.ok(historial);
     }
 

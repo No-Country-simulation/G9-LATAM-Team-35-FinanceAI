@@ -123,6 +123,7 @@ public class SecurityConfig {
         };
     }
 
+
     @Bean
     public AccessDeniedHandler accessDeniedHandler() {
         return (request, response, accessDeniedException) -> {
