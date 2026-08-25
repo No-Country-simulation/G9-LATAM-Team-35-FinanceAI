@@ -1,8 +1,20 @@
 descripcion,categoria,monto,descripcion_limpia
+Alimentación,Alimentación,647.41,alimentacion
+alimentacion,Alimentación,600.00,alimentacion
+alimentacion*,Alimentación,300.00,alimentacion
+alimentos,Alimentación,497.41,alimentos
+Alimentos,Alimentación,400.41,alimentos
+jugos y refrescos,Alimentación,100.50,jugos y refrescos
+refrescos,Alimentación,80.00,refrescos
+jugos,Alimentación,90.41,jugos
+Jugos,Alimentación,70.10,jugos
 *supermercado*,Alimentación,647.41,supermercado
 COMPRA EN SUPERMERCADO,Alimentación,498.99,compra en supermercado
 *supermercado*,Alimentación,384.37,supermercado
 *supermercado*,Alimentación,93.56,supermercado
+compra de groceries,Alimentación,800.00,compra de groceries
+Compra de Groceries,Alimentación,950.00,compra de groceries
+COMPRA DE GROCERIES,Alimentación,700.00,compra de groceries
 COMPRA EN SUPERMERCADO,Alimentación,300.28,compra en supermercado
 COMPRA EN WALMART,Alimentación,581.05,compra en walmart
 $Walmart,Alimentación,92.31,walmart
@@ -141,6 +153,12 @@ compra de verdura,Alimentación,120.00,compra de verdura
 abarrotes,Alimentación,200.00,abarrotes
 tienda de abarrotes,Alimentación,180.00,tienda de abarrotes
 abarrote,Alimentación,160.00,abarrote
+Mandado,Alimentación,1400.00,mandado
+MANDADO,Alimentación,1000.00,mandado
+CARNICERIA,Alimentación,700.00,carniceria
+abarrotes,Alimentación,900.00,abarrotes
+Abarrotes,Alimentación,1100.00,abarrotes
+ABARROTES,Alimentación,800.00,abarrotes
 despensa basica,Alimentación,1000.00,despensa basica
 despensa completa,Alimentación,2000.00,despensa completa
 despensa mensual,Alimentación,2200.00,despensa mensual
@@ -434,12 +452,24 @@ conductor particular,Transporte,550.00,conductor particular
 viaje con chofer,Transporte,480.00,viaje con chofer
 auto nuevo,Transporte,20000.00,auto nuevo
 compra de auto,Transporte,18000.00,compra de auto
+compra de automovil,Transporte,80000.00,compra de automovil
+compra de coche,Transporte,80000.00,compra de coche
+comprar automovil,Transporte,80000.00,comprar automovil
+coche nuevo,Transporte,80000.00,coche nuevo
+coche,Transporte,58000.00,coche
 carro nuevo,Transporte,22000.00,carro nuevo
-automovil,Transporte,19000.00,automovil
-camioneta,Transporte,25000.00,camioneta
+automovil,Transporte,29000.00,automovil
+Automovil,Transporte,35000.00,automovil
+camioneta,Transporte,45000.00,camioneta
+Camioneta,Transporte,25000.00,camioneta
+camioneta*,Transporte,25000.00,camioneta
+compra de camioneta*,Transporte,25000.00,compra de camioneta
+camioneta nueva,Transporte,85000.00,camioneta nueva
 suv,Transporte,23000.00,suv
 motorcycle,Transporte,8000.00,motorcycle
 moto,Transporte,7000.00,moto
+moto nueva,Transporte,7900.00,moto nueva
+moto*,Transporte,10000.00,moto*
 servicio de grúa,Transporte,1000.00,servicio de grua
 grua,Transporte,800.00,grua
 avion,Transporte,5000.00,avion
@@ -488,6 +518,16 @@ viaje en camion,Transporte,550.00,viaje en camion
 pago de camion,Transporte,500.00,pago de camion
 microbus,Transporte,400.00,microbus
 viaje en microbus,Transporte,350.00,viaje en microbus
+pago de transporte publico,Transporte,300.00,pago de transporte publico
+Pago de Transporte Publico,Transporte,350.00,pago de transporte publico
+PAGO DE TRANSPORTE PUBLICO,Transporte,250.00,pago de transporte publico
+transporte publico,Transporte,280.00,transporte publico
+Transporte Publico,Transporte,320.00,transporte publico
+TRANSPORTE PUBLICO,Transporte,250.00,transporte publico
+camion*,Transporte,200.00,camion
+CAMION,Transporte,180.00,camion
+Microbus,Transporte,280.00,microbus
+MICROBUS,Transporte,200.00,microbus
 taxi,Transporte,300.00,taxi
 viaje en taxi,Transporte,280.00,viaje en taxi
 pago de taxi,Transporte,250.00,pago de taxi
@@ -531,6 +571,9 @@ COMBUSTIBLE,Transporte,449.7,combustible
 pago combustible,Transporte,234.76,pago combustible
 COMBUSTIBLE,Transporte,210.64,combustible
 pago con tarjeta en combustible,Transporte,373.95,pago con tarjeta en combustible
+combustible,Transporte,800.00,combustible
+Combustible,Transporte,1000.00,combustible
+gasolina*,Transporte,900.00,gasolina
 *estacionamiento*,Transporte,174.6,estacionamiento
 *estacionamiento*,Transporte,62.82,estacionamiento
 pago con tarjeta en estacionamiento,Transporte,447.45,pago con tarjeta en estacionamiento
@@ -673,6 +716,8 @@ servicio mecanico,Transporte,1650.00,servicio mecanico
 reparacion de auto,Transporte,2000.00,reparacion de auto
 reparacion de carro,Transporte,1900.00,reparacion de carro
 cambio de aceite,Transporte,800.00,cambio de aceite
+cambio de aceite del auto,Transporte,600.00,cambio de aceite del auto
+cambio de aceite*,Transporte,500.00,cambio de aceite
 *refaccionaria*,Transporte,342.51,refaccionaria
 COMPRA EN REFACCIONARIA,Transporte,69.97,compra en refaccionaria
 Refaccionaria,Transporte,105.7,refaccionaria
@@ -774,6 +819,8 @@ COMPRA EN DENTISTA,Salud,717.45,compra en dentista
 *dentista*,Salud,191.5,dentista
 COMPRA EN DENTISTA,Salud,855.29,compra en dentista
 $dentista,Salud,546.25,dentista
+dentista*,Salud,828.24,pago dentista
+consulta dentista,Salud,650.00,consulta dentista
 pago dentista,Salud,828.24,pago dentista
 pago hospital,Salud,134.16,pago hospital
 pago hospital,Salud,129.78,pago hospital
@@ -830,12 +877,38 @@ ortodoncia,Salud,1500.00,ortodoncia
 optometrista,Salud,400.00,optometrista
 lentes,Salud,1200.00,lentes
 lentes de contacto,Salud,900.00,lentes de contacto
+psiquiatra,Salud,1200.00,psiquiatra
+Psiquiatra,Salud,1500.00,psiquiatra
+PSIQUIATRA,Salud,1800.00,psiquiatra
+DOCTORA,Salud,1200.00,doctora
+doctora,Salud,800.00,doctora
+Doctora,Salud,1000.00,doctora
+Doctora*,Salud,1200.00,doctora
+doctor,Salud,800.00,doctor
+Doctor,Salud,1000.00,doctor
+DOCTOR,Salud,1200.00,doctor
+medica,Salud,800.00,medica
+Medica,Salud,1000.00,medica
+MEDICA,Salud,1200.00,medica
+psicoterapia,Salud,900.00,psicoterapia
+Psicoterapia,Salud,1100.00,psicoterapia
+PSICOTERAPIA,Salud,1300.00,psicoterapia
+Neurocirujano,Salud,3000.00,neurocirujano
+NEUROCIRUJANO,Salud,3500.00,neurocirujano
+DERMATOLOGO,Salud,1800.00,dermatologo
+OFTALMOLOGO,Salud,1600.00,oftalmologo
+Pediatra,Salud,1100.00,pediatra
+GINECOLOGO,Salud,1800.00,ginecologo
 psicologo,Salud,600.00,psicologo
 psicologa,Salud,500.00,psicologa
 Psicologa,Salud,650.00,psicologa
+Psicologa*,Salud,850.00,psicologa
 terapia psicologica,Salud,700.00,terapia psicologica
 psiquiatra,Salud,800.00,psiquiatra
 nutriologo,Salud,500.00,nutriologo
+nutriologa,Salud,1100.00,nutriologa
+nutriologa*,Salud,1100.00,nutriologa
+consulta de psicologa,Salud,450.00,consulta de psicologa
 consulta de nutricion,Salud,450.00,consulta de nutricion
 medicina alternativa,Salud,350.00,medicina alternativa
 acupuntura,Salud,400.00,acupuntura
@@ -1166,6 +1239,10 @@ pago hipoteca,Vivienda,2318.63,pago hipoteca
 hipoteca,Vivienda,3504.17,hipoteca
 $hipoteca,Vivienda,4556.19,hipoteca
 Hipoteca,Vivienda,5000.00,hipoteca
+pension*,Vivienda,4500.00,pension
+Pension,Vivienda,5000.00,pension
+PENSION,Vivienda,4200.00,pension
+Pension*,Vivienda,4800.00,pension
 remodelacion de hogar,Vivienda,15000.00,remodelacion de hogar
 remodelacion de casa,Vivienda,12000.00,remodelacion de casa
 remodelacion de departamento,Vivienda,10000.00,remodelacion de departamento
@@ -1192,12 +1269,38 @@ jardineria,Vivienda,1000.00,jardineria
 jardin,Vivienda,3100.00,jardin
 pintura de casa,Vivienda,4000.00,pintura de casa
 pintura de paredes,Vivienda,3000.00,pintura de paredes
+pintura de casa*,Vivienda,2700.00,pintura de casa
+Pintura de Casa,Vivienda,3000.00,pintura de casa
 mano de obra para remodelacion,Vivienda,5000.00,mano de obra para remodelacion
 plomero,Vivienda, 800.00,plomero
 electricista,Vivienda, 700.00,electricista
 carpintero,Vivienda, 600.00,carpintero
 albanil,Vivienda, 1000.00,albanil
 albañil,Vivienda, 1050.00,albanil
+albañil*,Vivienda,1800.00,albanil
+Albañil,Vivienda,2200.00,albanil
+ALBAÑIL,Vivienda,1600.00,albanil
+Albañil*,Vivienda,1950.00,albanil
+ALBAÑIL*,Vivienda,2100.00,albanil
+plomeria*,Vivienda,1200.00,plomeria
+Plomeria,Vivienda,1350.00,plomeria
+PLOMERIA,Vivienda,1100.00,plomeria
+Plomeria*,Vivienda,1400.00,plomeria
+PLOMERIA*,Vivienda,1280.00,plomeria
+tuberias*,Vivienda,950.00,tuberias
+Tuberias,Vivienda,1050.00,tuberias
+TUBERIAS,Vivienda,880.00,tuberias
+Tuberias*,Vivienda,1150.00,tuberias
+TUBERIAS*,Vivienda,990.00,tuberias
+electricista*,Vivienda,1500.00,electricista
+Electricista,Vivienda,1700.00,electricista
+ELECTRICISTA,Vivienda,1400.00,electricista
+Electricista*,Vivienda,1650.00,electricista
+ELECTRICISTA*,Vivienda,1850.00,electricista
+demolicion*,Vivienda,3200.00,demolicion
+Demolicion,Vivienda,3500.00,demolicion
+DEMOLICION,Vivienda,2900.00,demolicion
+Demolicion*,Vivienda,3800.00,demolicion
 pago con tarjeta en agua,Vivienda,1927.38,pago con tarjeta en agua
 compra agua,Vivienda,1040.94,compra agua
 $agua,Vivienda,3420.84,agua
@@ -1233,6 +1336,10 @@ mantenimiento,Vivienda,4204.28,mantenimiento
 *mantenimiento*,Vivienda,3565.03,mantenimiento
 *mantenimiento*,Vivienda,2863.24,mantenimiento
 *mantenimiento*,Vivienda,1828.75,mantenimiento
+MANTENIMIENTO DEL HOGAR,Vivienda,4200.00,mantenimiento del hogar
+servicios de mudanza,Vivienda,5200.00,servicios de mudanza
+Servicios de Mudanza,Vivienda,5800.00,servicios de mudanza
+SERVICIOS DE MUDANZA,Vivienda,4900.00,servicios de mudanza
 compra reparacion,Vivienda,3052.9,compra reparacion
 COMPRA EN REPARACION,Vivienda,4833.17,compra en reparacion
 reparacion,Vivienda,891.68,reparacion
@@ -1311,6 +1418,9 @@ pago seguro hogar,Vivienda,2133.25,pago seguro hogar
 SEGURO HOGAR,Vivienda,3787.93,seguro hogar
 predial,Vivienda,770.64,predial
 predial,Vivienda,4827.5,predial
+predial*,Vivienda,3600.00,predial
+Predial,Vivienda,3900.00,predial
+PREDIAL,Vivienda,3400.00,predial
 pago con tarjeta en predial,Vivienda,1267.15,pago con tarjeta en predial
 pago con tarjeta en predial,Vivienda,4198.13,pago con tarjeta en predial
 compra predial,Vivienda,1853.84,compra predial
@@ -1506,6 +1616,18 @@ terreno,Vivienda,180000.00,terreno
 $colegio,Educación,1682.09,colegio
 pago con tarjeta en colegio,Educación,1920.34,pago con tarjeta en colegio
 pago con tarjeta en colegio,Educación,1388.92,pago con tarjeta en colegio
+bachillerato,Educación,1200.00,bachillerato
+Bachillerato,Educación,1200.00,bachillerato
+BACHILLERATO,Educación,1200.00,bachillerato
+bachillerato*,Educación,1200.00,bachillerato
+bachiller,Educación,1200.00,bachiller
+Bachiller,Educación,1200.00,bachiller
+BACHILLER,Educación,1200.00,bachiller
+bachiller*,Educación,1200.00,bachiller
+COBACH,Educación,1200.00,cobach
+Cobach,Educación,1200.00,cobach
+cobach,Educación,1200.00,cobach
+COBACH*,Educación,1200.00,cobach
 COLEGIO,Educación,1699.74,colegio
 $colegio,Educación,1765.64,colegio
 kinder,Educación,1500.00,kinder
@@ -1523,8 +1645,22 @@ posgrado,Educación,5000.00,posgrado
 Posgrado,Educación,5500.00,posgrado
 maestria,Educación,6000.00,maestria
 maestria,Educación,5600.00,maestria
+maestría en finanzas,Educación,8500.00,maestria en finanzas
+Maestría en Finanzas,Educación,9200.00,maestria en finanzas
+MAESTRIA EN FINANZAS,Educación,7800.00,maestria en finanzas
+programa de intercambio,Educación,12000.00,programa de intercambio
+Programa de Intercambio,Educación,13500.00,programa de intercambio
+certificación profesional,Educación,3500.00,certificacion profesional
+Certificación Profesional,Educación,3800.00,certificacion profesional
+CERTIFICACION PROFESIONAL,Educación,3200.00,certificacion profesional
+bootcamp de programación,Educación,15000.00,bootcamp de programacion
+Bootcamp de Programación,Educación,16500.00,bootcamp de programacion
+BOOTCAMP DE PROGRAMACION,Educación,14000.00,bootcamp de programacion
 doctorado,Educación,8000.00,doctorado
 Doctorado,Educación,8800.00,doctorado
+doctorado en medicina,Educación,25000.00,doctorado en medicina
+Doctorado en Medicina,Educación,28000.00,doctorado en medicina
+DOCTORADO EN MEDICINA,Educación,22000.00,doctorado en medicina
 carrera de ingenieria,Educación,7000.00,carrera de ingenieria
 carrera de arquitectura,Educación,7000.00,carrera de arquitectura
 ingenieria,Educación,6500.00,ingenieria
@@ -1549,6 +1685,31 @@ taller de musica,Educación,700.00,taller de musica
 taller de teatro,Educación,650.00,taller de teatro
 clases particulares,Educación,500.00,clases particulares
 tutorias,Educación,400.00,tutorias
+conferencia*,Educación,2500.00,conferencia
+Conferencia,Educación,2800.00,conferencia
+CONFERENCIA,Educación,2200.00,conferencia
+Conferencia*,Educación,2650.00,conferencia
+conferencia,Educación,2900.00,conferencia
+mentoria*,Educación,1800.00,mentoria
+Mentoria,Educación,2100.00,mentoria
+MENTORIA,Educación,1600.00,mentoria
+Mentoria*,Educación,1950.00,mentoria
+capacitacion profesional*,Educación,3200.00,capacitacion profesional
+Capacitacion Profesional,Educación,3500.00,capacitacion profesional
+CAPACITACION PROFESIONAL,Educación,2900.00,capacitacion profesional
+Capacitacion Profesional*,Educación,3400.00,capacitacion profesional
+alura,Educación,1950.00,alura
+cursos de Alura*,Educación,1850.00,cursos de alura
+Cursos de Alura,Educación,2100.00,cursos de alura
+CURSOS DE ALURA,Educación,1650.00,cursos de alura
+Cursos de Alura*,Educación,1950.00,cursos de alura
+academia*,Educación,2800.00,academia
+Academia,Educación,3100.00,academia
+ACADEMIA,Educación,2500.00,academia
+Academia*,Educación,2950.00,academia
+ACADEMIA*,Educación,3250.00,academia
+taller de habilidades*,Educación,2300.00,taller de habilidades
+Taller de Habilidades,Educación,2600.00,taller de habilidades
 material escolar,Educación,300.00,material escolar
 libros de universidad,Educación,500.00,libros de universidad
 Universidad,Educación,336.96,universidad
@@ -1714,11 +1875,89 @@ COMPRA EN PLATZI,Educación,238.07,compra en platzi
 PLATZI,Educación,1418.89,platzi
 pago con tarjeta en Platzi,Educación,509.51,pago con tarjeta en platzi
 Platzi,Educación,163.06,platzi
+Coursera curso*,Educación,950.00,coursera curso
+Coursera Plus,Educación,4500.00,coursera plus
+Udemy curso*,Educación,750.00,udemy curso
+edX curso*,Educación,900.00,edx curso
+edX curso,Educación,1100.00,edx curso
+EDX CURSO,Educación,850.00,edx curso
+Platzi*,Educación,850.00,platzi
+Platzi,Educación,1200.00,platzi
+Crehana*,Educación,550.00,crehana
+Crehana,Educación,800.00,crehana
+CREHANA,Educación,500.00,crehana
+Domestika*,Educación,450.00,domestika
+LinkedIn Learning*,Educación,550.00,linkedin learning
+LinkedIn Learning,Educación,700.00,linkedin learning
+LINKEDIN LEARNING,Educación,480.00,linkedin learning
 Domestika,Educación,875.78,domestika
 domestika,Educación,1882.78,domestika
 compra Domestika,Educación,1555.52,compra domestika
 DOMESTIKA,Educación,212.28,domestika
 pago Domestika,Educación,1336.46,pago domestika
+Universidad Anáhuac*,Educación,22000.00,universidad anahuac
+Universidad Anáhuac,Educación,25000.00,universidad anahuac
+UNIVERSIDAD ANAHUAC,Educación,18000.00,universidad anahuac
+ITAM*,Educación,20000.00,itam
+ITAM,Educación,23000.00,itam
+ITAM,Educación,17000.00,itam
+Ibero*,Educación,18000.00,ibero
+Ibero,Educación,21000.00,ibero
+IBERO,Educación,15000.00,ibero
+Universidad Panamericana*,Educación,20000.00,universidad panamericana
+Universidad Panamericana,Educación,24000.00,universidad panamericana
+UNIVERSIDAD PANAMERICANA,Educación,16000.00,universidad panamericana
+Tec de Monterrey*,Educación,25000.00,tec de monterrey
+Tec de Monterrey,Educación,30000.00,tec de monterrey
+TEC DE MONTERREY,Educación,20000.00,tec de monterrey
+UVM*,Educación,12000.00,uvm
+UVM,Educación,15000.00,uvm
+UVM,Educación,9000.00,uvm
+EBC*,Educación,9000.00,ebc
+EBC,Educación,12000.00,ebc
+EBC,Educación,7000.00,ebc
+La Salle*,Educación,14000.00,la salle
+La Salle,Educación,18000.00,la salle
+LA SALLE,Educación,11000.00,la salle
+UDEM*,Educación,16000.00,udem
+UDEM,Educación,20000.00,udem
+UDEM,Educación,13000.00,udem
+UDLAP*,Educación,18000.00,udlap
+UDLAP,Educación,22000.00,udlap
+UDLAP,Educación,15000.00,udlap
+CETYS*,Educación,14000.00,cetys
+CETYS,Educación,18000.00,cetys
+CETYS,Educación,11000.00,cetys
+Colegio Williams*,Educación,20000.00,colegio williams
+Colegio Williams,Educación,25000.00,colegio williams
+COLEGIO WILLIAMS,Educación,16000.00,colegio williams
+Olinca*,Educación,18000.00,olinca
+Olinca,Educación,22000.00,olinca
+OLINCA,Educación,15000.00,olinca
+SEK Guadalajara*,Educación,11000.00,sek guadalajara
+SEK Guadalajara,Educación,15000.00,sek guadalajara
+SEK GUADALAJARA,Educación,8000.00,sek guadalajara
+Colegio Washington*,Educación,11000.00,colegio washington
+Colegio Washington,Educación,15000.00,colegio washington
+COLEGIO WASHINGTON,Educación,8000.00,colegio washington
+Instituto Queretano Marista*,Educación,11000.00,instituto queretano marista
+Instituto Queretano Marista,Educación,15000.00,instituto queretano marista
+INSTITUTO QUERETANO MARISTA,Educación,8000.00,instituto queretano marista
+CEDIM*,Educación,11000.00,cedim
+CEDIM,Educación,15000.00,cedim
+CEDIM,Educación,8000.00,cedim
+Claustro de Sor Juana*,Educación,11000.00,claustro de sor juana
+Claustro de Sor Juana,Educación,15000.00,claustro de sor juana
+CLAUSTRO DE SOR JUANA,Educación,8000.00,claustro de sor juana
+UAG*,Educación,14000.00,uag
+UAG,Educación,18000.00,uag
+UAG,Educación,11000.00,uag
+UNIVA*,Educación,9000.00,univa
+UNIVA,Educación,12000.00,univa
+UNIVA,Educación,7000.00,univa
+UNITEC*,Educación,9000.00,unitec
+UNITEC,Educación,12000.00,unitec
+UNITEC,Educación,7000.00,unitec
 $Libreria Gandhi,Educación,1374.39,libreria gandhi
 *Libreria Gandhi*,Educación,421.25,libreria gandhi
 pago Libreria Gandhi,Educación,949.41,pago libreria gandhi
@@ -1794,6 +2033,13 @@ COMPRA EN REGULARIZACION,Educación,1374.79,compra en regularizacion
 compra regularizacion,Educación,1665.2,compra regularizacion
 *regularizacion*,Educación,1912.66,regularizacion
 Regularizacion,Educación,102.97,regularizacion
+celular*,Ocio y Servicios,1250.00,celular
+Celular,Ocio y Servicios,1380.00,celular
+Celular*,Ocio y Servicios,1490.00,celular
+teléfono celular*,Ocio y Servicios,1350.00,telefono celular
+Teléfono celular,Ocio y Servicios,1425.00,telefono celular
+TELEFONO CELULAR,Ocio y Servicios,1180.00,telefono celular
+Teléfono Celular*,Ocio y Servicios,1550.00,telefono celular
 *cine*,Ocio y Servicios,731.69,cine
 *cine*,Ocio y Servicios,88.53,cine
 cine,Ocio y Servicios,702.26,cine
@@ -1819,6 +2065,13 @@ Boletos,Ocio y Servicios,166.85,boletos
 compra boletos,Ocio y Servicios,255.25,compra boletos
 pago con tarjeta en boletos,Ocio y Servicios,742.71,pago con tarjeta en boletos
 pago con tarjeta en boletos,Ocio y Servicios,114.02,pago con tarjeta en boletos
+linkedin premium,Ocio y Servicios,850.00,linkedin premium
+LinkedIn Premium,Ocio y Servicios,650.00,linkedin premium
+LINKEDIN PREMIUM,Ocio y Servicios,780.00,linkedin premium
+LinkedIn Premium*,Ocio y Servicios,720.00,linkedin premium
+liverpool*,Ocio y Servicios,1200.00,liverpool
+Liverpool,Ocio y Servicios,1500.00,liverpool
+Liverpool*,Ocio y Servicios,1650.00,liverpool
 Suscripcion,Ocio y Servicios,707.87,suscripcion
 Suscripciones,Ocio y Servicios,707.87,suscripciones
 suscripciones,Ocio y Servicios,707.87,suscripciones
@@ -1956,8 +2209,10 @@ Dropbox,Ocio y Servicios,250.00,dropbox
 pago Dropbox,Ocio y Servicios,230.00,pago dropbox
 suscripcion Dropbox,Ocio y Servicios,270.00,suscripcion dropbox
 $videojuegos,Ocio y Servicios,929.36,videojuegos
-VIDEOJUEGOS,Ocio y Servicios,72.18,videojuegos
-Videojuegos,Ocio y Servicios,324.78,videojuegos
+JUEGOS,Ocio y Servicios,72.18,juegos
+juegos,Ocio y Servicios,72.18,juegos
+Juegos*,Ocio y Servicios,72.18,juegos
+Juegos moviles,Ocio y Servicios,72.18,juegos moviles
 Videojuegos,Ocio y Servicios,843.71,videojuegos
 Videojuegos,Ocio y Servicios,958.12,videojuegos
 Playstation,Ocio y Servicios,500.31,playstation
@@ -2023,6 +2278,9 @@ regalo dia del amor,Ocio y Servicios,300.00,regalo dia del amor
 regalo san valentin,Ocio y Servicios,350.00,regalo san valentin
 regalo dia de las madres,Ocio y Servicios,400.00,regalo dia de las madres
 regalo dia de los padres,Ocio y Servicios,380.00,regalo dia de los padres
+ropa nueva,Ocio y Servicios,1300.00,ropa nueva
+Ropa Nueva,Ocio y Servicios,1600.00,ropa nueva
+ROPA NUEVA,Ocio y Servicios,1100.00,ropa nueva
 compra Shein,Ocio y Servicios,650.00,compra shein
 carrito de shein,Ocio y Servicios,600.50,carrito de shein
 shein,Ocio y Servicios,390.00,shein
