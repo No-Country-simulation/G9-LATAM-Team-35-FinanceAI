@@ -12,7 +12,7 @@ public interface AnalisisRepository extends JpaRepository<Analisis, Long> {
 
     // Historial de análisis del usuario, más reciente primero
     List<Analisis> findByUsuarioIdOrderByFechaAnalisisDesc(Long usuarioId);
-
+    /*
     @Query(value = """
     SELECT * FROM analisis 
     WHERE usuario_id = :usuarioId 
@@ -22,9 +22,9 @@ public interface AnalisisRepository extends JpaRepository<Analisis, Long> {
         perfil
     ) ILIKE CONCAT('%', :query, '%')
     ORDER BY fecha_analisis DESC
-    """, nativeQuery = true)
+    """, nativeQuery = true) */
 
-    List<Analisis> buscarPorNombreGenerado(@Param("usuarioId") Long usuarioId, @Param("query") String query);
+    //List<Analisis> buscarPorNombreGenerado(@Param("usuarioId") Long usuarioId, @Param("query") String query);
 
     // Obtener análisis con sus recomendaciones
     @Query("SELECT a FROM Analisis a " +
@@ -44,5 +44,6 @@ public interface AnalisisRepository extends JpaRepository<Analisis, Long> {
             "LEFT JOIN FETCH a.recomendaciones " +
             "WHERE a.usuario.id = :usuarioId " +
             "ORDER BY a.fechaAnalisis DESC")
+
     List<Analisis> findTopByUsuarioIdOrderByFechaAnalisisDesc(Long usuarioId);
 }

@@ -158,10 +158,10 @@ const finalizarOnboarding = (resultado) => {
       </div>
 
       <!-- Alert error message -->
-      <div v-if="errorMessage" class="mb-4 p-3 rounded-xl bg-red-100 border border-red-200 text-red-700 text-xs font-semibold">
+      <div v-if="errorMessage"class="mb-4 p-3 rounded-xl bg-red-100 border border-red-200 text-red-700 text-xs font-semibold">
         {{ errorMessage }}
       </div>
-      <!-- Alert success message -->
+      <!-- Mensaje de éxito -->
       <div v-if="successMessage" class="mb-4 p-3 rounded-xl bg-green-100 border border-green-200 text-green-700 text-xs font-semibold">
         {{ successMessage }}
       </div>
@@ -197,12 +197,7 @@ const finalizarOnboarding = (resultado) => {
 
       <!-- Form: Register -->
       <form v-else @submit.prevent="handleRegister" class="space-y-5">
-        <div v-if="successMessage" class="mb-4 p-3 rounded-xl bg-green-100 border border-green-200 text-green-700 text-xs font-semibold">
-          {{ successMessage }}
-        </div>
-        <div v-if="errorMessage" class="mb-4 p-3 rounded-xl bg-red-100 border border-red-200 text-red-700 text-xs font-semibold">
-          {{ errorMessage }}
-        </div>
+      
         <div>
           <label class="block text-xs font-bold text-gray-500 tracking-wider mb-2">NOMBRE COMPLETO</label>
           <div class="relative">

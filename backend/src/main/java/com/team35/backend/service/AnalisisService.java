@@ -32,9 +32,30 @@ public class AnalisisService {
             }
 
     public List<AnalisisDetails> buscarAnalisis(Long usuarioId, String query) {
-        return analisisRepository.buscarPorNombreGenerado(usuarioId, query)
-                .stream()
+        // Obtener todos los análisis con recomendaciones
+        List<Analisis> analisis = analisisRepository
+                .findByUsuarioIdWithRecomendaciones(usuarioId);
+
+        // Convertir a DTOs (el nombre se genera en español)
+        List<AnalisisDetails> todos = analisis.stream()
                 .map(this::toBusquedaDTO)
+                .collect(Collectors.toList());
+
+        // 3. Si no hay query, devolver todos
+        if (query == null || query.trim().isEmpty()) {
+            return todos;
+        }
+
+        //  Filtrar en memoria (case-insensitive)
+        String q = query.toLowerCase().trim();
+        return todos.stream()
+                .filter(dto -> {
+                    String nombre = dto.getNombre() != null ? dto.getNombre().toLowerCase() : "";
+                    String perfil = dto.getPerfil() != null ? dto.getPerfil().toString().toLowerCase() : "";
+
+                    // Buscar en el nombre generado (ej: "Agosto 2026 - SALUDABLE")
+                    return nombre.contains(q) || perfil.contains(q);
+                })
                 .collect(Collectors.toList());
     }
 
