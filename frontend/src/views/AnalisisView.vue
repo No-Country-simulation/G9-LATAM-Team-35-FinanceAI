@@ -59,6 +59,7 @@ const perfilResultado = ref('')
 const probabilidadResultado = ref(0)
 const resumenGastos = ref({})
 const recomendaciones = ref([])
+const ingresoCalculadoPorTransacciones = ref(false)
 
 // Opciones de meses disponibles para el selector
 const mesesDisponibles = computed(() => {
@@ -88,8 +89,10 @@ const cargarDatosPeriodo = async () => {
       const dataIngreso = resIngreso.data || resIngreso
       if (dataIngreso && dataIngreso.ingreso_mensual > 0) {
         ingresoMensual.value = Number(dataIngreso.ingreso_mensual)
+        ingresoCalculadoPorTransacciones.value = true    
       } else if (ingresoMensual.value === 0) {
-        ingresoMensual.value = 0 // Fallback amigable
+        ingresoMensual.value = 0 
+        ingresoCalculadoPorTransacciones.value = false
       }
     } catch (e) {
       console.warn('No se pudo calcular ingreso mensual del backend:', e)
@@ -457,19 +460,22 @@ const listaDistribucion = computed(() => {
 })
 
 const mensajeIngreso = computed(() => {
-  // Verificar si hay transacciones de ingreso en el mes seleccionado
-  const hayIngresos = transaccionesUsuario.value.some(t => 
-    t.tipo === 'INGRESO' || t.tipo === 'ingreso'
-  )
-  const mesLabel = mesesDisponibles.value.find(m => m.val === mesSeleccionado.value)?.label || mesSeleccionado.value
-  
-  if (hayIngresos && ingresoMensual.value > 0) {
+  const mesLabel =
+    mesesDisponibles.value.find(
+      m => m.val === mesSeleccionado.value
+    )?.label || mesSeleccionado.value
+
+  if (
+    ingresoCalculadoPorTransacciones.value &&
+    ingresoMensual.value > 0
+  ) {
     return `Calculado de tus transacciones registradas de ${mesLabel}`
   }
 
-  if (!hayIngresos && ingresoMensual.value > 0) {
+  if (ingresoMensual.value > 0) {
     return `Calculado del último análisis registrado de ${mesLabel}`
   }
+
   return `No hay ingresos registrados para ${mesLabel}`
 })
 
@@ -785,7 +791,7 @@ const mensajeIngreso = computed(() => {
         
 
         <!-- Center Analyze Button -->
-        <div class="flex flex-col items-center justify-center mb-10 gap-2">
+        <div class="flex flex-col items-center justify-center mt-6 mb-10 gap-2">
           <button 
               @click="realizarAnalisis" 
               :disabled="loading || !datosCompletos" 
