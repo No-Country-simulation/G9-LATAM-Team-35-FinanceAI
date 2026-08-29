@@ -1,7 +1,7 @@
 # 🚀 FinanceAI – Asistente Inteligente de Salud Financiera
  
-![Estado del Proyecto](https://img.shields.io/badge/Estado-En_Pulido_Final-yellow)
-![Versión](https://img.shields.io/badge/Versión-1.0.0-green)
+![Estado](https://img.shields.io/badge/Estado-Finalizado-green)
+![Version](https://img.shields.io/badge/Versión-1.0.0-blue)
 ![Hackathon](https://img.shields.io/badge/Hackathon-ONE-orange)
 ![Oracle](https://img.shields.io/badge/Oracle-OCI-red)
 ![Java](https://img.shields.io/badge/Java-21-blue)
@@ -117,14 +117,47 @@ La solución está organizada en tres módulos principales que se comunican medi
 Oracle Cloud Infrastructure (OCI Object Storage) se integra como repositorio de los artefactos del modelo entrenado, permitiendo desacoplar su almacenamiento del entorno de ejecución local.
  
 ```
-Frontend (Vue) ⇄ Backend (Java/Spring Boot) ⇄ Microservicio ML (Python/FastAPI)
-                          ⇓
-                    PostgreSQL
+
+                    ┌──────────────┐
+                    │ PostgreSQL   │
+                    └──────▲───────┘
+                           │
+                           │
+┌──────────┐        ┌──────┴──────┐        ┌──────────┐
+│ Frontend │ ─────► │ Spring Boot │ ─────► │ Microservicio ML
+|          |        |             |        |FastAPI/  │
+│ Vue/Vite │ ◄───── │    Java     │ ◄───── │  Python  │
+└──────────┘        └─────────────┘        └────┬─────┘
+                                                │
+                                                ▼
+                                         ┌─────────────┐
+                                         │ OCI Object  │
+                                         │   Storage   │
+                                         └──────┬──────┘
+                                                │
+                                   ┌────────────┴────────────┐
+                                   │ .joblib                 │
+                                   │ .joblib                 │
+                                   └─────────────────────────┘
 ```
  
 ---
- 
- 
+
+# 📸 Capturas de pantalla
+
+Las capturas de pantalla y la demostración visual del proyecto están disponibles en el README del frontend:
+
+[![Ver README del Frontend](https://img.shields.io/badge/📱-Ver_Capturas_de_Pantalla-blue?style=for-the-badge)](https://github.com/No-Country-simulation/G9-LATAM-Team-35-FinanceAI/blob/main/frontend/README.md#capturas-de-pantalla)
+
+---
+
+## 🎥 Video de demostración
+
+[![Ver video de demostración](https://img.youtube.com/vi/l6vNyAYyH-4/0.jpg)](https://youtu.be/l6vNyAYyH-4)
+
+> **📌 Nota:** El video muestra el flujo completo de la aplicación, una vez el usuario ha sido registrado hasta el análisis financiero.
+
+--- 
 # 📂 Estructura del proyecto
  
 ```
@@ -212,7 +245,7 @@ El frontend queda disponible en `http://localhost:5173`.
 ### Endpoint
  
 ```http
-POST /analisis-financiero
+POST api/analisis-financiero
 Authorization: Bearer <token>   (opcional — con token se persiste el análisis, sin token se procesa en modo invitado)
 ```
  
@@ -220,9 +253,6 @@ Authorization: Bearer <token>   (opcional — con token se persiste el análisis
  
 ```json
 {
-  "ingresoMensual": 4500,
-  "nivelEndeudamiento": 25,
-  "frecuenciaAhorro": "Media",
   "transacciones": [
     {
       "descripcion": "Supermercado",
@@ -234,9 +264,16 @@ Authorization: Bearer <token>   (opcional — con token se persiste el análisis
     },
     {
       "descripcion": "Streaming",
-      "valor": 40
+      "valor": 140
+    },
+   {
+      "descripcion": "Pago de medicamentos",
+      "valor": 450
     }
-  ]
+  ],
+  "ingreso_mensual": 15000,
+  "nivel_endeudamiento": 25,
+  "frecuencia_ahorro": "Media"
 }
 ```
  
@@ -244,16 +281,19 @@ Authorization: Bearer <token>   (opcional — con token se persiste el análisis
  
 ```json
 {
-  "perfilFinanciero": "En observación",
-  "probabilidad": 0.82,
-  "resumenGastos": {
-    "alimentacion": 420,
-    "transporte": 300,
-    "entretenimiento": 40
+  "perfil_financiero": "Saludable",
+  "probabilidad": 0.84,
+  "resumen_gastos": {
+    "Salud": 450,
+    "Alimentación": 420,
+    "Transporte": 300,
+    "Ocio y Servicios": 140
   },
   "recomendaciones": [
-    "Monitorear gastos recurrentes de entretenimiento.",
-    "Aumentar la reserva financiera mensual."
+    "Mantén tus hábitos financieros actuales.",
+    "Considera diversificar parte de tu ahorro mediante instrumentos de inversión de bajo riesgo.",
+    "Mantén el equilibrio entre el cuidado de la salud y el resto de tus objetivos financieros.",
+    "Tu capacidad de ahorro es alta; podrías considerar invertir parte del excedente para alcanzar objetivos financieros de largo plazo."
   ]
 }
 ```
@@ -279,7 +319,6 @@ Funcionalidades evaluadas y dejadas fuera del alcance del MVP actual, como posib
 * Seguimiento de presupuesto por categoría (comparativo gastado / presupuestado).
 * Recuperación de contraseña.
 * Conversión real entre monedas (actualmente el soporte de moneda es solo visual/informativo).
-* Activación completa de la integración con OCI Object Storage para la carga de modelos en producción.
 ---
 
  # 📜 Licencia
