@@ -31,7 +31,7 @@
  
 # 🚧 Estado del proyecto
  
-El MVP se encuentra **funcional de punta a punta**: registro/inicio de sesión, gestión de transacciones, clasificación automática de gastos, análisis de perfil financiero, recomendaciones, historial de análisis y modo invitado. El equipo se encuentra en etapa de pulido final de detalles antes de la entrega del Hackathon ONE.
+El MVP se encuentra **funcional de punta a punta**: registro/inicio de sesión, gestión de transacciones, clasificación automática de gastos, análisis de perfil financiero, recomendaciones, historial de análisis y modo invitado. El equipo ha finalizado el proyecto y se ha presentado en el demo day 1 del Hackathon ONE.
  
 ---
  
